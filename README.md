@@ -8,13 +8,16 @@
 ## ⚡ Quick Start
 
 ```powershell
-# 1. Launch Interactive Web App (Persona Profiler & WhatsApp Generator)
+# 1. Launch Master Unified Real Estate AI Portal (All Person A Modules + Admin/Client Switcher)
+Start-Process "index.html"
+
+# 2. Launch Standalone Persona Profiler & WhatsApp Generator
 Start-Process "persona_app.html"
 
-# 2. Run Python Persona Backend Test
+# 3. Run Python Persona Backend Test
 python modules/persona_engine.py
 
-# 3. Run Competitor Scraper & Intelligence Report Builder
+# 4. Run Competitor Scraper & Intelligence Report Builder
 python modules/competitor_engine.py
 ```
 

@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RealEstate AI — Person A Unified Intelligence & Lead Suite</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --card-bg: rgba(22, 30, 46, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #10b981;
+      --primary-glow: rgba(16, 185, 129, 0.3);
+      --secondary: #38bdf8;
+      --accent: #f59e0b;
+      --danger: #ef4444;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    ::selection { background: rgba(16, 185, 129, 0.35); color: #fff; }
+
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: #253046; border-radius: 8px; }
+    ::-webkit-scrollbar-thumb:hover { background: #324066; }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(56, 189, 248, 0.10) 0%, transparent 40%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* TOP NAVBAR */
+    navbar {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      padding: 0.85rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 0 15px var(--primary-glow);
+    }
+
+    .brand-text h1 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .brand-text span {
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    /* NAV TABS */
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-tab {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-tab:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-tab.active {
+      background: var(--primary);
+      color: #042f2e;
+      box-shadow: 0 0 12px var(--primary-glow);
+      font-weight: 700;
+    }
+
+    .nav-tab.admin-only {
+      border: 1px dashed rgba(245, 158, 11, 0.4);
+    }
+
+    /* ROLE SWITCHER */
+    .role-switcher {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(15, 23, 42, 0.9);
+      padding: 6px 14px;
+      border-radius: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .role-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .switch-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-muted);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .switch-btn.active-admin {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+    }
+
+    .switch-btn.active-client {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: var(--secondary);
+      color: var(--secondary);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+    }
+
+    /* MAIN CONTAINER */
+    .main-container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      flex-grow: 1;
+    }
+
+    /* MODULE VIEWS */
+    .module-view {
+      display: none;
+      animation: viewFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .module-view.active {
+      display: block;
+    }
+
+    @keyframes viewFade {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MODULE HEADER BANNER */
+    .module-banner {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    }
+
+    .module-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+    }
+
+    .banner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .banner-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .banner-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 750px;
+      line-height: 1.5;
+    }
+
+    /* CARD STYLES */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.36);
+    }
+
+    .card-header {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* GRID LAYOUTS */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    }
+
+    /* KPI STAT CARDS */
+    .kpi-card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .kpi-icon {
+      font-size: 1.5rem;
+    }
+
+    .kpi-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .kpi-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .kpi-trend {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* BUTTON STYLES */
+    .btn {
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #042f2e;
+    }
+
+    .btn-primary:hover {
+      background: #34d399;
+      box-shadow: 0 0 20px var(--primary-glow);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .btn-whatsapp {
+      background: #25d366;
+      color: #052e16;
+      font-weight: 800;
+    }
+
+    .btn-whatsapp:hover {
+      background: #4ade80;
+      box-shadow: 0 0 20px rgba(37,211,102,0.4);
+    }
+
+    /* INPUTS & SELECTS */
+    .form-control {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 12px var(--primary-glow);
+    }
+
+    select.form-control option {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    /* WARNING ALERT BANNER */
+    .alert-warning {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fde68a;
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* DATA TABLE STYLES */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .data-table th, .data-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .data-table th {
+      background: rgba(255, 255, 255, 0.03);
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+    }
+
+    .data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* AD PREVIEW CANVAS */
+    .ad-card {
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .ad-header {
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .ad-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #000;
+    }
+
+    .ad-body {
+      padding: 1.25rem;
+    }
+
+    .ad-creative-box {
+      height: 220px;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border-radius: 12px;
+      margin: 1rem 0;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .ad-tag {
+      align-self: flex-start;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .ad-headline {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .ad-footer {
+      padding: 1rem 1.25rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* RESTRICTED ACCESS SCREEN */
+    .restricted-box {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px dashed rgba(239, 68, 68, 0.4);
+      border-radius: var(--radius);
+    }
+
+    .restricted-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAVBAR -->
+  <navbar>
+    <a href="#" class="brand">
+      <div class="brand-logo">🏢</div>
+      <div class="brand-text">
+        <h1>RealEstate AI</h1>
+        <span>Person A Unified Platform</span>
+      </div>
+    </a>
+
+    <!-- NAVIGATION TABS -->
+    <div class="nav-tabs">
+      <button class="nav-tab active admin-only" id="tabMod1" onclick="switchTab('mod1')">
+        <span>📊</span> Competitor Engine <small>(Admin)</small>
+      </button>
+      <button class="nav-tab" id="tabMod3" onclick="switchTab('mod3')">
+        <span>🤖</span> Persona &amp; WhatsApp
+      </button>
+      <button class="nav-tab admin-only" id="tabMod5" onclick="switchTab('mod5')">
+        <span>📈</span> Marketing Reports <small>(Admin)</small>
+      </button>
+      <button class="nav-tab" id="tabMod8" onclick="switchTab('mod8')">
+        <span>🎯</span> Hyper-Ad Engine
+      </button>
+    </div>
+
+    <!-- ROLE SWITCHER -->
+    <div class="role-switcher">
+      <span class="role-label">View Mode:</span>
+      <button class="switch-btn active-admin" id="btnRoleAdmin" onclick="setRole('admin')">👑 Admin</button>
+      <button class="switch-btn" id="btnRoleClient" onclick="setRole('client')">👤 Client</button>
+    </div>
+  </navbar>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <div class="main-container">
+
+    <!-- ================================================================= -->
+    <!-- MODULE 1: COMPETITOR INTELLIGENCE ENGINE (ADMIN ONLY) -->
+    <!-- ================================================================= -->
+    <div class="module-view active" id="viewMod1">
+      <div class="module-banner">
+        <div class="banner-badge">Person A · Module 1</div>
+        <div class="banner-title">Competitor Intelligence &amp; Market Analytics Engine</div>
+        <div class="banner-subtitle">
+          Scrapes and analyzes competitor campaigns, pricing benchmarks, rent-vs-sale yield spreads, and featured listing premiums across top Pakistani real estate markets.
+        </div>
+      </div>
+
+      <!-- ADMIN CHECK WRAPPER -->
+      <div id="adminContentMod1">
+        <!-- FILTER CONTROLS -->
+        <div class="card">
+          <div class="card-header">
+            <span>🔍 Competitor Analytics Query</span>
+            <button class="btn btn-primary" onclick="runCompetitorAnalysis()">
+              ⚡ Run Live Competitor Analysis
+            </button>
+          </div>
+          
+          <div class="grid-3">
+            <div>
+              <label class="role-label" style="display:block; margin-bottom:6px;">Target City</label>
+              <select class="form-control" id="compCity" onchange="runCompetitorAnalysis()">
+                <option value="Islamabad">Islamabad (Capital Zone)</option>
+                <option value="Karachi">Karachi (Commercial)</option>
+                <option value="Lahore">Lahore (Cultural Hub)</option>
+                <option value="Rawalpindi">Rawalpindi (Twin City)</option>
+                <option value="Faisalabad">Faisalabad</option>
+                <option value="Multan">Multan</option>
+                <option value="Peshawar">Peshawar</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="role-label" style="display:block; margin-bottom:6px;">Property Category</label>
+              <select class="form-control" id="compType" onchange="runCompetitorAnalysis()">
+                <option value="House">Houses &amp; Villas</option>
+                <option value="Flat">Flats &amp; Apartments</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="role-label" style="display:block; margin-bottom:6px;">Transaction Intent</label>
+              <select class="form-control" id="compMode" onchange="runCompetitorAnalysis()">
+                <option value="for_sale">For Sale (Lump Sum PKR)</option>
+                <option value="for_rent">For Rent (PKR / Month)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI SUMMARY CARDS -->
+        <div class="grid-4" style="margin-bottom:1.5rem;">
+          <div class="kpi-card">
+            <div class="kpi-icon">💰</div>
+            <div class="kpi-label">Avg Market Price</div>
+            <div class="kpi-value" id="kpiAvgPrice">PKR 2.85 Crore</div>
+            <div class="kpi-trend">↑ 4.2% vs last month</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">📐</div>
+            <div class="kpi-label">Avg Price / Sq.Ft</div>
+            <div class="kpi-value" id="kpiPriceSqft">PKR 12,450</div>
+            <div class="kpi-trend">↑ Stable yield zone</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">📊</div>
+            <div class="kpi-label">Analyzed Inventory</div>
+            <div class="kpi-value" id="kpiSample">4,638 Listings</div>
+            <div class="kpi-trend">✓ High confidence dataset</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">⭐</div>
+            <div class="kpi-label">Featured Listing Premium</div>
+            <div class="kpi-value" id="kpiFeatured">+18.5%</div>
+            <div class="kpi-trend">⭐ Higher buyer visibility</div>
+          </div>
+        </div>
+
+        <!-- LOW CONFIDENCE WARNING CARD (CONDITIONAL) -->
+        <div class="alert-warning" id="compWarning" style="display:none;">
+          <span style="font-size:1.4rem;">⚠️</span>
+          <div>
+            <strong>Low Sample Size Segment Warning (&lt; 15 listings):</strong> Strategic pricing advice for this city/mode is guarded to prevent speculative mispricing.
+          </div>
+        </div>
+
+        <!-- COMPARATIVE CITY BENCHMARK TABLE -->
+        <div class="card">
+          <div class="card-header">
+            <span>📈 Multi-City Competitor Benchmark Comparison</span>
+            <span style="font-size:0.8rem; color:var(--primary);">Real-time Scraped Averages</span>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>City Market</th>
+                <th>Category</th>
+                <th>Avg Sale Price</th>
+                <th>Avg Rental Yield / Mo</th>
+                <th>Market Volume</th>
+                <th>Strategic Positioning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Islamabad</strong></td>
+                <td>Houses &amp; Villas</td>
+                <td>PKR 4.25 Crore</td>
+                <td>PKR 145,000</td>
+                <td>1,240 listings</td>
+                <td><span style="color:var(--primary); font-weight:700;">High Yield &amp; Expat Capital</span></td>
+              </tr>
+              <tr>
+                <td><strong>Karachi</strong></td>
+                <td>Flats &amp; Apartments</td>
+                <td>PKR 2.45 Crore</td>
+                <td>PKR 95,000</td>
+                <td>1,850 listings</td>
+                <td><span style="color:var(--secondary); font-weight:700;">High Rental Velocity</span></td>
+              </tr>
+              <tr>
+                <td><strong>Lahore</strong></td>
+                <td>Houses &amp; Villas</td>
+                <td>PKR 3.80 Crore</td>
+                <td>PKR 120,000</td>
+                <td>1,120 listings</td>
+                <td><span style="color:var(--accent); font-weight:700;">Suburban Growth Zone</span></td>
+              </tr>
+              <tr>
+                <td><strong>Rawalpindi</strong></td>
+                <td>Houses &amp; Villas</td>
+                <td>PKR 1.95 Crore</td>
+                <td>PKR 65,000</td>
+                <td>428 listings</td>
+                <td><span style="color:#a855f7; font-weight:700;">Affordable Buyer Choice</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- MODULE 3: AI BUYER PERSONA & WHATSAPP ENGINE (ALL USERS) -->
+    <!-- ================================================================= -->
+    <div class="module-view" id="viewMod3">
+      <div class="module-banner">
+        <div class="banner-badge">Person A · Module 3</div>
+        <div class="banner-title">AI Buyer Persona Profiler &amp; WhatsApp Engine</div>
+        <div class="banner-subtitle">
+          Qualifies real estate leads into dynamic buyer personas, recommends platform channel ratings, and auto-generates formatted WhatsApp posts with recipient phone deep-linking.
+        </div>
+      </div>
+
+      <!-- EMBEDDED PERSONA WIZARD APPLICATION -->
+      <iframe src="persona_app.html" style="width:100%; height:950px; border:none; border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.5);"></iframe>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- MODULE 5: MARKETING PERFORMANCE REPORT GENERATOR (ADMIN ONLY) -->
+    <!-- ================================================================= -->
+    <div class="module-view" id="viewMod5">
+      <div class="module-banner">
+        <div class="banner-badge">Person A · Module 5</div>
+        <div class="banner-title">Marketing Report Generator &amp; AI Recommendations</div>
+        <div class="banner-subtitle">
+          Automatically aggregates multi-channel lead acquisition metrics, generates ROI reports, and provides AI strategic guidance.
+        </div>
+      </div>
+
+      <div id="adminContentMod5">
+        <!-- METRIC CARDS -->
+        <div class="grid-4" style="margin-bottom:1.5rem;">
+          <div class="kpi-card">
+            <div class="kpi-icon">🎯</div>
+            <div class="kpi-label">Lead Conversion Rate</div>
+            <div class="kpi-value">18.4%</div>
+            <div class="kpi-trend">↑ 3.1% this month</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">💵</div>
+            <div class="kpi-label">Avg Cost Per Qualified Lead</div>
+            <div class="kpi-value">PKR 1,420</div>
+            <div class="kpi-trend" style="color:var(--secondary);">↓ 12% Cost Reduction</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">📲</div>
+            <div class="kpi-label">WhatsApp Post Shares</div>
+            <div class="kpi-value">1,248</div>
+            <div class="kpi-trend">✓ 98% Open Rate</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon">👑</div>
+            <div class="kpi-label">Marketing Return (ROI)</div>
+            <div class="kpi-value">4.85x</div>
+            <div class="kpi-trend">↑ Top Performer</div>
+          </div>
+        </div>
+
+        <!-- CHANNEL PERFORMANCE BREAKDOWN -->
+        <div class="card">
+          <div class="card-header">
+            <span>📊 Channel Lead Performance</span>
+            <button class="btn btn-secondary" onclick="alert('Exporting PDF Performance Report...')">
+              📥 Export Full Report
+            </button>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Marketing Channel</th>
+                <th>Target Persona</th>
+                <th>Total Enquiries</th>
+                <th>Qualified Leads</th>
+                <th>Conversion %</th>
+                <th>Channel Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>WhatsApp Direct Broadcast</strong></td>
+                <td>Young Investors</td>
+                <td>485</td>
+                <td>312</td>
+                <td>64.3%</td>
+                <td><span style="color:var(--primary); font-weight:700;">🟢 Top Converter</span></td>
+              </tr>
+              <tr>
+                <td><strong>Instagram Reels Video</strong></td>
+                <td>First-Time Homebuyers</td>
+                <td>620</td>
+                <td>280</td>
+                <td>45.1%</td>
+                <td><span style="color:var(--primary); font-weight:700;">🟢 High Engagement</span></td>
+              </tr>
+              <tr>
+                <td><strong>Facebook Meta Ads</strong></td>
+                <td>Family Upgraders</td>
+                <td>390</td>
+                <td>145</td>
+                <td>37.1%</td>
+                <td><span style="color:var(--accent); font-weight:700;">🟡 Steady Yield</span></td>
+              </tr>
+              <tr>
+                <td><strong>LinkedIn B2B Network</strong></td>
+                <td>Luxury Real Estate Seekers</td>
+                <td>180</td>
+                <td>95</td>
+                <td>52.7%</td>
+                <td><span style="color:var(--secondary); font-weight:700;">🔵 Executive Quality</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- MODULE 8: HYPER-PERSONALIZED ADVERTISEMENT ENGINE (ALL USERS) -->
+    <!-- ================================================================= -->
+    <div class="module-view" id="viewMod8">
+      <div class="module-banner">
+        <div class="banner-badge">Person A · Module 8</div>
+        <div class="banner-title">Hyper-Personalized Advertisement Engine</div>
+        <div class="banner-subtitle">
+          Generates tailored real estate advertisement copy, visual headlines, and targeted specs customized specifically to individual customer buyer preferences.
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- AD GENERATOR CONTROLS -->
+        <div class="card">
+          <div class="card-header">
+            <span>⚙️ Configure Ad Parameters</span>
+          </div>
+
+          <div style="margin-bottom:1.25rem;">
+            <label class="role-label" style="display:block; margin-bottom:6px;">Target Buyer Segment</label>
+            <select class="form-control" id="adPersona" onchange="generateHyperAd()">
+              <option value="investor">Young Investor (High Yield &amp; Growth)</option>
+              <option value="first_buyer">First-Time Buyer (Security &amp; Installments)</option>
+              <option value="family">Family Upgrader (Space, Schools &amp; Parks)</option>
+              <option value="luxury">Luxury Seeker (Executive Privacy &amp; Penthouses)</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom:1.25rem;">
+            <label class="role-label" style="display:block; margin-bottom:6px;">Target City</label>
+            <select class="form-control" id="adCity" onchange="generateHyperAd()">
+              <option value="Islamabad">Islamabad</option>
+              <option value="Lahore">Lahore</option>
+              <option value="Karachi">Karachi</option>
+              <option value="Rawalpindi">Rawalpindi</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom:1.5rem;">
+            <label class="role-label" style="display:block; margin-bottom:6px;">Ad Format / Platform</label>
+            <select class="form-control" id="adPlatform" onchange="generateHyperAd()">
+              <option value="instagram">Instagram Reel / Feed Banner</option>
+              <option value="facebook">Facebook Sponsored Post</option>
+              <option value="whatsapp">WhatsApp Direct Promo Card</option>
+              <option value="linkedin">LinkedIn Executive Sponsored Ad</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="generateHyperAd()">
+            ✨ Generate Hyper-Personalized Creative
+          </button>
+        </div>
+
+        <!-- LIVE AD CREATIVE PREVIEW CANVAS -->
+        <div class="ad-card">
+          <div class="ad-header">
+            <div class="ad-avatar">AI</div>
+            <div>
+              <div style="font-weight:700; font-size:0.9rem; color:#fff;" id="adBrandName">RealEstate AI Marketing</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);" id="adPlatformTag">Sponsored · Instagram Banner</div>
+            </div>
+          </div>
+
+          <div class="ad-body">
+            <div class="ad-creative-box" id="adBox">
+              <div class="ad-tag" id="adTagText">HIGH YIELD INVESTOR</div>
+              <div class="ad-headline" id="adHeadlineText">
+                14% Guaranteed Rental Yield in Top City Islamabad
+              </div>
+            </div>
+
+            <p id="adBodyText" style="font-size:0.875rem; color:var(--text-muted); line-height:1.5; margin-bottom:1rem;">
+              Targeted ROI deal with instant pre-launch pricing. High appreciation potential for smart capital deployment.
+            </p>
+          </div>
+
+          <div class="ad-footer">
+            <span style="font-size:0.8rem; color:var(--primary); font-weight:700;" id="adCta">
+              📲 Tap to Calculate ROI via WhatsApp
+            </span>
+            <button class="btn btn-secondary" style="padding:6px 14px; font-size:0.8rem;" onclick="copyAdCopy()">
+              📋 Copy Ad Copy
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESTRICTED ACCESS WARNING SCREEN (FOR CLIENT VIEW ON ADMIN TABS) -->
+    <div class="restricted-box" id="restrictedView" style="display:none;">
+      <div class="restricted-icon">👑</div>
+      <h2 style="font-size:1.5rem; font-weight:800; color:#fff; margin-bottom:0.5rem;">
+        Admin-Only Module Access
+      </h2>
+      <p style="color:var(--text-muted); max-width:500px; margin:0 auto 1.5rem auto; font-size:0.925rem;">
+        This module is reserved for platform Administrators. Switch to <strong>👑 Admin View</strong> in the top navigation bar to access this module.
+      </p>
+      <button class="btn btn-primary" onclick="setRole('admin')">👑 Switch to Admin View</button>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    RealEstate AI — Person A Unified Suite | Dual Scraper, Competitor Intelligence, Persona Generator &amp; Hyper-Ad Engine
+  </footer>
+
+  <script>
+    // GLOBAL STATE
+    let currentRole = 'admin'; // 'admin' or 'client'
+    let currentTab = 'mod1';    // 'mod1', 'mod3', 'mod5', 'mod8'
+
+    // ROLE SWITCHER LOGIC
+    function setRole(role) {
+      currentRole = role;
+      
+      const btnAdmin = document.getElementById('btnRoleAdmin');
+      const btnClient = document.getElementById('btnRoleClient');
+
+      if (role === 'admin') {
+        btnAdmin.className = "switch-btn active-admin";
+        btnClient.className = "switch-btn";
+        document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'inline-flex');
+      } else {
+        btnAdmin.className = "switch-btn";
+        btnClient.className = "switch-btn active-client";
+        document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
+        
+        // If currently on an admin-only tab, auto-switch to public Module 3
+        if (currentTab === 'mod1' || currentTab === 'mod5') {
+          switchTab('mod3');
+        }
+      }
+
+      updateTabVisibility();
+    }
+
+    // TAB SWITCHER LOGIC
+    function switchTab(tabId) {
+      currentTab = tabId;
+
+      // Update Nav Tab UI
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      const activeNavTab = document.getElementById(`tab${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`);
+      if (activeNavTab) activeNavTab.classList.add('active');
+
+      // Hide all module views
+      document.querySelectorAll('.module-view').forEach(v => v.classList.remove('active'));
+      document.getElementById('restrictedView').style.display = 'none';
+
+      // Check RBAC Scope
+      if ((tabId === 'mod1' || tabId === 'mod5') && currentRole !== 'admin') {
+        document.getElementById('restrictedView').style.display = 'block';
+      } else {
+        const targetView = document.getElementById(`view${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`);
+        if (targetView) targetView.classList.add('active');
+      }
+    }
+
+    function updateTabVisibility() {
+      switchTab(currentTab);
+    }
+
+    // MODULE 1: COMPETITOR ENGINE SIMULATOR
+    function runCompetitorAnalysis() {
+      const city = document.getElementById('compCity').value;
+      const type = document.getElementById('compType').value;
+      const mode = document.getElementById('compMode').value;
+
+      const warning = document.getElementById('compWarning');
+      
+      // Low confidence alert trigger for smaller markets
+      if (city === 'Quetta' || city === 'Peshawar' || city === 'Multan') {
+        warning.style.display = 'flex';
+      } else {
+        warning.style.display = 'none';
+      }
+
+      // Dynamic price calculation mock
+      let basePrice = 28500000;
+      if (city === 'Karachi') basePrice = 34000000;
+      if (city === 'Islamabad') basePrice = 42500000;
+      if (city === 'Lahore') basePrice = 38000000;
+      if (mode === 'for_rent') basePrice = 110000;
+
+      const formatTxt = mode === 'for_rent' 
+        ? `PKR ${basePrice.toLocaleString()} /mo`
+        : `PKR ${(basePrice / 10000000).toFixed(2)} Crore`;
+
+      document.getElementById('kpiAvgPrice').innerText = formatTxt;
+    }
+
+    // MODULE 8: HYPER-PERSONALIZED AD ENGINE
+    function generateHyperAd() {
+      const persona = document.getElementById('adPersona').value;
+      const city = document.getElementById('adCity').value;
+      const platform = document.getElementById('adPlatform').value;
+
+      const tagEl = document.getElementById('adTagText');
+      const headEl = document.getElementById('adHeadlineText');
+      const bodyEl = document.getElementById('adBodyText');
+      const ctaEl = document.getElementById('adCta');
+      const platTag = document.getElementById('adPlatformTag');
+
+      platTag.innerText = `Sponsored · ${platform.toUpperCase()} Ad Creative`;
+
+      if (persona === 'investor') {
+        tagEl.innerText = 'HIGH YIELD INVESTOR';
+        headEl.innerText = `14% Guaranteed Rental Yield in Prime ${city}`;
+        bodyEl.innerText = `Handpicked pre-launch price opportunity in ${city}. Optimized for capital growth and instant rental predictability.`;
+        ctaEl.innerText = '📲 Tap to Calculate ROI via WhatsApp';
+      } else if (persona === 'first_buyer') {
+        tagEl.innerText = 'SECURITY & TITLE VERIFIED';
+        headEl.innerText = `Own Your Dream Home in ${city} with 10% Down`;
+        bodyEl.innerText = `NOC verified clear title guaranteed. Easy 3-year installment plan designed for first-time buyers.`;
+        ctaEl.innerText = '🔑 View NOC & Payment Breakdown';
+      } else if (persona === 'family') {
+        tagEl.innerText = 'FAMILY NEST & PARKS';
+        headEl.innerText = `Spacious 5-Bed Luxury Villa in ${city} Gated Society`;
+        bodyEl.innerText = `Minutes away from top grammar schools, family parks, and 24/7 security surveillance.`;
+        ctaEl.innerText = '🏡 Schedule Private Family Walkthrough';
+      } else if (persona === 'luxury') {
+        tagEl.innerText = 'EXECUTIVE PENTHOUSE';
+        headEl.innerText = `Bespoke Executive Residence on ${city}'s Boulevard`;
+        bodyEl.innerText = `Italian marble finishes, private skyline deck, and discreet white-glove VIP concierge.`;
+        ctaEl.innerText = '💎 Access Off-Market Private Portfolio';
+      }
+    }
+
+    function copyAdCopy() {
+      const head = document.getElementById('adHeadlineText').innerText;
+      const body = document.getElementById('adBodyText').innerText;
+      const copyText = `${head}\n\n${body}`;
+
+      navigator.clipboard.writeText(copyText).then(() => {
+        alert('Ad Copy copied to clipboard!');
+      });
+    }
+
+    // INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+      setRole('admin');
+      generateHyperAd();
+    });
+  </script>
+</body>
+</html>
