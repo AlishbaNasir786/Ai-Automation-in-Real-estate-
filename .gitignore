@@ -1,0 +1,20 @@
+# Environments
+venv/
+env/
+ENV/
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Raw scrape files & cache
+modules/data/
+data/*.html
+*.raw.html
+
+# Operating system files
+.DS_Store
+Thumbs.db
