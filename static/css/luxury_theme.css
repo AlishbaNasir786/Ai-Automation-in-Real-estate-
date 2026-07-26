@@ -1,0 +1,124 @@
+/* Luxury Real Estate Theme */
+:root {
+  --color-matte-black: #0D0D0D;
+  --color-charcoal: #1A1A1A;
+  --color-warm-brown: #5C3B2E;
+  --color-walnut: #7A5238;
+  --color-golden-beige: #D6B38A;
+  --color-soft-cream: #F5F1EB;
+  --color-white: #FFFFFF;
+
+  --bg-primary: var(--color-matte-black);
+  --bg-card: rgba(30,30,30,0.85);
+  --text-primary: var(--color-white);
+  --text-muted: var(--color-soft-cream);
+  --accent-primary: var(--color-walnut);
+  --accent-secondary: var(--color-golden-beige);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Glassmorphism Card */
+.property-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.property-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+}
+.property-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.property-card .content {
+  padding: 1rem;
+  flex-grow: 1;
+}
+.property-card .title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: 0.25rem;
+}
+.property-card .location {
+  font-size: 0.9rem;
+  color: var(--color-soft-cream);
+  margin-bottom: 0.5rem;
+}
+.property-card .price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  margin-bottom: 0.5rem;
+}
+.property-card .specs {
+  font-size: 0.85rem;
+  color: var(--color-soft-cream);
+  margin-bottom: 0.5rem;
+}
+.property-card .description {
+  font-size: 0.9rem;
+  color: var(--color-white);
+  margin-bottom: 0.75rem;
+}
+.property-card .amenities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.property-card .amenities span {
+  background: var(--accent-secondary);
+  color: var(--color-matte-black);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+}
+.property-card .actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+.property-card .actions button {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.property-card .actions button:hover {
+  background: var(--accent-primary);
+  color: var(--color-white);
+}
+
+/* Grid Layout */
+#propertyShowcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.property-card {
+  animation: fadeInUp 0.6s ease both;
+}

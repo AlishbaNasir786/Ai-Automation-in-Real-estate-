@@ -1064,189 +1064,167 @@
       return val.toLocaleString() + " PKR";
     }
 
-    function renderResults() {
-      document.getElementById('wizardCard').style.display = 'none';
-      document.getElementById('resultsSection').style.display = 'block';
+    async function renderResults() {
+      // 1. Show loading state
+      const nextBtn = document.getElementById('btnNext');
+      nextBtn.innerText = 'Generating Match...';
+      nextBtn.disabled = true;
 
-      // 1. Persona Config
-      const personaMeta = {
-        investor: {
-          title: "Yield & Growth Capitalist",
-          badge: "Investor Archetype",
-          desc: "Targeting high capital gain, ROI predictability, and immediate rental yields.",
-          angle: "Message uses ROI calculation, rental yield highlights, and pre-launch pricing urgency.",
-          platforms: [
-            { name: "WhatsApp Direct Broadcast", score: 96, color: "#25d366" },
-            { name: "LinkedIn Professional Network", score: 84, color: "#0077b5" },
-            { name: "Direct Portal Alerts", score: 78, color: "#38bdf8" },
-            { name: "Email Investment Digest", score: 65, color: "#f59e0b" }
-          ]
-        },
-        first_time: {
-          title: "Security & First-Home Seeker",
-          badge: "First Buyer Archetype",
-          desc: "Prioritizes easy installment plans, builder reputation, and immediate possession.",
-          angle: "Message highlights installment breakdown, clear title verification, and family safety.",
-          platforms: [
-            { name: "Instagram & Reels Showcase", score: 92, color: "#e1306c" },
-            { name: "WhatsApp Advisory Chat", score: 88, color: "#25d366" },
-            { name: "Direct Web Search Portal", score: 85, color: "#38bdf8" },
-            { name: "Facebook Community Groups", score: 74, color: "#1877f2" }
-          ]
-        },
-        family: {
-          title: "Family Nest & Space Upgrader",
-          badge: "Family Archetype",
-          desc: "Seeking 3-5 bedrooms, gated security, nearby top schools, and green parks.",
-          angle: "Message emphasizes neighbourhood tranquility, bedroom count, and proximity to schools.",
-          platforms: [
-            { name: "WhatsApp Video Walkthrough", score: 94, color: "#25d366" },
-            { name: "Facebook Meta Ads", score: 86, color: "#1877f2" },
-            { name: "Direct Portal Search", score: 82, color: "#38bdf8" },
-            { name: "Community Email Newsletter", score: 68, color: "#f59e0b" }
-          ]
-        },
-        luxury: {
-          title: "Executive Portfolio Collector",
-          badge: "Luxury Archetype",
-          desc: "Demands prime boulevard location, modern architectural aesthetics, and privacy.",
-          angle: "Message conveys exclusive white-glove availability, prime location prestige, and luxury finishes.",
-          platforms: [
-            { name: "Private WhatsApp VIP Concierge", score: 98, color: "#25d366" },
-            { name: "LinkedIn Executive Network", score: 90, color: "#0077b5" },
-            { name: "Instagram High-Design Feed", score: 85, color: "#e1306c" },
-            { name: "Bespoke Portfolio Mailer", score: 72, color: "#f59e0b" }
-          ]
+      try {
+        const response = await fetch('/api/persona/match', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            persona_type: selections.persona,
+            city: selections.city,
+            purpose: selections.mode === 'for_rent' ? 'rent' : 'sale',
+            budget: selections.budget
+          })
+        });
+
+        const data = await response.json();
+        
+        if (!data.success) {
+            alert('Error generating match: ' + data.error);
+            nextBtn.innerText = '✨ Generate Persona & Match →';
+            nextBtn.disabled = false;
+            return;
         }
-      };
 
-      const meta = personaMeta[selections.persona] || personaMeta.investor;
-      document.getElementById('personaTitle').innerText = meta.title;
-      document.getElementById('personaBadge').innerText = meta.badge;
-      document.getElementById('personaDesc').innerText = meta.desc;
-      document.getElementById('salesAngle').innerText = meta.angle;
+        const topProp = data.property;
+        const waData = data.whatsapp;
 
-      const modeLabel = selections.mode === 'for_sale' ? 'For Sale' : 'For Rent';
-      document.getElementById('targetSummary').innerText = `${selections.city} · ${selections.type} · ${modeLabel}`;
+        document.getElementById('wizardCard').style.display = 'none';
+        document.getElementById('resultsSection').style.display = 'block';
 
-      // 2. Render Platforms
-      const pContainer = document.getElementById('platformBars');
-      pContainer.innerHTML = '';
-      meta.platforms.forEach(p => {
-        pContainer.innerHTML += `
-          <div class="platform-row">
-            <div class="platform-meta">
-              <span>${p.name}</span>
-              <span style="color:${p.color}">${p.score}% Match</span>
+        // 2. Persona Config
+        const personaMeta = {
+          investor: {
+            title: "Yield & Growth Capitalist",
+            badge: "Investor Archetype",
+            desc: "Targeting high capital gain, ROI predictability, and immediate rental yields.",
+            angle: "Message uses ROI calculation, rental yield highlights, and pre-launch pricing urgency.",
+            platforms: [
+              { name: "WhatsApp Direct Broadcast", score: 96, color: "#25d366" },
+              { name: "LinkedIn Professional Network", score: 84, color: "#0077b5" },
+              { name: "Direct Portal Alerts", score: 78, color: "#38bdf8" },
+              { name: "Email Investment Digest", score: 65, color: "#f59e0b" }
+            ]
+          },
+          first_time: {
+            title: "Security & First-Home Seeker",
+            badge: "First Buyer Archetype",
+            desc: "Prioritizes easy installment plans, builder reputation, and immediate possession.",
+            angle: "Message highlights installment breakdown, clear title verification, and family safety.",
+            platforms: [
+              { name: "Instagram & Reels Showcase", score: 92, color: "#e1306c" },
+              { name: "WhatsApp Advisory Chat", score: 88, color: "#25d366" },
+              { name: "Direct Web Search Portal", score: 85, color: "#38bdf8" },
+              { name: "Facebook Community Groups", score: 74, color: "#1877f2" }
+            ]
+          },
+          family: {
+            title: "Family Nest & Space Upgrader",
+            badge: "Family Archetype",
+            desc: "Seeking 3-5 bedrooms, gated security, nearby top schools, and green parks.",
+            angle: "Message emphasizes neighbourhood tranquility, bedroom count, and proximity to schools.",
+            platforms: [
+              { name: "WhatsApp Video Walkthrough", score: 94, color: "#25d366" },
+              { name: "Facebook Meta Ads", score: 86, color: "#1877f2" },
+              { name: "Direct Portal Search", score: 82, color: "#38bdf8" },
+              { name: "Community Email Newsletter", score: 68, color: "#f59e0b" }
+            ]
+          },
+          luxury: {
+            title: "Executive Portfolio Collector",
+            badge: "Luxury Archetype",
+            desc: "Demands prime boulevard location, modern architectural aesthetics, and privacy.",
+            angle: "Message conveys exclusive white-glove availability, prime location prestige, and luxury finishes.",
+            platforms: [
+              { name: "Private WhatsApp VIP Concierge", score: 98, color: "#25d366" },
+              { name: "LinkedIn Executive Network", score: 90, color: "#0077b5" },
+              { name: "Instagram High-Design Feed", score: 85, color: "#e1306c" },
+              { name: "Bespoke Portfolio Mailer", score: 72, color: "#f59e0b" }
+            ]
+          }
+        };
+
+        const meta = personaMeta[selections.persona] || personaMeta.investor;
+        document.getElementById('personaTitle').innerText = meta.title;
+        document.getElementById('personaBadge').innerText = meta.badge;
+        document.getElementById('personaDesc').innerText = meta.desc;
+        document.getElementById('salesAngle').innerText = meta.angle;
+
+        const modeLabel = selections.mode === 'for_sale' ? 'For Sale' : 'For Rent';
+        document.getElementById('targetSummary').innerText = `${selections.city} · ${selections.type} · ${modeLabel}`;
+
+        // 3. Render Platforms
+        const pContainer = document.getElementById('platformBars');
+        pContainer.innerHTML = '';
+        meta.platforms.forEach(p => {
+          pContainer.innerHTML += `
+            <div class="platform-row">
+              <div class="platform-meta">
+                <span>${p.name}</span>
+                <span style="color:${p.color}">${p.score}% Match</span>
+              </div>
+              <div class="bar-bg">
+                <div class="bar-fill" style="width: ${p.score}%; background: ${p.color};"></div>
+              </div>
             </div>
-            <div class="bar-bg">
-              <div class="bar-fill" style="width: ${p.score}%; background: ${p.color};"></div>
-            </div>
-          </div>
-        `;
-      });
+          `;
+        });
 
-      // 3. Filter Properties strictly by City and Mode
-      const targetCity = selections.city.toLowerCase();
-      const targetMode = selections.mode.toLowerCase();
+        // 4. Render Property
+        document.getElementById('matchCount').innerText = `1 Property Matched`;
 
-      // Strict City AND Mode match
-      let matches = MOCK_PROPERTIES.filter(p => {
-        const itemCity = p.city.toLowerCase();
-        const itemMode = p.mode.toLowerCase();
-        return itemCity.includes(targetCity) && itemMode === targetMode;
-      });
+        const grid = document.getElementById('propertyGrid');
+        grid.innerHTML = '';
+        
+        const priceTxt = topProp.listing_mode === 'for_rent' || topProp.mode === 'for_rent' 
+          ? `PKR ${(topProp.price_numeric || 0).toLocaleString()} /mo` 
+          : `PKR ${formatPKR(topProp.price_numeric || 0)}`;
 
-      // City-only fallback if no exact mode match exists for that city
-      if (matches.length === 0) {
-        matches = MOCK_PROPERTIES.filter(p => p.city.toLowerCase().includes(targetCity));
-      }
+        const agent = waData.agent || AGENTS[0];
 
-      // Safe backup (only if dataset has 0 entries for that city)
-      if (matches.length === 0) {
-        matches = [{
-          id: 999,
-          title: `Prime Property Opportunity in ${selections.city}`,
-          city: selections.city,
-          mode: selections.mode,
-          type: selections.type || 'House',
-          price: selections.mode === 'for_rent' ? 75000 : 25000000,
-          beds: 4, baths: 4, area: '10 Marla',
-          agentIdx: 0
-        }];
-      }
+        const bgUrl = topProp.property_images && topProp.property_images.length > 0 
+          ? topProp.property_images[0].url 
+          : '';
 
-      document.getElementById('matchCount').innerText = `${matches.length} Properties Matched`;
-
-      const grid = document.getElementById('propertyGrid');
-      grid.innerHTML = '';
-      
-      matches.slice(0, 3).forEach((item, idx) => {
-        const agent = AGENTS[item.agentIdx % AGENTS.length];
-        const priceTxt = selections.mode === 'for_rent' 
-          ? `PKR ${item.price.toLocaleString()} /mo` 
-          : `PKR ${formatPKR(item.price)}`;
-
-        grid.innerHTML += `
+        grid.innerHTML = `
           <div class="prop-item">
-            <div class="prop-banner">
-              <div class="prop-tag">${item.mode === 'for_rent' ? 'FOR RENT' : 'FOR SALE'}</div>
+            <div class="prop-banner" style="${bgUrl ? `background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(15,23,42,0.9) 100%), url('${bgUrl}'); background-size: cover; background-position: center;` : ''}">
+              <div class="prop-tag">${topProp.listing_mode === 'for_rent' || topProp.mode === 'for_rent' ? 'FOR RENT' : 'FOR SALE'}</div>
               <div class="prop-price">${priceTxt}</div>
             </div>
             <div class="prop-body">
-              <div class="prop-title">${item.title}</div>
+              <div class="prop-title">${topProp.title}</div>
               <div class="prop-details">
-                <span>📍 ${item.city}</span>
-                <span>🛏️ ${item.beds} Bed</span>
-                <span>📐 ${item.area}</span>
+                <span>📍 ${topProp.city}</span>
+                <span>🛏️ ${topProp.beds} Bed</span>
+                <span>📐 ${topProp.area}</span>
               </div>
               <div class="agent-box">
-                <div class="agent-avatar">${agent.avatar}</div>
+                <div class="agent-avatar">${agent.avatar || 'A'}</div>
                 <div>
                   <div style="font-weight:700;">${agent.name}</div>
-                  <div style="font-size:0.75rem; color:var(--text-muted);">${agent.agency}</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">${agent.agency || 'Agent'}</div>
                 </div>
               </div>
             </div>
           </div>
         `;
-      });
 
-      // 4. Generate WhatsApp Message
-      const topProp = matches[0];
-      const agent = AGENTS[topProp.agentIdx % AGENTS.length];
-      const topPrice = topProp.mode === 'for_rent' 
-        ? `PKR ${topProp.price.toLocaleString()}/month` 
-        : `PKR ${formatPKR(topProp.price)}`;
+        // 5. WhatsApp Message
+        window.activeAgentPhone = agent.phone || waData.recipient_phone || "+923005551234";
+        document.getElementById('chipAgentPhone').innerText = window.activeAgentPhone;
+        document.getElementById('waMessageText').innerText = waData.text;
 
-      let hook = "🌟 *EXCLUSIVE PROPERTY MATCH FOR YOU* 🌟";
-      if(selections.persona === 'investor') hook = "📈 *HIGH-YIELD REAL ESTATE INVESTMENT OPPORTUNITY* 📈";
-      if(selections.persona === 'luxury') hook = "💎 *PREMIUM LUXURY RESIDENCE SPOTLIGHT* 💎";
-
-      const waMsg = `${hook}
-
-Hello! Based on your preferred *${meta.title}* profile, here is a curated verified listing:
-
-🏡 *${topProp.title}*
-📍 *Location:* ${topProp.city}, Pakistan
-💰 *Price:* ${topPrice}
-📐 *Specs:* ${topProp.area} | ${topProp.beds} Bedrooms | Verified Title
-
-💡 *Why This Fits You:*
-✓ Handpicked for ${selections.city} ${selections.type} buyers seeking high value.
-✓ Verified seller title & clear documentation guaranteed.
-
-👤 *Assigned Consultant:*
-*${agent.name}* (${agent.title})
-🏢 ${agent.agency}
-📞 Call / WhatsApp: ${agent.phone}
-
-Reply *YES* to schedule a private video walkthrough or site visit!`;
-
-      // Store active agent phone for direct chat
-      window.activeAgentPhone = agent.phone || "+923005551234";
-      document.getElementById('chipAgentPhone').innerText = window.activeAgentPhone;
-      document.getElementById('waMessageText').innerText = waMsg;
+      } catch (err) {
+        alert('Failed to connect to API: ' + err.message);
+        nextBtn.innerText = '✨ Generate Persona & Match →';
+        nextBtn.disabled = false;
+      }
     }
 
     function promptPhoneModal() {

@@ -131,27 +131,39 @@ FALLBACK_LISTINGS = [
 # Core Engine Functions
 # ---------------------------------------------------------------------------
 
+# Add path for importing db
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from db import supabase
+
 def load_inventory_csv(filepath: str = "data/zameen_all_listings.csv") -> list:
-    """Load inventory listings from CSV or return fallback data if file missing."""
-    if not os.path.exists(filepath):
-        return FALLBACK_LISTINGS
-
-    listings = []
+    """Load inventory listings from Supabase (formerly from CSV) or return fallback data on failure."""
     try:
-        with open(filepath, mode="r", encoding="utf-8") as f:
-            reader = csv.DictReader(f)
-            for row in reader:
-                # Convert numerical fields
-                try:
-                    row["price_numeric"] = int(float(row.get("price_numeric") or 0))
-                except ValueError:
-                    row["price_numeric"] = 0
-                listings.append(row)
+        response = supabase.table('properties').select('*, property_images(*), agents(*), cities(*)').execute()
+        listings = response.data
+        if not listings:
+            return FALLBACK_LISTINGS
+            
+        # Clean up database row structures to match what the engine expects
+        for row in listings:
+            # Flatten city
+            if isinstance(row.get("cities"), dict) and "name" in row["cities"]:
+                row["city"] = row["cities"]["name"]
+                
+            # Ensure price_numeric exists
+            try:
+                row["price_numeric"] = int(float(row.get("price_numeric") or row.get("price") or 0))
+            except (ValueError, TypeError):
+                row["price_numeric"] = 0
+                
+            # Map listing_purpose to listing_mode
+            if "listing_purpose" in row:
+                purpose = row["listing_purpose"]
+                row["listing_mode"] = "for_sale" if purpose == "buy" else "for_rent" if purpose == "rent" else purpose
+                
+        return listings
     except Exception as e:
-        print(f"Warning loading {filepath}: {e}")
+        print(f"Warning loading from Supabase: {e}")
         return FALLBACK_LISTINGS
-
-    return listings if listings else FALLBACK_LISTINGS
 
 
 def match_listings(listings: list, city: str = "Islamabad", mode: str = "for_sale", prop_type: str = None) -> list:
@@ -225,7 +237,7 @@ def generate_whatsapp_post(listing: dict, persona_key: str = "investor", agent: 
         f"*{agent['name']}* ({agent['title']})\n"
         f"🏢 {agent['agency']}\n"
         f"📞 Call / WhatsApp: {agent['phone']}\n\n"
-        f"Reply *YES* to schedule a private video walkthrough or site visit!"
+        f"Reply *YES* to schedule a private video walkthrough or site visit!\n\n🔗 Visit our platform: {OUR_PLATFORM_URL}\n🤝 Connect on LinkedIn: {OUR_LINKEDIN_URL}\n🔗 Facebook: {OUR_FACEBOOK_URL}\n📸 Instagram: {OUR_INSTAGRAM_URL}"
     )
 
     encoded_msg = urllib.parse.quote(message)
@@ -245,6 +257,40 @@ def generate_whatsapp_post(listing: dict, persona_key: str = "investor", agent: 
         "agent": agent,
         "recipient_phone": clean_phone,
     }
+# ---------------------------------------------------------------------------
+# Platform Invite (call this AFTER displaying the platform rating to the user)
+# ---------------------------------------------------------------------------
+OUR_PLATFORM_URL = "https://dhaislamabad.com.pk/"
+OUR_LINKEDIN_URL = "https://www.linkedin.com/in/alishba-nasir786/"
+OUR_FACEBOOK_URL = "https://facebook.com/YourPage"
+OUR_INSTAGRAM_URL = "https://instagram.com/YourProfile"
+
+
+def generate_platform_invite(persona_key: str = "investor", recipient_phone: str = None) -> dict:
+    """
+    Builds one WhatsApp-ready message combining:
+      1. An urgency-framed invite to visit our own platform.
+      2. A professional LinkedIn connect invite.
+    """
+    persona = PERSONA_PROFILES.get(persona_key, PERSONA_PROFILES["investor"])
+
+    message = (
+        f"👋 Hi! As a *{persona['title']}*, you get early access to our newest listings.\n\n"
+        f"🔥 *Limited-time update:* Visit our platform now for the latest verified properties "
+        f"before they're gone:\n{OUR_PLATFORM_URL}\n\n"
+        f"🤝 We'd also love to stay connected professionally — follow our LinkedIn page for "
+        f"market insights and new project launches:\n{OUR_LINKEDIN_URL}"
+    )
+
+    encoded_msg = urllib.parse.quote(message)
+    clean_phone = re.sub(r"[^0-9]", "", str(recipient_phone or ""))
+    if clean_phone.startswith("0"):
+        clean_phone = "92" + clean_phone[1:]
+
+    wa_link = (f"https://api.whatsapp.com/send?phone={clean_phone}&text={encoded_msg}"
+               if clean_phone else f"https://api.whatsapp.com/send?text={encoded_msg}")
+
+    return {"text": message, "wa_link": wa_link, "recipient_phone": clean_phone}
 
 
 if __name__ == "__main__":
@@ -253,10 +299,15 @@ if __name__ == "__main__":
     print(f"Loaded {len(listings)} listings from dataset.")
 
     matched = match_listings(listings, city="Islamabad", mode="for_sale")
+    recipient_phone = input("\nEnter the customer's WhatsApp number (e.g. 03001234567): ").strip()
     print(f"Matched {len(matched)} properties for Islamabad For Sale.")
 
     if matched:
-        result = generate_whatsapp_post(matched[0], persona_key="investor")
+        result = generate_whatsapp_post(matched[0], persona_key="investor", recipient_phone=recipient_phone)
+        invite = generate_platform_invite(persona_key="investor", recipient_phone=recipient_phone)
+        print("\n--- Platform + LinkedIn invite ---")
+        print(invite["text"])
+        print("wa_link:", invite["wa_link"])
         print("\n" + "="*60)
         print("  GENERATED WHATSAPP MESSAGE PREVIEW")
         print("="*60)

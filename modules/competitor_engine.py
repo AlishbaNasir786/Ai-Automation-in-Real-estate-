@@ -8,10 +8,15 @@ import sys
 import io
 
 # Force UTF-8 output so emoji print correctly on Windows
+# line_buffering=True ensures every print() flushes immediately (required for SSE streaming)
 if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+else:
+    sys.stdout.reconfigure(line_buffering=True)
 if sys.stderr.encoding and sys.stderr.encoding.lower() != "utf-8":
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+else:
+    sys.stderr.reconfigure(line_buffering=True)
 
 import requests
 from datetime import datetime
@@ -634,6 +639,15 @@ def generate_competitor_report(listings: list) -> dict:
 # Entry point
 # ---------------------------------------------------------------------------
 
+def print_progress_bar(current: float, total: int, label: str = "", bar_length: int = 30):
+    """Cool inline progress bar: [██████████░░░░░░░░░░] 45.0%  SALE scrape (9/20 segments)"""
+    fraction = current / total if total else 0
+    filled = int(bar_length * fraction)
+    bar = "█" * filled + "░" * (bar_length - filled)
+    pct = fraction * 100
+    print(f"\n📊 [{bar}] {pct:5.1f}%  {label} ({int(current)}/{total} segments)\n")
+
+
 def _scrape_segment_group(categories: dict, location_ids: dict, mode: str) -> list:
     """
     Scrape one group of category/city combinations and tag every listing
@@ -641,6 +655,8 @@ def _scrape_segment_group(categories: dict, location_ids: dict, mode: str) -> li
     Returns deduplicated listing dicts.
     """
     raw = []
+    total_segments = len(categories) * len(location_ids)
+    segment_counter = 0
 
     for cat_label, cat_slug in categories.items():
         for city, loc_id in location_ids.items():
@@ -670,8 +686,14 @@ def _scrape_segment_group(categories: dict, location_ids: dict, mode: str) -> li
                         lst["listing_mode"] = mode
                     raw.extend(page_listings)
 
+                # Emit progress update after every page so frontend receives stream continuously
+                current_progress = segment_counter + (page / 10.0)
+                print_progress_bar(current_progress, total_segments, label=f"{mode.upper()} {city_label}")
+
                 # Polite delay — randomised to avoid rate-limiting
                 time.sleep(random.uniform(2.5, 5.0))
+
+            segment_counter += 1
 
     # Deduplicate within this group on canonical URL
     seen_urls: set = set()
