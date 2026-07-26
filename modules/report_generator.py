@@ -713,137 +713,114 @@ class CompetitorReport:
 <style>
 /* ── Reset & base ───────────────────────────────── */
 *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-body{{font-family:'Plus Jakarta Sans','Segoe UI',system-ui,sans-serif;
-   background:#090d16;
-   background-image:
-     radial-gradient(circle at 15% 15%, rgba(16,185,129,0.08) 0%, transparent 40%),
-     radial-gradient(circle at 85% 85%, rgba(56,189,248,0.06) 0%, transparent 40%);
-   color:#f8fafc;line-height:1.6;padding:32px 20px}}
-a{{color:#10b981;text-decoration:none}}
-::selection{{background:rgba(16,185,129,0.35);color:#fff}}
-::-webkit-scrollbar{{width:10px}}
-::-webkit-scrollbar-track{{background:#090d16}}
-::-webkit-scrollbar-thumb{{background:#253046;border-radius:8px;border:2px solid #090d16}}
+body{{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+   background:#f0f4f8;color:#1e293b;line-height:1.6;padding:32px 20px}}
+a{{color:inherit;text-decoration:none}}
 
-/* ── Page wrapper — subtle report border ─────────── */
-.page{{max-width:1200px;margin:0 auto;
-    background:rgba(15,23,42,0.65);backdrop-filter:blur(20px);
-    border-radius:24px;
-    border:1px solid rgba(255,255,255,0.06);
-    box-shadow:0 25px 60px rgba(0,0,0,.4), 0 0 0 1px rgba(16,185,129,0.06);
-    overflow:hidden}}
+/* ── Page wrapper ───────────────────────────────── */
+.page{{max-width:1200px;margin:0 auto;background:#fff;
+    border-radius:24px;box-shadow:0 25px 60px rgba(0,0,0,.12);overflow:hidden}}
 
-/* ── Hero header — emerald gradient ────────────── */
-.hero{{background:linear-gradient(135deg,#042f2e 0%,#064e3b 45%,#065f46 100%);
+/* ── Hero header ────────────────────────────────── */
+.hero{{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 45%,#4f46e5 100%);
     padding:52px 52px 44px;color:#fff;position:relative;overflow:hidden}}
 .hero::before{{content:'';position:absolute;inset:0;
-        background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}}
+        background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}}
 .hero-inner{{position:relative;z-index:1}}
 .hero-eyebrow{{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-        color:#6ee7b7;margin-bottom:12px}}
+        color:#a5b4fc;margin-bottom:12px}}
 .hero h1{{font-size:36px;font-weight:800;line-height:1.15;margin-bottom:8px}}
 .hero h1 span{{color:#fbbf24}}
-.hero-sub{{font-size:15px;color:#a7f3d0;margin-top:4px}}
+.hero-sub{{font-size:15px;color:#c7d2fe;margin-top:4px}}
 .hero-meta{{display:flex;gap:24px;margin-top:28px;flex-wrap:wrap}}
-.hero-badge{{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+.hero-badge{{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
        backdrop-filter:blur(8px);border-radius:12px;padding:12px 20px;text-align:center}}
 .hero-badge .hb-val{{font-size:24px;font-weight:800;color:#fff}}
-.hero-badge .hb-lbl{{font-size:11px;color:#6ee7b7;text-transform:uppercase;letter-spacing:.8px;margin-top:2px}}
+.hero-badge .hb-lbl{{font-size:11px;color:#a5b4fc;text-transform:uppercase;letter-spacing:.8px;margin-top:2px}}
 .alert-strip{{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}}
-.alert-pill{{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.35);
+.alert-pill{{background:rgba(239,68,68,.25);border:1px solid rgba(239,68,68,.5);
        border-radius:99px;padding:6px 16px;font-size:13px;color:#fca5a5;font-weight:600}}
-.alert-pill.warn{{background:rgba(249,115,22,.12);border-color:rgba(249,115,22,.3);color:#fed7aa}}
+.alert-pill.warn{{background:rgba(249,115,22,.2);border-color:rgba(249,115,22,.4);color:#fed7aa}}
 
-/* ── Section wrapper — report accent border ──────── */
-.section{{padding:44px 52px;border-bottom:1px solid rgba(255,255,255,0.06);
-     border-left:3px solid rgba(16,185,129,0.25);position:relative}}
+/* ── Section wrapper ────────────────────────────── */
+.section{{padding:44px 52px;border-bottom:1px solid #f1f5f9}}
 .section:last-child{{border-bottom:none}}
-.section-title{{font-size:22px;font-weight:700;color:#f8fafc;margin-bottom:6px;
+.section-title{{font-size:22px;font-weight:700;color:#1e293b;margin-bottom:6px;
         display:flex;align-items:center;gap:10px}}
-.section-desc{{font-size:14px;color:#94a3b8;margin-bottom:24px}}
-.section-sub-title{{font-size:15px;font-weight:600;color:#cbd5e1;margin-top:24px;margin-bottom:10px}}
+.section-desc{{font-size:14px;color:#64748b;margin-bottom:24px}}
+.section-sub-title{{font-size:15px;font-weight:600;color:#374151;margin-top:24px;margin-bottom:10px}}
 
 /* ── KPI grid ───────────────────────────────────── */
 .kpi-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}}
-.kpi-card{{background:rgba(22,30,46,0.75);backdrop-filter:blur(12px);border-radius:16px;
-      padding:22px 18px;text-align:center;
-      border:1px solid rgba(255,255,255,0.08);transition:transform .2s,box-shadow .2s}}
-.kpi-card:hover{{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.3)}}
+.kpi-card{{background:#f8fafc;border-radius:16px;padding:22px 18px;text-align:center;
+      border:1px solid #e2e8f0;transition:transform .2s,box-shadow .2s}}
+.kpi-card:hover{{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}}
 .kpi-icon{{font-size:26px;margin-bottom:8px}}
-.kpi-value{{font-size:28px;font-weight:800;color:#10b981}}
-.kpi-label{{font-size:12px;color:#94a3b8;margin-top:4px;line-height:1.3}}
+.kpi-value{{font-size:28px;font-weight:800}}
+.kpi-label{{font-size:12px;color:#64748b;margin-top:4px;line-height:1.3}}
 
 /* ── City grid ──────────────────────────────────── */
 .city-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px}}
-.city-card{{background:rgba(22,30,46,0.75);backdrop-filter:blur(12px);border-radius:16px;
-       padding:22px;border:1px solid rgba(255,255,255,0.08);
-       transition:transform .2s,box-shadow .2s}}
-.city-card:hover{{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.3);
-        border-color:rgba(16,185,129,0.3)}}
+.city-card{{background:#f8fafc;border-radius:16px;padding:22px;border:1px solid #e2e8f0;
+      transition:transform .2s,box-shadow .2s}}
+.city-card:hover{{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}}
 .city-header{{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}}
-.city-name{{font-size:16px;font-weight:700;color:#f8fafc}}
-.city-price{{font-size:20px;font-weight:800;color:#10b981}}
+.city-name{{font-size:16px;font-weight:700}}
+.city-price{{font-size:20px;font-weight:800}}
 .city-sub{{font-size:12px;color:#94a3b8;margin-bottom:8px}}
 .city-meta{{font-size:12px;color:#64748b;display:flex;justify-content:space-between;
       margin-bottom:10px}}
 .dist-row{{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}}
 .dist-item{{text-align:center}}
-.dist-label{{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:.5px}}
-.dist-val{{font-size:15px;font-weight:700;color:#f8fafc}}
+.dist-label{{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}}
+.dist-val{{font-size:15px;font-weight:700;color:#1e293b}}
 
 /* ── Marketing grid ─────────────────────────────── */
 .mkt-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}}
-.mkt-card{{border-radius:14px;padding:18px;background:rgba(22,30,46,0.75);
-      border:1px solid rgba(255,255,255,0.08)}}
+.mkt-card{{border-radius:14px;padding:18px;border:1px solid rgba(0,0,0,.06)}}
 .mkt-row{{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}}
-.mkt-label{{font-size:13px;font-weight:700;color:#cbd5e1}}
-.mkt-stat{{font-size:28px;font-weight:800;color:#38bdf8;margin:4px 0 2px}}
+.mkt-label{{font-size:13px;font-weight:700}}
+.mkt-stat{{font-size:28px;font-weight:800;margin:4px 0 2px}}
 .mkt-count{{font-size:12px;color:#64748b}}
-.keyword-cloud{{background:rgba(22,30,46,0.6);border-radius:14px;padding:20px;margin-top:20px;
-        border:1px solid rgba(255,255,255,0.08)}}
+.keyword-cloud{{background:#f8fafc;border-radius:14px;padding:20px;margin-top:20px;
+        border:1px solid #e2e8f0}}
 
 /* ── Property distribution ──────────────────────── */
 .prop-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}}
-.prop-card{{background:rgba(22,30,46,0.75);border-radius:14px;padding:18px;text-align:center;
-      border:1px solid rgba(255,255,255,0.08)}}
-.prop-type{{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8}}
-.prop-count{{font-size:30px;font-weight:800;color:#f8fafc;margin:6px 0 2px}}
-.prop-pct{{font-size:14px;font-weight:600;color:#10b981;margin-bottom:6px}}
+.prop-card{{background:#f8fafc;border-radius:14px;padding:18px;text-align:center;
+      border:1px solid #e2e8f0}}
+.prop-type{{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}}
+.prop-count{{font-size:30px;font-weight:800;color:#1e293b;margin:6px 0 2px}}
+.prop-pct{{font-size:14px;font-weight:600;margin-bottom:6px}}
 
 /* ── Quality cards ──────────────────────────────── */
 .quality-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}}
-.quality-card{{background:rgba(22,30,46,0.75);border-radius:14px;padding:20px;
-        border:1px solid rgba(255,255,255,0.08)}}
-.quality-label{{font-size:13px;color:#94a3b8;margin-bottom:6px}}
-.quality-val{{font-size:32px;font-weight:800;color:#38bdf8;margin-bottom:6px}}
+.quality-card{{background:#f8fafc;border-radius:14px;padding:20px;border:1px solid #e2e8f0}}
+.quality-label{{font-size:13px;color:#64748b;margin-bottom:6px}}
+.quality-val{{font-size:32px;font-weight:800;color:#1e293b;margin-bottom:6px}}
 
-/* ── Suggestions — distinct report look ────────── */
-.suggestion{{background:rgba(22,30,46,0.6);border-radius:16px;padding:24px;margin-bottom:16px;
-       border:1px solid rgba(255,255,255,0.08);
-       border-left:4px solid #10b981}}
+/* ── Suggestions ────────────────────────────────── */
+.suggestion{{background:#f8fafc;border-radius:16px;padding:24px;margin-bottom:16px;
+       border:1px solid #e2e8f0}}
 .sug-header{{display:flex;gap:16px;align-items:flex-start;margin-bottom:12px}}
 .sug-icon{{font-size:32px;flex-shrink:0}}
-.sug-title{{font-size:18px;font-weight:700;color:#f8fafc}}
-.sug-stat{{font-size:12px;color:#94a3b8;font-style:italic}}
-.sug-desc{{font-size:14px;color:#cbd5e1;margin-bottom:12px;line-height:1.65}}
-.sug-action{{background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);
-       border-radius:10px;padding:12px 16px;
-       font-size:14px;color:#6ee7b7;margin-bottom:10px;line-height:1.5}}
-.sug-impact{{font-size:13px;color:#10b981;font-weight:600}}
+.sug-title{{font-size:18px;font-weight:700;color:#1e293b}}
+.sug-stat{{font-size:12px;color:#64748b;font-style:italic}}
+.sug-desc{{font-size:14px;color:#475569;margin-bottom:12px;line-height:1.65}}
+.sug-action{{background:#e0e7ff;border-radius:10px;padding:12px 16px;
+       font-size:14px;color:#3730a3;margin-bottom:10px;line-height:1.5}}
+.sug-impact{{font-size:13px;color:#059669;font-weight:600}}
 
 /* ── Strategy grid ──────────────────────────────── */
 .strategy-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}}
-.strat-card{{border-radius:16px;padding:24px;background:rgba(22,30,46,0.75);
-       border:1px solid rgba(255,255,255,0.08)}}
-.strat-title{{font-size:16px;font-weight:700;color:#f8fafc;margin-bottom:10px}}
-.strat-body{{font-size:14px;color:#94a3b8;line-height:1.7}}
+.strat-card{{border-radius:16px;padding:24px;border:1px solid rgba(0,0,0,.06)}}
+.strat-title{{font-size:16px;font-weight:700;color:#1e293b;margin-bottom:10px}}
+.strat-body{{font-size:14px;color:#475569;line-height:1.7}}
 
 /* ── Footer ─────────────────────────────────────── */
-.footer{{background:rgba(6,78,59,0.5);border-top:1px solid rgba(16,185,129,0.15);
-     padding:28px 52px;display:flex;
+.footer{{background:#1e1b4b;padding:28px 52px;display:flex;
      justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}}
-.footer-brand{{color:#6ee7b7;font-size:13px;font-weight:600}}
+.footer-brand{{color:#a5b4fc;font-size:13px;font-weight:600}}
 .footer-ts{{color:#6366f1;font-size:12px}}
 
 /* ── Responsive ─────────────────────────────────── */
