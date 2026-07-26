@@ -38,7 +38,7 @@ def match_persona():
         if city_id:
             q = q.eq('city_id', city_id)
 
-        q = q.order('featured', desc=True).order('price_numeric', desc=False).limit(10)
+        q = q.order('featured', desc=True).order('price_numeric', desc=False).limit(100)
         db_res = q.execute()
         rows   = db_res.data or []
 
@@ -50,7 +50,7 @@ def match_persona():
                 .eq('city_id', city_id)
                 .eq('listing_purpose', listing_purpose)
                 .order('featured', desc=True)
-                .limit(5)
+                .limit(100)
                 .execute()
             )
             rows = fallback.data or []
@@ -62,7 +62,7 @@ def match_persona():
                 .select('id, title, city_id, listing_purpose, property_type, price_numeric, beds, baths, area_sqft, area_value, area_unit, address, featured')
                 .eq('listing_purpose', listing_purpose)
                 .order('featured', desc=True)
-                .limit(5)
+                .limit(100)
                 .execute()
             )
             rows = any_city.data or []

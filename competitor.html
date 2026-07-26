@@ -4,35 +4,61 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Competitor Intelligence Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
-    body { margin:0; background:#111; color:#eee; font-family:'Inter','Segoe UI',sans-serif; display:flex; flex-direction:column; height:100vh; }
+    * { box-sizing: border-box; margin:0; padding:0; font-family:'Plus Jakarta Sans','Inter',sans-serif; }
+    ::selection { background: rgba(16,185,129,0.35); color:#fff; }
+    ::-webkit-scrollbar       { width:10px; height:10px; }
+    ::-webkit-scrollbar-track  { background:#090d16; }
+    ::-webkit-scrollbar-thumb  { background:#253046; border-radius:8px; border:2px solid #090d16; }
+    ::-webkit-scrollbar-thumb:hover { background:#324066; }
+
+    body {
+      margin:0; display:flex; flex-direction:column; height:100vh;
+      background-color:#090d16;
+      background-image:
+        radial-gradient(circle at 15% 15%, rgba(16,185,129,0.12) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(56,189,248,0.10) 0%, transparent 40%);
+      color:#f8fafc;
+    }
 
     /* ── Top bar with button ────────────────────────────────────── */
-    .header { padding:0.8rem 1rem; background:linear-gradient(135deg,#1a1a2e,#16213e); display:flex; justify-content:center; align-items:center; gap:1rem; }
-    .header button {
-      background:linear-gradient(135deg,#0ea5e9,#6366f1); color:#fff; border:none; border-radius:8px;
-      padding:0.65rem 1.6rem; font-size:0.95rem; font-weight:700; cursor:pointer;
-      letter-spacing:0.3px; transition:transform .2s, box-shadow .2s;
+    .header {
+      padding:0.8rem 1rem;
+      background:rgba(22,30,46,0.75); backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      display:flex; justify-content:center; align-items:center; gap:1rem;
     }
-    .header button:hover { transform:scale(1.05); box-shadow:0 0 14px rgba(14,165,233,.45); }
+    .header button {
+      background:#10b981; color:#042f2e; border:none; border-radius:10px;
+      padding:0.65rem 1.6rem; font-size:0.95rem; font-weight:700; cursor:pointer;
+      letter-spacing:0.3px; transition:all .25s ease;
+    }
+    .header button:hover {
+      background:#34d399; box-shadow:0 0 20px rgba(16,185,129,0.4); transform:translateY(-2px);
+    }
     .header button:disabled { opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
 
     /* ── Progress panel (hidden by default) ─────────────────────── */
     #scrapeProgress {
-      display:none;                      /* JS toggles to "flex" */
+      display:none;
       flex-direction:column; align-items:center; gap:0.35rem;
-      padding:0.6rem 1rem; background:#1e293b; color:#94a3b8; font-size:0.85rem;
+      padding:0.6rem 1rem;
+      background:rgba(22,30,46,0.75); backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      color:#94a3b8; font-size:0.85rem;
     }
-    #scrapeProgress.visible { display:flex; }   /* class-based toggle */
-    #progressText { font-weight:600; color:#e2e8f0; }
-    .progress-track { background:#334155; height:6px; width:60%; min-width:280px; border-radius:3px; overflow:hidden; }
-    #progressFill  { background:linear-gradient(90deg,#0ea5e9,#6366f1); height:100%; width:0%; transition:width .4s ease; border-radius:3px; }
+    #scrapeProgress.visible { display:flex; }
+    #progressText { font-weight:600; color:#f8fafc; }
+    .progress-track { background:rgba(255,255,255,0.08); height:6px; width:60%; min-width:280px; border-radius:3px; overflow:hidden; }
+    #progressFill  { background:linear-gradient(90deg,#10b981,#38bdf8); height:100%; width:0%; transition:width .4s ease; border-radius:3px; }
 
     /* ── Log area (live lines from the engine) ──────────────────── */
     #logArea {
       display:none; max-height:120px; overflow-y:auto; margin:0 auto; width:60%; min-width:280px;
-      padding:0.4rem 0.6rem; background:#0f172a; border:1px solid #334155; border-radius:4px;
+      padding:0.4rem 0.6rem;
+      background:rgba(15,23,42,0.8); border:1px solid rgba(255,255,255,0.08); border-radius:8px;
       font-family:'Cascadia Code','Fira Code',monospace; font-size:0.72rem; color:#64748b; line-height:1.5;
     }
     #logArea.visible { display:block; }

@@ -1,124 +1,150 @@
-/* Luxury Real Estate Theme */
-:root {
-  --color-matte-black: #0D0D0D;
-  --color-charcoal: #1A1A1A;
-  --color-warm-brown: #5C3B2E;
-  --color-walnut: #7A5238;
-  --color-golden-beige: #D6B38A;
-  --color-soft-cream: #F5F1EB;
-  --color-white: #FFFFFF;
+/* ═══════════════════════════════════════════════════════════════════
+   Unified Theme — matches Persona page colour palette
+   ═══════════════════════════════════════════════════════════════════ */
 
-  --bg-primary: var(--color-matte-black);
-  --bg-card: rgba(30,30,30,0.85);
-  --text-primary: var(--color-white);
-  --text-muted: var(--color-soft-cream);
-  --accent-primary: var(--color-walnut);
-  --accent-secondary: var(--color-golden-beige);
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --bg-dark: #090d16;
+  --card-bg: rgba(22, 30, 46, 0.75);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --primary: #10b981;
+  --primary-glow: rgba(16, 185, 129, 0.3);
+  --secondary: #38bdf8;
+  --accent: #f59e0b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --radius: 16px;
 }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+::selection { background: rgba(16, 185, 129, 0.35); color: #fff; }
+
+::-webkit-scrollbar       { width: 10px; height: 10px; }
+::-webkit-scrollbar-track  { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb  { background: #253046; border-radius: 8px; border: 2px solid var(--bg-dark); }
+::-webkit-scrollbar-thumb:hover { background: #324066; }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-dark);
+  background-image:
+    radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.10) 0%, transparent 40%);
+  color: var(--text-main);
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  min-height: 100vh;
 }
 
-/* Glassmorphism Card */
+/* ── Glassmorphism Card ────────────────────────────────────────── */
 .property-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 16px;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+  animation: cardIn 0.5s cubic-bezier(0.16,1,0.3,1) both;
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .property-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+  transform: translateY(-5px);
+  border-color: rgba(16, 185, 129, 0.35);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(16, 185, 129, 0.12);
 }
 .property-card img {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
 }
 .property-card .content {
-  padding: 1rem;
+  padding: 1.25rem;
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 .property-card .title {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: var(--color-white);
-  margin-bottom: 0.25rem;
+  color: var(--text-main);
+  margin-bottom: 0.15rem;
 }
 .property-card .location {
-  font-size: 0.9rem;
-  color: var(--color-soft-cream);
-  margin-bottom: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
 }
 .property-card .price {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--accent-primary);
-  margin-bottom: 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 0.35rem;
 }
 .property-card .specs {
   font-size: 0.85rem;
-  color: var(--color-soft-cream);
-  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
 }
 .property-card .description {
-  font-size: 0.9rem;
-  color: var(--color-white);
-  margin-bottom: 0.75rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-bottom: 0.5rem;
 }
 .property-card .amenities {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.45rem;
   margin-bottom: 0.75rem;
 }
 .property-card .amenities span {
-  background: var(--accent-secondary);
-  color: var(--color-matte-black);
-  padding: 0.25rem 0.5rem;
-  border-radius: 8px;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--primary);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
   font-size: 0.75rem;
+  font-weight: 600;
 }
 .property-card .actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.6rem;
   margin-top: auto;
+  padding-top: 0.5rem;
 }
 .property-card .actions button {
   flex: 1;
-  padding: 0.5rem;
+  padding: 0.55rem;
   font-size: 0.85rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
+  font-weight: 700;
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  color: var(--text-main);
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .property-card .actions button:hover {
-  background: var(--accent-primary);
-  color: var(--color-white);
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #042f2e;
+  box-shadow: 0 0 16px var(--primary-glow);
 }
 
-/* Grid Layout */
+/* ── Grid Layout ───────────────────────────────────────────────── */
 #propertyShowcase {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
   gap: 1.5rem;
-  margin: 2rem 0;
+  padding: 1.5rem 2rem 2rem;
 }
 
-/* Fade-in animation */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.property-card {
-  animation: fadeInUp 0.6s ease both;
-}
