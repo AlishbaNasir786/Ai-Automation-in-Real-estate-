@@ -63,8 +63,25 @@
     }
     #logArea.visible { display:block; }
 
-    /* ── Report iframe ──────────────────────────────────────────── */
-    iframe { flex:1; border:none; width:100%; }
+    /* ── Report iframe & container ────────────────────────────── */
+    .report-container {
+      flex: 1;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      overflow: hidden;
+    }
+    iframe {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.7);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(16, 185, 129, 0.1);
+      backdrop-filter: blur(16px);
+    }
   </style>
 </head>
 <body>
@@ -81,8 +98,10 @@
   </div>
   <pre id="logArea"></pre>
 
-  <!-- Existing report — untouched -->
-  <iframe id="reportIframe" src="modules/data/competitor_report.html"></iframe>
+  <!-- Existing report with dark border framing -->
+  <div class="report-container">
+    <iframe id="reportIframe" src="modules/data/competitor_report.html"></iframe>
+  </div>
 
   <script src="/static/js/competitor_sse.js"></script>
 </body>
