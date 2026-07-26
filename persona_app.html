@@ -1175,8 +1175,9 @@
           `;
         });
 
-        // 4. Render Properties
-        document.getElementById('matchCount').innerText = `${properties.length} Property${properties.length > 1 ? 's' : ''} Matched`;
+        // 4. Render ALL matched properties from DB
+        console.log('API returned properties:', properties.length, properties);
+        document.getElementById('matchCount').innerText = `${properties.length} Properties Matched from Database`;
 
         const grid = document.getElementById('propertyGrid');
         grid.innerHTML = '';
