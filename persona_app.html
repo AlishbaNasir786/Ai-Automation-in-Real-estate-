@@ -1091,7 +1091,7 @@
             return;
         }
 
-        const topProp = data.property;
+        const properties = data.properties || [data.property];
         const waData = data.whatsapp;
 
         document.getElementById('wizardCard').style.display = 'none';
@@ -1175,48 +1175,49 @@
           `;
         });
 
-        // 4. Render Property
-        document.getElementById('matchCount').innerText = `1 Property Matched`;
+        // 4. Render Properties
+        document.getElementById('matchCount').innerText = `${properties.length} Property${properties.length > 1 ? 's' : ''} Matched`;
 
         const grid = document.getElementById('propertyGrid');
         grid.innerHTML = '';
         
-        const priceTxt = topProp.listing_mode === 'for_rent' || topProp.mode === 'for_rent' 
-          ? `PKR ${(topProp.price_numeric || 0).toLocaleString()} /mo` 
-          : `PKR ${formatPKR(topProp.price_numeric || 0)}`;
+        properties.forEach(topProp => {
+          const priceTxt = topProp.listing_mode === 'for_rent' || topProp.mode === 'for_rent' 
+            ? `PKR ${(topProp.price_numeric || 0).toLocaleString()} /mo` 
+            : `PKR ${formatPKR(topProp.price_numeric || 0)}`;
 
-        const agent = waData.agent || AGENTS[0];
+          const agent = waData.agent || AGENTS[0];
+          const bgUrl = topProp.property_images && topProp.property_images.length > 0 
+            ? topProp.property_images[0].url 
+            : '';
 
-        const bgUrl = topProp.property_images && topProp.property_images.length > 0 
-          ? topProp.property_images[0].url 
-          : '';
-
-        grid.innerHTML = `
-          <div class="prop-item">
-            <div class="prop-banner" style="${bgUrl ? `background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(15,23,42,0.9) 100%), url('${bgUrl}'); background-size: cover; background-position: center;` : ''}">
-              <div class="prop-tag">${topProp.listing_mode === 'for_rent' || topProp.mode === 'for_rent' ? 'FOR RENT' : 'FOR SALE'}</div>
-              <div class="prop-price">${priceTxt}</div>
-            </div>
-            <div class="prop-body">
-              <div class="prop-title">${topProp.title}</div>
-              <div class="prop-details">
-                <span>📍 ${topProp.city}</span>
-                <span>🛏️ ${topProp.beds} Bed</span>
-                <span>📐 ${topProp.area}</span>
+          grid.innerHTML += `
+            <div class="prop-item">
+              <div class="prop-banner" style="${bgUrl ? `background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(15,23,42,0.9) 100%), url('${bgUrl}'); background-size: cover; background-position: center;` : ''}">
+                <div class="prop-tag">${topProp.listing_mode === 'for_rent' || topProp.mode === 'for_rent' ? 'FOR RENT' : 'FOR SALE'}</div>
+                <div class="prop-price">${priceTxt}</div>
               </div>
-              <div class="agent-box">
-                <div class="agent-avatar">${agent.avatar || 'A'}</div>
-                <div>
-                  <div style="font-weight:700;">${agent.name}</div>
-                  <div style="font-size:0.75rem; color:var(--text-muted);">${agent.agency || 'Agent'}</div>
+              <div class="prop-body">
+                <div class="prop-title">${topProp.title}</div>
+                <div class="prop-details">
+                  <span>📍 ${topProp.city}</span>
+                  <span>🛏️ ${topProp.beds} Bed</span>
+                  <span>📐 ${topProp.area}</span>
+                </div>
+                <div class="agent-box">
+                  <div class="agent-avatar">${agent.avatar || 'A'}</div>
+                  <div>
+                    <div style="font-weight:700;">${agent.name}</div>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">${agent.agency || 'Agent'}</div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        `;
+          `;
+        });
 
         // 5. WhatsApp Message
-        window.activeAgentPhone = agent.phone || waData.recipient_phone || "+923005551234";
+        window.activeAgentPhone = waData.agent ? waData.agent.phone : (waData.recipient_phone || "+923005551234");
         document.getElementById('chipAgentPhone').innerText = window.activeAgentPhone;
         document.getElementById('waMessageText').innerText = waData.text;
 

@@ -1,6 +1,8 @@
 import os
+import json
 import subprocess
-from flask import Flask, jsonify, send_from_directory, Response
+from werkzeug.utils import secure_filename
+from flask import Flask, jsonify, send_from_directory, Response, request
 
 from routes.properties import properties_bp
 from routes.persona import persona_bp
@@ -82,6 +84,65 @@ def run_engine():
             'Connection': 'keep-alive',
         },
     )
+
+# ---------------------------------------------------------------------------
+# Image upload & retrieval
+# ---------------------------------------------------------------------------
+IMAGES_DIR   = os.path.join('static', 'images')
+IMAGES_MAP   = os.path.join('static', 'images', 'property_images.json')
+os.makedirs(IMAGES_DIR, exist_ok=True)
+
+ALLOWED_EXTS = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
+
+def _allowed(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTS
+
+def _load_map():
+    if os.path.exists(IMAGES_MAP):
+        with open(IMAGES_MAP) as f:
+            return json.load(f)
+    return {}
+
+def _save_map(m):
+    with open(IMAGES_MAP, 'w') as f:
+        json.dump(m, f, indent=2)
+
+@app.route('/api/property_images', methods=['GET'])
+def get_property_images():
+    """Return the property_id → image_url mapping."""
+    return jsonify(_load_map())
+
+@app.route('/api/upload_image', methods=['POST'])
+def upload_image():
+    """Upload an image for a specific property.
+    Form fields: property_id (string), file (image).
+    """
+    property_id = request.form.get('property_id', '').strip()
+    if not property_id:
+        return jsonify({'error': 'property_id required'}), 400
+
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+
+    f = request.files['file']
+    if f.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    if not _allowed(f.filename):
+        return jsonify({'error': 'File type not allowed'}), 400
+
+    ext      = f.filename.rsplit('.', 1)[1].lower()
+    filename = secure_filename(f'property_{property_id}.{ext}')
+    filepath = os.path.join(IMAGES_DIR, filename)
+    f.save(filepath)
+
+    url = f'/static/images/{filename}'
+    m   = _load_map()
+    m[property_id] = url
+    _save_map(m)
+
+    return jsonify({'url': url}), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000, threaded=True)
