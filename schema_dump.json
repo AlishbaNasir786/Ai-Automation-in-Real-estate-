@@ -1,0 +1,5644 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "title": "standard public schema",
+    "version": "14.5"
+  },
+  "host": "phbdkhcznxqyeajcbmyu.supabase.co:443",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json",
+    "application/vnd.pgrst.object+json;nulls=stripped",
+    "application/vnd.pgrst.object+json",
+    "text/csv"
+  ],
+  "produces": [
+    "application/json",
+    "application/vnd.pgrst.object+json;nulls=stripped",
+    "application/vnd.pgrst.object+json",
+    "text/csv"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "produces": [
+          "application/openapi+json",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "summary": "OpenAPI description (this document)",
+        "tags": [
+          "Introspection"
+        ]
+      }
+    },
+    "/agencies": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.agencies.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.logo_url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.email"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.website"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.address"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.description"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/agencies"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "agencies"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.agencies"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "agencies"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.agencies.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.logo_url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.email"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.website"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.address"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.description"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "agencies"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.agencies.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.logo_url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.email"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.website"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.address"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.description"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agencies.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.agencies"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "agencies"
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.users.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.email"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.full_name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.role"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.agent_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/users"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.users"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.users.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.email"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.full_name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.role"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.agent_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.users.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.email"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.full_name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.role"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.agent_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.users.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.users"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "users"
+        ]
+      }
+    },
+    "/marketing_reports": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.generated_at"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.period_start"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.period_end"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.metrics"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.ai_summary"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/marketing_reports"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "marketing_reports"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.marketing_reports"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "marketing_reports"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.generated_at"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.period_start"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.period_end"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.metrics"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.ai_summary"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "marketing_reports"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.generated_at"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.period_start"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.period_end"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.metrics"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.ai_summary"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.marketing_reports.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.marketing_reports"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "marketing_reports"
+        ]
+      }
+    },
+    "/property_images": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.property_images.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.thumbnail_url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.alt_text"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.is_primary"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.sort_order"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.width"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.height"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/property_images"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "property_images"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.property_images"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "property_images"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.property_images.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.thumbnail_url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.alt_text"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.is_primary"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.sort_order"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.width"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.height"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "property_images"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.property_images.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.thumbnail_url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.alt_text"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.is_primary"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.sort_order"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.width"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.height"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_images.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.property_images"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "property_images"
+        ]
+      }
+    },
+    "/saved_searches": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.user_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.filters"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.alert_enabled"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/saved_searches"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "saved_searches"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.saved_searches"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "saved_searches"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.user_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.filters"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.alert_enabled"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "saved_searches"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.user_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.filters"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.alert_enabled"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.saved_searches.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.saved_searches"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "saved_searches"
+        ]
+      }
+    },
+    "/property_price_history": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.old_price"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.new_price"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.changed_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/property_price_history"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "property_price_history"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.property_price_history"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "property_price_history"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.old_price"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.new_price"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.changed_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "property_price_history"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.old_price"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.new_price"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_price_history.changed_at"
+          },
+          {
+            "$ref": "#/parameters/body.property_price_history"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "property_price_history"
+        ]
+      }
+    },
+    "/ad_variants": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.persona_key"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.placement"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.platform"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.headline"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.body"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.cta_text"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.active"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/ad_variants"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "ad_variants"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.ad_variants"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "ad_variants"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.persona_key"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.placement"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.platform"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.headline"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.body"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.cta_text"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.active"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "ad_variants"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.persona_key"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.placement"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.platform"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.headline"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.body"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.cta_text"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.active"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.ad_variants.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.ad_variants"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "ad_variants"
+        ]
+      }
+    },
+    "/areas": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.areas.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.city_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.latitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.longitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/areas"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "areas"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.areas"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "areas"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.areas.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.city_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.latitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.longitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "areas"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.areas.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.city_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.latitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.longitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.areas.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.areas"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "areas"
+        ]
+      }
+    },
+    "/agents": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.agents.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.agency_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.title"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.whatsapp_number"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.email"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.photo_url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.bio"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.is_active"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/agents"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "agents"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.agents"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "agents"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.agents.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.agency_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.title"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.whatsapp_number"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.email"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.photo_url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.bio"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.is_active"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "agents"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.agents.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.agency_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.title"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.whatsapp_number"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.email"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.photo_url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.bio"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.is_active"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.agents.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.agents"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "agents"
+        ]
+      }
+    },
+    "/property_videos": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.video_type"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/property_videos"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "property_videos"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.property_videos"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "property_videos"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.video_type"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "property_videos"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.url"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.video_type"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_videos.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.property_videos"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "property_videos"
+        ]
+      }
+    },
+    "/reviews": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.reviews.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.agent_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.user_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.rating"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.comment"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/reviews"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "reviews"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.reviews"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "reviews"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.reviews.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.agent_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.user_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.rating"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.comment"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "reviews"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.reviews.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.agent_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.user_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.rating"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.comment"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.reviews.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.reviews"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "reviews"
+        ]
+      }
+    },
+    "/amenities": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.amenities.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.amenities.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.amenities.icon"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/amenities"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "amenities"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.amenities"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "amenities"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.amenities.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.amenities.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.amenities.icon"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "amenities"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.amenities.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.amenities.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.amenities.icon"
+          },
+          {
+            "$ref": "#/parameters/body.amenities"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "amenities"
+        ]
+      }
+    },
+    "/cities": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.cities.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.province"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.latitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.longitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.is_active"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/cities"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "cities"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.cities"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "cities"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.cities.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.province"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.latitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.longitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.is_active"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "cities"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.cities.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.province"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.latitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.longitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.is_active"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.cities.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.cities"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "cities"
+        ]
+      }
+    },
+    "/properties": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.properties.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.title"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.description"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.property_category"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.property_type"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.listing_purpose"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.status"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.price_numeric"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.price_per_sqft"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.currency"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.beds"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.baths"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.area_value"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.area_unit"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.area_sqft"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.city_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.area_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.address"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.latitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.longitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.agent_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.featured"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.views_count"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.search_vector"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.published_at"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.created_at"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.updated_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/properties"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "properties"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.properties"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "properties"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.properties.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.title"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.description"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.property_category"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.property_type"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.listing_purpose"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.status"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.price_numeric"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.price_per_sqft"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.currency"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.beds"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.baths"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.area_value"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.area_unit"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.area_sqft"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.city_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.area_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.address"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.latitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.longitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.agent_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.featured"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.views_count"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.search_vector"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.published_at"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.created_at"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.updated_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "properties"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.properties.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.slug"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.title"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.description"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.property_category"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.property_type"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.listing_purpose"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.status"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.price_numeric"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.price_per_sqft"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.currency"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.beds"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.baths"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.area_value"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.area_unit"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.area_sqft"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.city_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.area_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.address"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.latitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.longitude"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.agent_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.featured"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.views_count"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.search_vector"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.published_at"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.created_at"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.properties.updated_at"
+          },
+          {
+            "$ref": "#/parameters/body.properties"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "properties"
+        ]
+      }
+    },
+    "/personalization_events": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.session_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.persona_key"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.variant_shown"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.page"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.converted"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/personalization_events"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "personalization_events"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.personalization_events"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "personalization_events"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.session_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.persona_key"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.variant_shown"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.page"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.converted"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "personalization_events"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.session_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.persona_key"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.variant_shown"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.page"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.converted"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.personalization_events.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.personalization_events"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "personalization_events"
+        ]
+      }
+    },
+    "/inquiries": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.user_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.email"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.message"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.status"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/inquiries"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "inquiries"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.inquiries"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "inquiries"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.user_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.email"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.message"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.status"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "inquiries"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.user_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.name"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.email"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.message"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.status"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.inquiries.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.inquiries"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "inquiries"
+        ]
+      }
+    },
+    "/leads": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.leads.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.persona_key"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.purpose"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.city_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.budget_key"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.matched_property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.contacted"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/leads"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "leads"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.leads"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "leads"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.leads.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.persona_key"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.purpose"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.city_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.budget_key"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.matched_property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.contacted"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "leads"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.leads.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.persona_key"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.purpose"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.city_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.budget_key"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.phone"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.matched_property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.contacted"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.leads.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.leads"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "leads"
+        ]
+      }
+    },
+    "/property_amenities": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.property_amenities.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_amenities.amenity_id"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/property_amenities"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "property_amenities"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.property_amenities"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "property_amenities"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.property_amenities.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_amenities.amenity_id"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "property_amenities"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.property_amenities.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.property_amenities.amenity_id"
+          },
+          {
+            "$ref": "#/parameters/body.property_amenities"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "property_amenities"
+        ]
+      }
+    },
+    "/favorites": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.favorites.user_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.favorites.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.favorites.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/favorites"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "favorites"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.favorites"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "favorites"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.favorites.user_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.favorites.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.favorites.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "favorites"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.favorites.user_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.favorites.property_id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.favorites.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.favorites"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "favorites"
+        ]
+      }
+    },
+    "/competitor_snapshots": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.generated_at"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.total_listings"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.overall_avg_price"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.report_data"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.created_at"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/order"
+          },
+          {
+            "$ref": "#/parameters/range"
+          },
+          {
+            "$ref": "#/parameters/rangeUnit"
+          },
+          {
+            "$ref": "#/parameters/offset"
+          },
+          {
+            "$ref": "#/parameters/limit"
+          },
+          {
+            "$ref": "#/parameters/preferCount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/competitor_snapshots"
+              },
+              "type": "array"
+            }
+          },
+          "206": {
+            "description": "Partial Content"
+          }
+        },
+        "tags": [
+          "competitor_snapshots"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/body.competitor_snapshots"
+          },
+          {
+            "$ref": "#/parameters/select"
+          },
+          {
+            "$ref": "#/parameters/preferPost"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "tags": [
+          "competitor_snapshots"
+        ]
+      },
+      "delete": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.generated_at"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.total_listings"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.overall_avg_price"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.report_data"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.created_at"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "competitor_snapshots"
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.id"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.generated_at"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.total_listings"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.overall_avg_price"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.report_data"
+          },
+          {
+            "$ref": "#/parameters/rowFilter.competitor_snapshots.created_at"
+          },
+          {
+            "$ref": "#/parameters/body.competitor_snapshots"
+          },
+          {
+            "$ref": "#/parameters/preferReturn"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "competitor_snapshots"
+        ]
+      }
+    },
+    "/rpc/show_trgm": {
+      "get": {
+        "parameters": [
+          {
+            "format": "text",
+            "in": "query",
+            "name": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "(rpc) show_trgm"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "args",
+            "required": true,
+            "schema": {
+              "properties": {
+                "": {
+                  "format": "text",
+                  "type": "string"
+                }
+              },
+              "required": [
+                ""
+              ],
+              "type": "object"
+            }
+          },
+          {
+            "$ref": "#/parameters/preferParams"
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "(rpc) show_trgm"
+        ]
+      }
+    },
+    "/rpc/show_limit": {
+      "get": {
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "(rpc) show_limit"
+        ]
+      },
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "args",
+            "required": true,
+            "schema": {
+              "type": "object"
+            }
+          },
+          {
+            "$ref": "#/parameters/preferParams"
+          }
+        ],
+        "produces": [
+          "application/json",
+          "application/vnd.pgrst.object+json;nulls=stripped",
+          "application/vnd.pgrst.object+json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "tags": [
+          "(rpc) show_limit"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "agencies": {
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "name": {
+          "format": "text",
+          "type": "string"
+        },
+        "logo_url": {
+          "format": "text",
+          "type": "string"
+        },
+        "phone": {
+          "format": "text",
+          "type": "string"
+        },
+        "email": {
+          "format": "text",
+          "type": "string"
+        },
+        "website": {
+          "format": "text",
+          "type": "string"
+        },
+        "address": {
+          "format": "text",
+          "type": "string"
+        },
+        "description": {
+          "format": "text",
+          "type": "string"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "users": {
+      "required": [
+        "id",
+        "role"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "email": {
+          "format": "text",
+          "type": "string"
+        },
+        "phone": {
+          "format": "text",
+          "type": "string"
+        },
+        "full_name": {
+          "format": "text",
+          "type": "string"
+        },
+        "role": {
+          "default": "buyer",
+          "format": "text",
+          "type": "string"
+        },
+        "agent_id": {
+          "description": "Note:\nThis is a Foreign Key to `agents.id`.<fk table='agents' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "marketing_reports": {
+      "required": [
+        "id",
+        "generated_at"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "generated_at": {
+          "format": "timestamp with time zone",
+          "type": "string"
+        },
+        "period_start": {
+          "format": "date",
+          "type": "string"
+        },
+        "period_end": {
+          "format": "date",
+          "type": "string"
+        },
+        "metrics": {
+          "format": "jsonb"
+        },
+        "ai_summary": {
+          "format": "text",
+          "type": "string"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "property_images": {
+      "required": [
+        "id",
+        "property_id",
+        "url"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "property_id": {
+          "description": "Note:\nThis is a Foreign Key to `properties.id`.<fk table='properties' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "url": {
+          "format": "text",
+          "type": "string"
+        },
+        "thumbnail_url": {
+          "format": "text",
+          "type": "string"
+        },
+        "alt_text": {
+          "format": "text",
+          "type": "string"
+        },
+        "is_primary": {
+          "default": false,
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "sort_order": {
+          "default": 0,
+          "format": "integer",
+          "type": "integer"
+        },
+        "width": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "height": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "saved_searches": {
+      "required": [
+        "id",
+        "user_id",
+        "filters"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "user_id": {
+          "description": "Note:\nThis is a Foreign Key to `users.id`.<fk table='users' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "filters": {
+          "format": "jsonb"
+        },
+        "alert_enabled": {
+          "default": true,
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "property_price_history": {
+      "required": [
+        "id",
+        "property_id",
+        "new_price"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "property_id": {
+          "description": "Note:\nThis is a Foreign Key to `properties.id`.<fk table='properties' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "old_price": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "new_price": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "changed_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ad_variants": {
+      "required": [
+        "id",
+        "persona_key",
+        "placement"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "persona_key": {
+          "format": "text",
+          "type": "string"
+        },
+        "placement": {
+          "format": "text",
+          "type": "string"
+        },
+        "platform": {
+          "format": "text",
+          "type": "string"
+        },
+        "headline": {
+          "format": "text",
+          "type": "string"
+        },
+        "body": {
+          "format": "text",
+          "type": "string"
+        },
+        "cta_text": {
+          "format": "text",
+          "type": "string"
+        },
+        "active": {
+          "default": true,
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "areas": {
+      "required": [
+        "id",
+        "city_id",
+        "name",
+        "slug"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "city_id": {
+          "description": "Note:\nThis is a Foreign Key to `cities.id`.<fk table='cities' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "name": {
+          "format": "text",
+          "type": "string"
+        },
+        "slug": {
+          "format": "text",
+          "type": "string"
+        },
+        "latitude": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "longitude": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "agents": {
+      "required": [
+        "id",
+        "name",
+        "phone"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "agency_id": {
+          "description": "Note:\nThis is a Foreign Key to `agencies.id`.<fk table='agencies' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "name": {
+          "format": "text",
+          "type": "string"
+        },
+        "title": {
+          "format": "text",
+          "type": "string"
+        },
+        "phone": {
+          "format": "text",
+          "type": "string"
+        },
+        "whatsapp_number": {
+          "format": "text",
+          "type": "string"
+        },
+        "email": {
+          "format": "text",
+          "type": "string"
+        },
+        "photo_url": {
+          "format": "text",
+          "type": "string"
+        },
+        "bio": {
+          "format": "text",
+          "type": "string"
+        },
+        "is_active": {
+          "default": true,
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "property_videos": {
+      "required": [
+        "id",
+        "property_id",
+        "url"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "property_id": {
+          "description": "Note:\nThis is a Foreign Key to `properties.id`.<fk table='properties' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "url": {
+          "format": "text",
+          "type": "string"
+        },
+        "video_type": {
+          "default": "youtube",
+          "format": "text",
+          "type": "string"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "reviews": {
+      "required": [
+        "id",
+        "rating"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "agent_id": {
+          "description": "Note:\nThis is a Foreign Key to `agents.id`.<fk table='agents' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "user_id": {
+          "description": "Note:\nThis is a Foreign Key to `users.id`.<fk table='users' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "rating": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "comment": {
+          "format": "text",
+          "type": "string"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "amenities": {
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "name": {
+          "format": "text",
+          "type": "string"
+        },
+        "icon": {
+          "format": "text",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "cities": {
+      "required": [
+        "id",
+        "name",
+        "slug"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "name": {
+          "format": "text",
+          "type": "string"
+        },
+        "slug": {
+          "format": "text",
+          "type": "string"
+        },
+        "province": {
+          "format": "text",
+          "type": "string"
+        },
+        "latitude": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "longitude": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "is_active": {
+          "default": true,
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "properties": {
+      "required": [
+        "id",
+        "slug",
+        "title",
+        "property_category",
+        "listing_purpose",
+        "status",
+        "price_numeric",
+        "currency",
+        "city_id"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "slug": {
+          "format": "text",
+          "type": "string"
+        },
+        "title": {
+          "format": "text",
+          "type": "string"
+        },
+        "description": {
+          "format": "text",
+          "type": "string"
+        },
+        "property_category": {
+          "format": "text",
+          "type": "string"
+        },
+        "property_type": {
+          "format": "text",
+          "type": "string"
+        },
+        "listing_purpose": {
+          "format": "text",
+          "type": "string"
+        },
+        "status": {
+          "default": "active",
+          "format": "text",
+          "type": "string"
+        },
+        "price_numeric": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "price_per_sqft": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "currency": {
+          "default": "PKR",
+          "format": "text",
+          "type": "string"
+        },
+        "beds": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "baths": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "area_value": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "area_unit": {
+          "default": "Marla",
+          "format": "text",
+          "type": "string"
+        },
+        "area_sqft": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "city_id": {
+          "description": "Note:\nThis is a Foreign Key to `cities.id`.<fk table='cities' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "area_id": {
+          "description": "Note:\nThis is a Foreign Key to `areas.id`.<fk table='areas' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "address": {
+          "format": "text",
+          "type": "string"
+        },
+        "latitude": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "longitude": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "agent_id": {
+          "description": "Note:\nThis is a Foreign Key to `agents.id`.<fk table='agents' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "featured": {
+          "default": false,
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "views_count": {
+          "default": 0,
+          "format": "integer",
+          "type": "integer"
+        },
+        "search_vector": {
+          "format": "tsvector",
+          "type": "string"
+        },
+        "published_at": {
+          "format": "timestamp with time zone",
+          "type": "string"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        },
+        "updated_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "personalization_events": {
+      "required": [
+        "id",
+        "session_id"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "session_id": {
+          "format": "text",
+          "type": "string"
+        },
+        "persona_key": {
+          "format": "text",
+          "type": "string"
+        },
+        "variant_shown": {
+          "format": "text",
+          "type": "string"
+        },
+        "page": {
+          "format": "text",
+          "type": "string"
+        },
+        "converted": {
+          "default": false,
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "inquiries": {
+      "required": [
+        "id",
+        "name",
+        "phone"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "property_id": {
+          "description": "Note:\nThis is a Foreign Key to `properties.id`.<fk table='properties' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "user_id": {
+          "description": "Note:\nThis is a Foreign Key to `users.id`.<fk table='users' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "name": {
+          "format": "text",
+          "type": "string"
+        },
+        "phone": {
+          "format": "text",
+          "type": "string"
+        },
+        "email": {
+          "format": "text",
+          "type": "string"
+        },
+        "message": {
+          "format": "text",
+          "type": "string"
+        },
+        "status": {
+          "default": "new",
+          "format": "text",
+          "type": "string"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "leads": {
+      "required": [
+        "id",
+        "persona_key",
+        "purpose",
+        "phone"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "persona_key": {
+          "format": "text",
+          "type": "string"
+        },
+        "purpose": {
+          "format": "text",
+          "type": "string"
+        },
+        "city_id": {
+          "description": "Note:\nThis is a Foreign Key to `cities.id`.<fk table='cities' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "budget_key": {
+          "format": "text",
+          "type": "string"
+        },
+        "phone": {
+          "format": "text",
+          "type": "string"
+        },
+        "matched_property_id": {
+          "description": "Note:\nThis is a Foreign Key to `properties.id`.<fk table='properties' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "contacted": {
+          "default": false,
+          "format": "boolean",
+          "type": "boolean"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "property_amenities": {
+      "required": [
+        "property_id",
+        "amenity_id"
+      ],
+      "properties": {
+        "property_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>\nThis is a Foreign Key to `properties.id`.<fk table='properties' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "amenity_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>\nThis is a Foreign Key to `amenities.id`.<fk table='amenities' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "favorites": {
+      "required": [
+        "user_id",
+        "property_id"
+      ],
+      "properties": {
+        "user_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>\nThis is a Foreign Key to `users.id`.<fk table='users' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "property_id": {
+          "description": "Note:\nThis is a Primary Key.<pk/>\nThis is a Foreign Key to `properties.id`.<fk table='properties' column='id'/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "competitor_snapshots": {
+      "required": [
+        "id",
+        "generated_at"
+      ],
+      "properties": {
+        "id": {
+          "default": "gen_random_uuid()",
+          "description": "Note:\nThis is a Primary Key.<pk/>",
+          "format": "uuid",
+          "type": "string"
+        },
+        "generated_at": {
+          "format": "timestamp with time zone",
+          "type": "string"
+        },
+        "total_listings": {
+          "format": "integer",
+          "type": "integer"
+        },
+        "overall_avg_price": {
+          "format": "numeric",
+          "type": "number"
+        },
+        "report_data": {
+          "format": "jsonb"
+        },
+        "created_at": {
+          "default": "now()",
+          "format": "timestamp with time zone",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "parameters": {
+    "preferParams": {
+      "name": "Prefer",
+      "description": "Preference",
+      "required": false,
+      "in": "header",
+      "type": "string"
+    },
+    "preferReturn": {
+      "name": "Prefer",
+      "description": "Preference",
+      "required": false,
+      "enum": [
+        "return=representation",
+        "return=minimal",
+        "return=none"
+      ],
+      "in": "header",
+      "type": "string"
+    },
+    "preferCount": {
+      "name": "Prefer",
+      "description": "Preference",
+      "required": false,
+      "enum": [
+        "count=none"
+      ],
+      "in": "header",
+      "type": "string"
+    },
+    "preferPost": {
+      "name": "Prefer",
+      "description": "Preference",
+      "required": false,
+      "enum": [
+        "return=representation",
+        "return=minimal",
+        "return=none",
+        "resolution=ignore-duplicates",
+        "resolution=merge-duplicates"
+      ],
+      "in": "header",
+      "type": "string"
+    },
+    "select": {
+      "name": "select",
+      "description": "Filtering Columns",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "on_conflict": {
+      "name": "on_conflict",
+      "description": "On Conflict",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "order": {
+      "name": "order",
+      "description": "Ordering",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "range": {
+      "name": "Range",
+      "description": "Limiting and Pagination",
+      "required": false,
+      "in": "header",
+      "type": "string"
+    },
+    "rangeUnit": {
+      "name": "Range-Unit",
+      "description": "Limiting and Pagination",
+      "required": false,
+      "default": "items",
+      "in": "header",
+      "type": "string"
+    },
+    "offset": {
+      "name": "offset",
+      "description": "Limiting and Pagination",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "limit": {
+      "name": "limit",
+      "description": "Limiting and Pagination",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.agencies": {
+      "name": "agencies",
+      "description": "agencies",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/agencies"
+      }
+    },
+    "rowFilter.agencies.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agencies.name": {
+      "name": "name",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agencies.logo_url": {
+      "name": "logo_url",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agencies.phone": {
+      "name": "phone",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agencies.email": {
+      "name": "email",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agencies.website": {
+      "name": "website",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agencies.address": {
+      "name": "address",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agencies.description": {
+      "name": "description",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agencies.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.users": {
+      "name": "users",
+      "description": "users",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/users"
+      }
+    },
+    "rowFilter.users.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.users.email": {
+      "name": "email",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.users.phone": {
+      "name": "phone",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.users.full_name": {
+      "name": "full_name",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.users.role": {
+      "name": "role",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.users.agent_id": {
+      "name": "agent_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.users.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.marketing_reports": {
+      "name": "marketing_reports",
+      "description": "marketing_reports",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/marketing_reports"
+      }
+    },
+    "rowFilter.marketing_reports.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.marketing_reports.generated_at": {
+      "name": "generated_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.marketing_reports.period_start": {
+      "name": "period_start",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.marketing_reports.period_end": {
+      "name": "period_end",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.marketing_reports.metrics": {
+      "name": "metrics",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.marketing_reports.ai_summary": {
+      "name": "ai_summary",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.marketing_reports.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.property_images": {
+      "name": "property_images",
+      "description": "property_images",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/property_images"
+      }
+    },
+    "rowFilter.property_images.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_images.property_id": {
+      "name": "property_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_images.url": {
+      "name": "url",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_images.thumbnail_url": {
+      "name": "thumbnail_url",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_images.alt_text": {
+      "name": "alt_text",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_images.is_primary": {
+      "name": "is_primary",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_images.sort_order": {
+      "name": "sort_order",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_images.width": {
+      "name": "width",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_images.height": {
+      "name": "height",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_images.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.saved_searches": {
+      "name": "saved_searches",
+      "description": "saved_searches",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/saved_searches"
+      }
+    },
+    "rowFilter.saved_searches.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.saved_searches.user_id": {
+      "name": "user_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.saved_searches.filters": {
+      "name": "filters",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.saved_searches.alert_enabled": {
+      "name": "alert_enabled",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.saved_searches.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.property_price_history": {
+      "name": "property_price_history",
+      "description": "property_price_history",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/property_price_history"
+      }
+    },
+    "rowFilter.property_price_history.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_price_history.property_id": {
+      "name": "property_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_price_history.old_price": {
+      "name": "old_price",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_price_history.new_price": {
+      "name": "new_price",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_price_history.changed_at": {
+      "name": "changed_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.ad_variants": {
+      "name": "ad_variants",
+      "description": "ad_variants",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/ad_variants"
+      }
+    },
+    "rowFilter.ad_variants.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.ad_variants.persona_key": {
+      "name": "persona_key",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.ad_variants.placement": {
+      "name": "placement",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.ad_variants.platform": {
+      "name": "platform",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.ad_variants.headline": {
+      "name": "headline",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.ad_variants.body": {
+      "name": "body",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.ad_variants.cta_text": {
+      "name": "cta_text",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.ad_variants.active": {
+      "name": "active",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.ad_variants.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.areas": {
+      "name": "areas",
+      "description": "areas",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/areas"
+      }
+    },
+    "rowFilter.areas.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.areas.city_id": {
+      "name": "city_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.areas.name": {
+      "name": "name",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.areas.slug": {
+      "name": "slug",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.areas.latitude": {
+      "name": "latitude",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.areas.longitude": {
+      "name": "longitude",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.areas.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.agents": {
+      "name": "agents",
+      "description": "agents",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/agents"
+      }
+    },
+    "rowFilter.agents.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agents.agency_id": {
+      "name": "agency_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agents.name": {
+      "name": "name",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agents.title": {
+      "name": "title",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agents.phone": {
+      "name": "phone",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agents.whatsapp_number": {
+      "name": "whatsapp_number",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agents.email": {
+      "name": "email",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agents.photo_url": {
+      "name": "photo_url",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agents.bio": {
+      "name": "bio",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agents.is_active": {
+      "name": "is_active",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.agents.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.property_videos": {
+      "name": "property_videos",
+      "description": "property_videos",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/property_videos"
+      }
+    },
+    "rowFilter.property_videos.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_videos.property_id": {
+      "name": "property_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_videos.url": {
+      "name": "url",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_videos.video_type": {
+      "name": "video_type",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_videos.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.reviews": {
+      "name": "reviews",
+      "description": "reviews",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/reviews"
+      }
+    },
+    "rowFilter.reviews.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.reviews.agent_id": {
+      "name": "agent_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.reviews.user_id": {
+      "name": "user_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.reviews.rating": {
+      "name": "rating",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.reviews.comment": {
+      "name": "comment",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.reviews.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.amenities": {
+      "name": "amenities",
+      "description": "amenities",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/amenities"
+      }
+    },
+    "rowFilter.amenities.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.amenities.name": {
+      "name": "name",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.amenities.icon": {
+      "name": "icon",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.cities": {
+      "name": "cities",
+      "description": "cities",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/cities"
+      }
+    },
+    "rowFilter.cities.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.cities.name": {
+      "name": "name",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.cities.slug": {
+      "name": "slug",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.cities.province": {
+      "name": "province",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.cities.latitude": {
+      "name": "latitude",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.cities.longitude": {
+      "name": "longitude",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.cities.is_active": {
+      "name": "is_active",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.cities.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.properties": {
+      "name": "properties",
+      "description": "properties",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/properties"
+      }
+    },
+    "rowFilter.properties.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.slug": {
+      "name": "slug",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.title": {
+      "name": "title",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.description": {
+      "name": "description",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.property_category": {
+      "name": "property_category",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.property_type": {
+      "name": "property_type",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.listing_purpose": {
+      "name": "listing_purpose",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.status": {
+      "name": "status",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.price_numeric": {
+      "name": "price_numeric",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.price_per_sqft": {
+      "name": "price_per_sqft",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.currency": {
+      "name": "currency",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.beds": {
+      "name": "beds",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.baths": {
+      "name": "baths",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.area_value": {
+      "name": "area_value",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.area_unit": {
+      "name": "area_unit",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.area_sqft": {
+      "name": "area_sqft",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.city_id": {
+      "name": "city_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.area_id": {
+      "name": "area_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.address": {
+      "name": "address",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.latitude": {
+      "name": "latitude",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.longitude": {
+      "name": "longitude",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.agent_id": {
+      "name": "agent_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.featured": {
+      "name": "featured",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.views_count": {
+      "name": "views_count",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.search_vector": {
+      "name": "search_vector",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.published_at": {
+      "name": "published_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.properties.updated_at": {
+      "name": "updated_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.personalization_events": {
+      "name": "personalization_events",
+      "description": "personalization_events",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/personalization_events"
+      }
+    },
+    "rowFilter.personalization_events.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.personalization_events.session_id": {
+      "name": "session_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.personalization_events.persona_key": {
+      "name": "persona_key",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.personalization_events.variant_shown": {
+      "name": "variant_shown",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.personalization_events.page": {
+      "name": "page",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.personalization_events.converted": {
+      "name": "converted",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.personalization_events.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.inquiries": {
+      "name": "inquiries",
+      "description": "inquiries",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/inquiries"
+      }
+    },
+    "rowFilter.inquiries.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.inquiries.property_id": {
+      "name": "property_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.inquiries.user_id": {
+      "name": "user_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.inquiries.name": {
+      "name": "name",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.inquiries.phone": {
+      "name": "phone",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.inquiries.email": {
+      "name": "email",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.inquiries.message": {
+      "name": "message",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.inquiries.status": {
+      "name": "status",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.inquiries.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.leads": {
+      "name": "leads",
+      "description": "leads",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/leads"
+      }
+    },
+    "rowFilter.leads.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.leads.persona_key": {
+      "name": "persona_key",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.leads.purpose": {
+      "name": "purpose",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.leads.city_id": {
+      "name": "city_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.leads.budget_key": {
+      "name": "budget_key",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.leads.phone": {
+      "name": "phone",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.leads.matched_property_id": {
+      "name": "matched_property_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.leads.contacted": {
+      "name": "contacted",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.leads.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.property_amenities": {
+      "name": "property_amenities",
+      "description": "property_amenities",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/property_amenities"
+      }
+    },
+    "rowFilter.property_amenities.property_id": {
+      "name": "property_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.property_amenities.amenity_id": {
+      "name": "amenity_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.favorites": {
+      "name": "favorites",
+      "description": "favorites",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/favorites"
+      }
+    },
+    "rowFilter.favorites.user_id": {
+      "name": "user_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.favorites.property_id": {
+      "name": "property_id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.favorites.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "body.competitor_snapshots": {
+      "name": "competitor_snapshots",
+      "description": "competitor_snapshots",
+      "required": false,
+      "in": "body",
+      "schema": {
+        "$ref": "#/definitions/competitor_snapshots"
+      }
+    },
+    "rowFilter.competitor_snapshots.id": {
+      "name": "id",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.competitor_snapshots.generated_at": {
+      "name": "generated_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.competitor_snapshots.total_listings": {
+      "name": "total_listings",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.competitor_snapshots.overall_avg_price": {
+      "name": "overall_avg_price",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.competitor_snapshots.report_data": {
+      "name": "report_data",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    },
+    "rowFilter.competitor_snapshots.created_at": {
+      "name": "created_at",
+      "required": false,
+      "in": "query",
+      "type": "string"
+    }
+  },
+  "externalDocs": {
+    "description": "PostgREST Documentation",
+    "url": "https://postgrest.org/en/v14/references/api.html"
+  }
+}

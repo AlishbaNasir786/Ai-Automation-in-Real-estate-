@@ -3,33 +3,92 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Real‑Estate AI – Home</title>
+  <title>RealEstate AI — Premium Islamabad Property Intelligence</title>
   <link rel="stylesheet" href="/static/css/luxury_theme.css" />
   <style>
     .top-nav {
-      display:flex; justify-content:center; gap:1rem; padding:1.2rem 1rem;
-      background: rgba(22, 30, 46, 0.75); backdrop-filter:blur(16px);
-      border-bottom:1px solid rgba(255,255,255,0.08);
+      display: flex; justify-content: center; align-items: center; gap: 1rem; padding: 1rem 1.5rem;
+      background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08); position: sticky; top: 0; z-index: 1000;
     }
     .top-nav a {
-      background:rgba(16, 185, 129, 0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3);
-      padding:0.6rem 1.3rem; border-radius:30px; text-decoration:none;
-      font-weight:700; font-size:0.9rem; transition:all .25s ease;
+      background: rgba(16, 185, 129, 0.12); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 0.5rem 1.1rem; border-radius: 30px; text-decoration: none;
+      font-weight: 700; font-size: 0.85rem; transition: all 0.25s ease;
     }
     .top-nav a:hover {
-      background:#10b981; color:#042f2e;
-      box-shadow:0 0 18px rgba(16,185,129,0.35); transform:translateY(-2px);
+      background: #10b981; color: #042f2e;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.4); transform: translateY(-1px);
     }
   </style>
 </head>
 <body>
+
+  <!-- Top Navigation Bar -->
   <nav class="top-nav">
     <a href="/persona_app.html">🤖 Persona &amp; WhatsApp</a>
-    <a href="/competitor">📊 Competitor Engine</a>
-    <a href="/competitor">📈 Marketing Reports</a>
+    <a href="/competitor" data-admin-only>📊 Competitor Engine</a>
+    <a href="/marketing_report" data-admin-only>📈 Marketing Reports</a>
     <a href="/">🏠 Home (Listings)</a>
   </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-badge">🏛️ Premier Real Estate Portal · Islamabad</div>
+    <h1 class="hero-title">Find Your Dream Property in Islamabad</h1>
+    <p class="hero-sub">AI-Powered Hyper-Personalized Listings, 100% NOC Clearance &amp; Direct Seller Intelligence</p>
+    
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-num">100%</div>
+        <div class="hero-lbl">Islamabad Verified</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-num">9.5%+</div>
+        <div class="hero-lbl">Avg Rental Yield</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-num">2,400+</div>
+        <div class="hero-lbl">Active Buyers</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Professional Filter Bar -->
+  <div class="filter-bar">
+    <input type="text" id="filterKeyword" placeholder="🔍 Search sector, title or keyword..." oninput="applyPropertyFilters()" />
+    <select id="filterType" onchange="applyPropertyFilters()">
+      <option value="">All Property Types</option>
+      <option value="Residential Villa">Residential Villa</option>
+      <option value="Apartment / Flat">Apartment / Flat</option>
+      <option value="Residential Plot">Residential Plot</option>
+      <option value="Commercial Office">Commercial Office</option>
+    </select>
+    <select id="filterSector" onchange="applyPropertyFilters()">
+      <option value="">All Islamabad Sectors</option>
+      <option value="DHA">DHA Phase 2</option>
+      <option value="F-7">Sector F-7</option>
+      <option value="F-11">Sector F-11</option>
+      <option value="E-11">Sector E-11</option>
+      <option value="G-10">Sector G-10</option>
+      <option value="B-17">Sector B-17</option>
+    </select>
+    <select id="filterPrice" onchange="applyPropertyFilters()">
+      <option value="">Any Price Range</option>
+      <option value="100">Under 1 Crore</option>
+      <option value="300">Under 3 Crore</option>
+      <option value="500">Under 5 Crore</option>
+      <option value="500+">5+ Crore Luxury</option>
+    </select>
+    <button class="filter-btn" onclick="resetPropertyFilters()">Reset</button>
+  </div>
+
+  <div class="filter-results-count" id="filterCount">Showing <span id="visibleCount">0</span> Islamabad listings</div>
+
+  <!-- Property Showcase Grid -->
   <section id="propertyShowcase" class="property-showcase"></section>
+
   <script src="/static/js/home_properties.js"></script>
+  <script src="/static/js/user_auth_banner.js"></script>
 </body>
 </html>

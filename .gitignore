@@ -18,3 +18,9 @@ data/*.html
 # Operating system files
 .DS_Store
 Thumbs.db
+
+# Local database & temp test files
+users_store.db
+_test_marketing.py
+test_api_res.json
+

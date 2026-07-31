@@ -7,16 +7,16 @@ deep analytics and listing-level enrichment.
 import sys
 import io
 
-# Force UTF-8 output so emoji print correctly on Windows
-# line_buffering=True ensures every print() flushes immediately (required for SSE streaming)
+# Force UTF-8 output so emoji print correctly on Windows.
+# line_buffering=True ensures every print() is flushed immediately,
+# which is required for the SSE progress bar to update in real time.
 if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace", line_buffering=True)
 else:
-    sys.stdout.reconfigure(line_buffering=True)
+    # Already UTF-8 but may still be block-buffered (e.g. when piped) — force line buffering
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace", line_buffering=True)
 if sys.stderr.encoding and sys.stderr.encoding.lower() != "utf-8":
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace", line_buffering=True)
-else:
-    sys.stderr.reconfigure(line_buffering=True)
 
 import requests
 from datetime import datetime
@@ -72,14 +72,12 @@ def clean_price(price_text: str):
     if not price_text:
         return None
     cleaned = re.sub(r"PKR\s*", "", str(price_text)).strip()
-    match = re.search(r"([\d,]+(?:\.\d+)?)\s*(Thousand|Lakh|Crore|Arab)?", cleaned, re.I)
+    match = re.search(r"([\d,]+(?:\.\d+)?)\s*(Lakh|Crore|Arab)?", cleaned, re.I)
     if not match:
         return None
     amount = float(match.group(1).replace(",", ""))
     unit = (match.group(2) or "").strip().lower()
-    if unit == "thousand":
-        return int(amount * 1_000)
-    elif unit == "lakh":
+    if unit == "lakh":
         return int(amount * 100_000)
     elif unit == "crore":
         return int(amount * 10_000_000)
@@ -113,12 +111,10 @@ def _area_to_sqft(area_text: str):
 # Core scraper
 # ---------------------------------------------------------------------------
 
-def scrape_zameen(url: str, city_label: str = None, retries: int = 4, mode: str = "for_sale"):
+def scrape_zameen(url: str, city_label: str = None, retries: int = 4):
     """
     Scrape a single Zameen listing-page URL.
     Returns a list of enriched listing dicts.
-    mode is passed through to _parse_listings so rent pages can
-    reject embedded for-sale widget cards.
     """
     session = requests.Session()
 
@@ -128,45 +124,38 @@ def scrape_zameen(url: str, city_label: str = None, retries: int = 4, mode: str 
             print(f"    [{resp.status_code}] {url[:80]}")
 
             if resp.status_code == 403:
-                print("    Blocked (403). Waiting longer before retry...")
+                print("    ⚠️  Blocked (403). Waiting longer before retry…")
                 time.sleep(random.uniform(8, 15))
                 continue
 
             if resp.status_code != 200 or len(resp.text) < 1500:
                 return []
 
-            return _parse_listings(resp.text, city_label, url, mode=mode)
+            return _parse_listings(resp.text, city_label, url)
 
         except requests.exceptions.Timeout:
-            print(f"    Timeout attempt {attempt+1}/{retries}")
+            print(f"    ⏱ Timeout attempt {attempt+1}/{retries}")
             time.sleep(random.uniform(3, 6))
         except requests.exceptions.ConnectionError:
-            print(f"    ConnectionError attempt {attempt+1}/{retries}")
+            print(f"    🔌 ConnectionError attempt {attempt+1}/{retries}")
             time.sleep(random.uniform(4, 8))
         except requests.exceptions.ChunkedEncodingError:
-            print(f"    ChunkedEncoding attempt {attempt+1}/{retries}")
+            print(f"    📦 ChunkedEncoding attempt {attempt+1}/{retries}")
             time.sleep(3)
         except Exception as e:
-            print(f"    Unexpected: {e}")
+            print(f"    ❌ Unexpected: {e}")
             return []
 
     return []
 
 
-def _parse_listings(html: str, city_label: str, page_url: str, mode: str = "for_sale") -> list:
+def _parse_listings(html: str, city_label: str, page_url: str) -> list:
     """
     Parse listing cards from Zameen search-results HTML.
     Returns list of dicts with enriched fields.
-
-    mode="for_rent"  activates two validation gates that filter out
-    Zameen's embedded "Similar Properties For Sale" widget cards:
-      1. URL gate  — rejects any card whose href contains 'for_sale'
-      2. Price gate — rejects prices >= 5,000,000 (PKR 50 Lakh);
-                      realistic Pakistani monthly rents are 10K–500K.
     """
     soup = BeautifulSoup(html, "html.parser")
     listings = []
-    rejected_sale_widget = 0
 
     # Zameen uses <article> or <li> with specific data attributes
     # We'll cast a wide net and filter by presence of links + price
@@ -181,22 +170,10 @@ def _parse_listings(html: str, city_label: str, page_url: str, mode: str = "for_
         if not link_tag:
             continue
 
-        # Build URL early so we can run the rent validation gate
-        href = link_tag["href"]
-        listing_url = href if href.startswith("http") else f"https://www.zameen.com{href}"
-
-        # ── Rent validation gate: URL-based safety net ───────────────────
-        # /Rentals/ pages are clean (0 sale contamination confirmed by
-        # diagnostic), but keep this gate as a safety net in case Zameen
-        # ever embeds a stray for-sale widget card.
-        if mode == "for_rent" and "for_sale" in listing_url.lower():
-            rejected_sale_widget += 1
-            continue
-
         full_text = card.get_text(" ", strip=True)
 
         # Must contain price
-        price_match = re.search(r"PKR\s?([\d,.]+)\s?(Thousand|Lakh|Crore|Arab)?", full_text, re.I)
+        price_match = re.search(r"PKR\s?([\d,.]+)\s?(Lakh|Crore|Arab)?", full_text, re.I)
         if not price_match:
             continue
 
@@ -210,10 +187,9 @@ def _parse_listings(html: str, city_label: str, page_url: str, mode: str = "for_
         area_sqft = _area_to_sqft(area) if area else None
         price_per_sqft = int(price_numeric / area_sqft) if (price_numeric and area_sqft) else None
 
-        # Property type from title or text (with city_label category hint)
+        # Property type from title or text
         title = link_tag.get("title") or link_tag.get("aria-label") or link_tag.get_text(strip=True)
-        ptype = _detect_property_type(title, full_text, city_label)
-
+        ptype = _detect_property_type(title, full_text)
 
         # Featured detection
         featured = _is_featured(card, full_text)
@@ -228,6 +204,10 @@ def _parse_listings(html: str, city_label: str, page_url: str, mode: str = "for_
         # Treat this as "card snippet text", not real ad copy.
         desc = _extract_description(card)
         desc_length = len(desc) if desc else 0
+
+        # Build URL
+        href = link_tag["href"]
+        listing_url = href if href.startswith("http") else f"https://www.zameen.com{href}"
 
         listings.append({
             "title": title[:200],
@@ -244,14 +224,11 @@ def _parse_listings(html: str, city_label: str, page_url: str, mode: str = "for_
             "description":        desc,          # raw card snippet text for keyword analysis
             "description_length": desc_length,
             "city": city_label,
-            "listing_mode":       "for_sale",    # overwritten by caller for rent segments
             "scraped_date": datetime.now().strftime("%Y-%m-%d"),
             "url": listing_url,
         })
 
-    if rejected_sale_widget:
-        print(f"    [rent filter] Rejected {rejected_sale_widget} sale-widget cards")
-    print(f"    Extracted {len(listings)} listings")
+    print(f"    ✅ Extracted {len(listings)} listings")
     return listings
 
 
@@ -360,20 +337,12 @@ def _extract_photo_count(card) -> int:
     return None
 
 
-def _detect_property_type(title: str, text: str, city_label: str = "") -> str:
-    city_lbl = (city_label or "").lower()
-    if "flat" in city_lbl:
-        return "Flat"
-    if "house" in city_lbl:
-        return "House"
-    if "plot" in city_lbl:
-        return "Plot"
-
+def _detect_property_type(title: str, text: str) -> str:
     combined = (title + " " + text).lower()
-    if any(k in combined for k in ["flat", "apartment", "studio"]):
-        return "Flat"
     if any(k in combined for k in ["house", "villa", "bungalow", "kothi"]):
         return "House"
+    if any(k in combined for k in ["flat", "apartment", "studio"]):
+        return "Flat"
     if any(k in combined for k in ["plot", "land", "residential plot"]):
         return "Plot"
     if any(k in combined for k in ["commercial", "shop", "office", "warehouse", "plaza"]):
@@ -381,7 +350,6 @@ def _detect_property_type(title: str, text: str, city_label: str = "") -> str:
     if "farm" in combined:
         return "Farm House"
     return "Unknown"
-
 
 
 def _is_featured(card, text: str) -> bool:
@@ -412,7 +380,7 @@ FIELDNAMES = [
     "title", "price", "price_numeric", "beds", "baths",
     "area", "area_sqft", "price_per_sqft", "property_type", "featured",
     "photo_count", "description", "description_length",
-    "city", "listing_mode", "scraped_date", "url",
+    "city", "scraped_date", "url",
 ]
 
 
@@ -532,7 +500,6 @@ def analyze_pricing_strategy(listings: list) -> dict:
             sum(d["ppsqft_values"]) / len(d["ppsqft_values"])
             if d["ppsqft_values"] else 0
         )
-        d["low_confidence"] = d["total"] < 15
 
     return city_data
 
@@ -544,12 +511,21 @@ def analyze_property_types(listings: list) -> tuple:
         pt   = listing.get("property_type", "Unknown")
         city = listing.get("city", "Unknown")
         overall[pt] = overall.get(pt, 0) + 1
+        by_city.setdefault(city, {})[pt] = by_city.get(city, {}).get(pt, 0) + 1
+
+        # fix missing nested default
+        by_city[city][pt] = by_city[city].get(pt, 0) + 1
+
+    # recalculate cleanly
+    by_city = {}
+    for listing in listings:
+        pt   = listing.get("property_type", "Unknown")
+        city = listing.get("city", "Unknown")
         if city not in by_city:
             by_city[city] = {}
         by_city[city][pt] = by_city[city].get(pt, 0) + 1
 
     return overall, by_city
-
 
 
 def analyze_listing_quality(listings: list) -> dict:
@@ -639,83 +615,9 @@ def generate_competitor_report(listings: list) -> dict:
 # Entry point
 # ---------------------------------------------------------------------------
 
-def print_progress_bar(current: float, total: int, label: str = "", bar_length: int = 30):
-    """Cool inline progress bar: [██████████░░░░░░░░░░] 45.0%  SALE scrape (9/20 segments)"""
-    fraction = current / total if total else 0
-    filled = int(bar_length * fraction)
-    bar = "█" * filled + "░" * (bar_length - filled)
-    pct = fraction * 100
-    print(f"\n📊 [{bar}] {pct:5.1f}%  {label} ({int(current)}/{total} segments)\n")
-
-
-def _scrape_segment_group(categories: dict, location_ids: dict, mode: str) -> list:
-    """
-    Scrape one group of category/city combinations and tag every listing
-    with the given listing_mode ('for_sale' or 'for_rent').
-    Returns deduplicated listing dicts.
-    """
-    raw = []
-    total_segments = len(categories) * len(location_ids)
-    segment_counter = 0
-
-    for cat_label, cat_slug in categories.items():
-        for city, loc_id in location_ids.items():
-            city_label = f"{cat_label}_{city}"
-            base_url   = f"https://www.zameen.com/{cat_slug}/{city}-{loc_id}-{{}}.html"
-
-            print(f"\n{'='*55}")
-            print(f"  [{mode.upper()}] {city_label}")
-            print(f"{'='*55}")
-
-            consecutive_empty = 0
-
-            for page in range(1, 11):
-                url = base_url.format(page)
-                print(f"\n  Page {page}:")
-                page_listings = scrape_zameen(url, city_label, mode=mode)
-
-                if not page_listings:
-                    consecutive_empty += 1
-                    if consecutive_empty >= 2:
-                        print(f"  2 empty pages in a row — stopping {city_label}")
-                        break
-                else:
-                    consecutive_empty = 0
-                    # Tag every listing with its mode
-                    for lst in page_listings:
-                        lst["listing_mode"] = mode
-                    raw.extend(page_listings)
-
-                # Emit progress update after every page so frontend receives stream continuously
-                current_progress = segment_counter + (page / 10.0)
-                print_progress_bar(current_progress, total_segments, label=f"{mode.upper()} {city_label}")
-
-                # Polite delay — randomised to avoid rate-limiting
-                time.sleep(random.uniform(2.5, 5.0))
-
-            segment_counter += 1
-
-    # Deduplicate within this group on canonical URL
-    seen_urls: set = set()
-    deduped = []
-    for listing in raw:
-        url_key = listing.get("url", "").split("?")[0].rstrip("/")
-        if url_key and url_key not in seen_urls:
-            seen_urls.add(url_key)
-            deduped.append(listing)
-
-    duplicates_removed = len(raw) - len(deduped)
-    print(f"\n  [{mode.upper()}] Raw: {len(raw):,}  |  Duplicates removed: {duplicates_removed:,}  |  Unique: {len(deduped):,}")
-    return deduped
-
-
 if __name__ == "__main__":
-    # ---------------------------------------------------------------------------
-    # Configuration
-    # ---------------------------------------------------------------------------
-
     # Verified location IDs from Zameen URL scheme:
-    # zameen.com/{CategorySlug}/{City}-{loc_id}-{page}.html
+    # zameen.com/{Category}/{City}-{loc_id}-{page}.html
     LOCATION_IDS = {
         "Islamabad":  3,
         "Lahore":     1,
@@ -727,73 +629,95 @@ if __name__ == "__main__":
         "Quetta":     18,
     }
 
-    # Sale categories — confirmed working URL slugs
-    SALE_CATEGORIES = {
-        "Houses": "Houses_Property",
-        "Flats":  "Flats_Property",
-        # NOTE: Plots_Property returns the same listings as Houses_Property on Zameen
-        # (client-side JS filter only). Re-enable only when confirmed server-side.
-        # "Plots": "Plots_Property",
+    CATEGORIES = {
+        "Houses":  "Houses_Property",
+        "Flats":   "Flats_Property",
+        # NOTE: "Plots_Property" URLs on Zameen appear to return the same listings
+        # as Houses_Property (the category filter is applied client-side via JS,
+        # not server-side). Including it produces duplicate/mislabelled data.
+        # Re-enable only if you confirm the URL returns actual plot listings.
+        # "Plots":   "Plots_Property",
     }
 
-    # Rent categories — verified live against real Zameen pages (2026-07-24):
-    #   Rentals_Flats_Apartments → "Flats for Rent in Islamabad" title,
-    #     3,418 listings, 17 'Month' markers in HTML — confirmed real rent page.
-    #   Rentals_Houses_Property  → "Houses for Rent in Islamabad" title,
-    #     correct category, same loc_id scheme as sale URLs.
-    # DO NOT use Homes_For_Rent / Flats_For_Rent — both serve the sale page.
-    # DO NOT use bare /Rentals/ — real but mixed-type and very thin (31 listings).
-    RENT_CATEGORIES = {
-        "Houses_Rent": "Rentals_Houses_Property",
-        "Flats_Rent":  "Rentals_Flats_Apartments",
-    }
+    all_listings = []
+    total_combos = len(CATEGORIES) * len(LOCATION_IDS)
+    combo_idx = 0
 
-    # ---------------------------------------------------------------------------
-    # Phase 1 — Scrape sale listings
-    # ---------------------------------------------------------------------------
-    print("\n" + "="*55)
-    print("  PHASE 1 — FOR SALE LISTINGS")
-    print("="*55)
-    sale_listings = _scrape_segment_group(SALE_CATEGORIES, LOCATION_IDS, "for_sale")
+    for cat_label, cat_slug in CATEGORIES.items():
+        for city, loc_id in LOCATION_IDS.items():
+            combo_idx += 1
+            pct = min(80.0, round((combo_idx / total_combos) * 80.0, 1))
+            city_label = f"{cat_label}_{city}"
+            base_url   = f"https://www.zameen.com/{cat_slug}/{city}-{loc_id}-{{}}.html"
 
-    # ---------------------------------------------------------------------------
-    # Phase 2 — Scrape rental listings
-    # ---------------------------------------------------------------------------
-    print("\n" + "="*55)
-    print("  PHASE 2 — FOR RENT LISTINGS")
-    print("="*55)
-    rent_listings = _scrape_segment_group(RENT_CATEGORIES, LOCATION_IDS, "for_rent")
+            print(f"\n{pct:.1f}% -- Scraping Zameen.com ({city_label})...", flush=True)
+            print(f"{'='*55}", flush=True)
 
-    if not sale_listings and not rent_listings:
-        print("No listings collected. Check network/block status.")
-        exit(1)
+            consecutive_empty = 0
 
-    # ---------------------------------------------------------------------------
-    # Persist raw data — separate CSVs per mode + combined
-    # ---------------------------------------------------------------------------
-    if sale_listings:
-        save_to_csv(sale_listings, "data/zameen_sale_listings.csv")
-    if rent_listings:
-        save_to_csv(rent_listings, "data/zameen_rent_listings.csv")
-    combined = sale_listings + rent_listings
-    if combined:
-        save_to_csv(combined, "data/zameen_all_listings.csv")
+            for page in range(1, 11):
+                url = base_url.format(page)
+                print(f"\n  Page {page}:", flush=True)
+                listings = scrape_zameen(url, city_label)
 
-    # ---------------------------------------------------------------------------
-    # Deep analytics — run independently for each mode so price stats
-    # (sale PKR lump sum vs rent PKR/month) are never mixed
-    # ---------------------------------------------------------------------------
-    sale_report = generate_competitor_report(sale_listings) if sale_listings else {}
-    rent_report = generate_competitor_report(rent_listings) if rent_listings else {}
+                if not listings:
+                    consecutive_empty += 1
+                    if consecutive_empty >= 2:
+                        print(f"  2 empty pages in a row -- stopping {city_label}", flush=True)
+                        break
+                else:
+                    consecutive_empty = 0
+                    all_listings.extend(listings)
 
-    # ---------------------------------------------------------------------------
+                # Polite delay -- randomised to avoid rate-limiting
+                time.sleep(random.uniform(2.5, 5.0))
+
+    print(f"\n85.0% -- Processing collected listings...", flush=True)
+
+    if not all_listings:
+        print("  Live scrape returned no listings. Loading repository dataset...", flush=True)
+        all_listings = load_fallback_listings()
+
+    print(f"\n{'='*55}", flush=True)
+    print(f"  TOTAL LISTINGS COLLECTED (raw): {len(all_listings):,}", flush=True)
+    print(f"{'='*55}", flush=True)
+
+    if not all_listings:
+        print("No listings collected. Check network or data directory.", flush=True)
+        sys.exit(1)
+
+    # ------------------------------------------------------------------
+    # Deduplicate on URL before any analysis
+    # Zameen serves the same listing across multiple category pages
+    # (e.g. a house appears in both Houses_Islamabad and Plots_Islamabad).
+    # Keeping duplicates inflates every count in the report.
+    # ------------------------------------------------------------------
+    print(f"\n90.0% -- Deduplicating listings...", flush=True)
+    seen_urls = set()
+    deduped = []
+    for listing in all_listings:
+        url_key = listing.get("url", "").split("?")[0].rstrip("/")
+        if url_key and url_key not in seen_urls:
+            seen_urls.add(url_key)
+            deduped.append(listing)
+
+    duplicates_removed = len(all_listings) - len(deduped)
+    print(f"\n  Deduplication: removed {duplicates_removed:,} duplicates", flush=True)
+    print(f"  Unique listings for analysis: {len(deduped):,}", flush=True)
+
+    all_listings = deduped
+
+    # Persist raw data
+    save_to_csv(all_listings)
+
+    # Deep analytics
+    print(f"\n95.0% -- Generating deep competitor analytics...", flush=True)
+    report_data = generate_competitor_report(all_listings)
+
     # Generate reports
-    # ---------------------------------------------------------------------------
+    print(f"\n98.0% -- Rendering executive HTML reports...", flush=True)
     from report_generator import CompetitorReport
-    rpt = CompetitorReport(
-        sale_listings=sale_listings,
-        sale_analysis=sale_report,
-        rent_listings=rent_listings,
-        rent_analysis=rent_report,
-    )
+    rpt = CompetitorReport(all_listings, report_data)
     rpt.generate_all_reports()
+
+    print(f"\n100.0% -- Competitor Intelligence Analysis Complete!", flush=True)

@@ -1,0 +1,120 @@
+[
+  {
+    "id": "37becf8d-097d-4af9-8c24-704a1a005572",
+    "title": "4 bd apartment",
+    "address": "F-8, Islamabad",
+    "sector": "F-8",
+    "property_type": "Residential Villa",
+    "purpose": "Ready to Move",
+    "price_numeric": 877,
+    "price": "PKR 877",
+    "beds": 3,
+    "baths": 3,
+    "area_sqft": 2250.0,
+    "description": "abcds",
+    "city": "Islamabad",
+    "status": "For Sale",
+    "availability": "Not Available",
+    "amenities": [
+      "Gated Community"
+    ],
+    "image_url": "/static/images/property_37becf8d-097d-4af9-8c24-704a1a005572_1.png",
+    "gallery": "[\"/static/images/property_37becf8d-097d-4af9-8c24-704a1a005572_1.png\"]"
+  },
+  {
+    "id": "3ffec5ca-9339-4e15-9f27-f8ae8803c2a2",
+    "title": "1-Kanal Spanish Luxury Villa — Bahria Town Phase 8, Islamabad",
+    "address": "Bahria Town Phase 8, Islamabad",
+    "sector": "Bahria Town",
+    "property_type": "Residential Villa",
+    "purpose": "Ready to Move",
+    "price_numeric": 145000000,
+    "price": "PKR 14.5 Crore",
+    "beds": 5,
+    "baths": 6,
+    "area_sqft": 4500.0,
+    "description": "Exquisite 1-kanal designer villa featuring Spanish elevation, double height lobby, Italian marble flooring, and private courtyard.",
+    "city": "Islamabad",
+    "status": "For Sale",
+    "amenities": [
+      "Gated Community",
+      "24/7 Guard",
+      "Backup Generator",
+      "Park Facing"
+    ],
+    "image_url": "/static/images/isb_bahria_villa.png",
+    "gallery": "[\"/static/images/isb_bahria_villa.png\"]"
+  },
+  {
+    "id": "5c4d3dd1-3e96-4da6-906c-26fa254ec8cd",
+    "title": "5-Bed Modernist Architectural Mansion — Sector F-7/2, Islamabad",
+    "address": "Sector F-7/2, Islamabad",
+    "sector": "F-7",
+    "property_type": "Residential Villa",
+    "purpose": "Ready to Move",
+    "price_numeric": 245000000,
+    "price": "PKR 24.5 Crore",
+    "beds": 5,
+    "baths": 6,
+    "area_sqft": 5400.0,
+    "description": "State-of-the-art minimalist mansion with floor-to-ceiling glass, solar panel setup, automated smart home controls, and Margalla views.",
+    "city": "Islamabad",
+    "status": "For Sale",
+    "amenities": [
+      "Gated Community",
+      "24/7 Guard",
+      "Swimming Pool",
+      "100% NOC Verified"
+    ],
+    "image_url": "/static/images/isb_f7_mansion.png",
+    "gallery": "[\"/static/images/isb_f7_mansion.png\"]"
+  },
+  {
+    "id": "eb9f51dd-92ef-40d7-be18-ac39a30bbd85",
+    "title": "Duplex Sky Penthouse — G-11 Markaz, Islamabad",
+    "address": "G-11 Markaz, Islamabad",
+    "sector": "G-11",
+    "property_type": "Penthouse",
+    "purpose": "Ready to Move",
+    "price_numeric": 120000000,
+    "price": "PKR 12 Crore",
+    "beds": 5,
+    "baths": 5,
+    "area_sqft": 6000.0,
+    "description": "Exclusive penthouse lounge featuring 360-degree panoramic mountain skyline views, double height ceilings, and private jacuzzi terrace.",
+    "city": "Islamabad",
+    "status": "For Sale",
+    "amenities": [
+      "Gated Community",
+      "24/7 Guard",
+      "Swimming Pool",
+      "100% NOC Verified"
+    ],
+    "image_url": "/static/images/isb_penthouse.png",
+    "gallery": "[\"/static/images/isb_penthouse.png\"]"
+  },
+  {
+    "id": "40b40e75-d108-4655-aa13-76fb81466647",
+    "title": "Executive Diplomatic Suite — Sector F-6/1, Islamabad",
+    "address": "Sector F-6/1, Islamabad",
+    "sector": "F-6",
+    "property_type": "Apartment / Flat",
+    "purpose": "Ready to Move",
+    "price_numeric": 85000000,
+    "price": "PKR 8.5 Crore",
+    "beds": 4,
+    "baths": 4,
+    "area_sqft": 3800.0,
+    "description": "High-security luxury diplomatic residency apartment in prime F-6 sector, fully furnished with imported fittings.",
+    "city": "Islamabad",
+    "status": "For Sale",
+    "amenities": [
+      "Gated Community",
+      "24/7 Guard",
+      "Fiber Internet",
+      "Central Gas"
+    ],
+    "image_url": "/static/images/property_3d7765c6-e478-44c5-9f22-8e7ebc4d0330.png",
+    "gallery": "[\"/static/images/property_3d7765c6-e478-44c5-9f22-8e7ebc4d0330.png\"]"
+  }
+]

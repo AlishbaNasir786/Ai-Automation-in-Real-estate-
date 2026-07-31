@@ -794,19 +794,19 @@
     // ROLE SWITCHER LOGIC
     function setRole(role) {
       currentRole = role;
+      document.body.setAttribute('data-role', role);  // CSS uses this to show/hide admin controls
       
-      const btnAdmin = document.getElementById('btnRoleAdmin');
+      const btnAdmin  = document.getElementById('btnRoleAdmin');
       const btnClient = document.getElementById('btnRoleClient');
 
       if (role === 'admin') {
-        btnAdmin.className = "switch-btn active-admin";
+        btnAdmin.className  = "switch-btn active-admin";
         btnClient.className = "switch-btn";
         document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'inline-flex');
       } else {
-        btnAdmin.className = "switch-btn";
+        btnAdmin.className  = "switch-btn";
         btnClient.className = "switch-btn active-client";
         document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
-        
         // If currently on an admin-only tab, auto-switch to public Module 3
         if (currentTab === 'mod1' || currentTab === 'mod5') {
           switchTab('mod3');

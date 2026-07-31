@@ -736,29 +736,69 @@
         </div>
       </div>
 
-      <!-- STEP 2: CITY -->
+      <!-- STEP 2: SECTOR -->
       <div class="step-content" id="step2" style="display:none;">
-        <div class="step-title">📍 Select your primary target city</div>
-        <div class="grid-options">
-          <div class="option-card selected" onclick="selectOption(this, 'city', 'Islamabad')">
+        <div class="step-title">📍 Select your primary target Islamabad sector</div>
+        <div class="grid-options" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <div class="option-card selected" onclick="selectOption(this, 'city', 'Sector F-7')">
             <div class="option-icon">🏛️</div>
-            <div class="option-name">Islamabad</div>
-            <div class="option-desc">Capital city — high capital gain & diplomatic zone interest.</div>
+            <div class="option-name">Sector F-7</div>
+            <div class="option-desc">Jinnah Super hub — prime luxury villas & diplomatic interest.</div>
           </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'Lahore')">
-            <div class="option-icon">🕌</div>
-            <div class="option-name">Lahore</div>
-            <div class="option-desc">Cultural hub — booming housing societies & suburban projects.</div>
+          <div class="option-card" onclick="selectOption(this, 'city', 'Sector F-6')">
+            <div class="option-icon">🌲</div>
+            <div class="option-name">Sector F-6</div>
+            <div class="option-desc">Diplomatic enclave — executive residences & green avenues.</div>
           </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'Karachi')">
-            <div class="option-icon">🌊</div>
-            <div class="option-name">Karachi</div>
-            <div class="option-desc">Commercial powerhouse — high rental demand & apartment living.</div>
+          <div class="option-card" onclick="selectOption(this, 'city', 'Sector F-8')">
+            <div class="option-icon">⚖️</div>
+            <div class="option-name">Sector F-8</div>
+            <div class="option-desc">Judicial & commercial zone — high capital appreciation.</div>
           </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'Rawalpindi')">
-            <div class="option-icon">⛰️</div>
-            <div class="option-name">Rawalpindi</div>
-            <div class="option-desc">Twin city hub — high liquidity & commercial hubs.</div>
+          <div class="option-card" onclick="selectOption(this, 'city', 'Sector F-10')">
+            <div class="option-icon">🏢</div>
+            <div class="option-name">Sector F-10</div>
+            <div class="option-desc">F-10 Markaz hub — luxury commercial & residential villas.</div>
+          </div>
+          <div class="option-card" onclick="selectOption(this, 'city', 'Sector F-11')">
+            <div class="option-icon">🏙️</div>
+            <div class="option-name">Sector F-11</div>
+            <div class="option-desc">Modern high-rises — panoramic Margalla view apartments.</div>
+          </div>
+          <div class="option-card" onclick="selectOption(this, 'city', 'Sector E-11')">
+            <div class="option-icon">🏬</div>
+            <div class="option-name">Sector E-11</div>
+            <div class="option-desc">Executive apartment towers — high rental demand & 100% NOC.</div>
+          </div>
+          <div class="option-card" onclick="selectOption(this, 'city', 'Sector G-9')">
+            <div class="option-icon">🛍️</div>
+            <div class="option-name">Sector G-9</div>
+            <div class="option-desc">Peshawar Morr hub — central location & high liquidity.</div>
+          </div>
+          <div class="option-card" onclick="selectOption(this, 'city', 'Sector G-10')">
+            <div class="option-icon">🏡</div>
+            <div class="option-name">Sector G-10</div>
+            <div class="option-desc">Sub-divisional family living — parks & school proximity.</div>
+          </div>
+          <div class="option-card" onclick="selectOption(this, 'city', 'Sector G-11')">
+            <div class="option-icon">🏠</div>
+            <div class="option-name">Sector G-11</div>
+            <div class="option-desc">G-11 Markaz sector — modern townhouses & family homes.</div>
+          </div>
+          <div class="option-card" onclick="selectOption(this, 'city', 'DHA Phase 2')">
+            <div class="option-icon">🏰</div>
+            <div class="option-name">DHA Phase 2</div>
+            <div class="option-desc">Gated Defense society — 24/7 security & luxury living.</div>
+          </div>
+          <div class="option-card" onclick="selectOption(this, 'city', 'Bahria Town')">
+            <div class="option-icon">🌴</div>
+            <div class="option-name">Bahria Town</div>
+            <div class="option-desc">Master-planned society — world-class infrastructure & parks.</div>
+          </div>
+          <div class="option-card" onclick="selectOption(this, 'city', 'Blue Area')">
+            <div class="option-icon">🏦</div>
+            <div class="option-name">Blue Area</div>
+            <div class="option-desc">Central business district — prime commercial offices & retail.</div>
           </div>
         </div>
       </div>
@@ -876,7 +916,8 @@
 
         <div class="whatsapp-container">
           <div class="wa-preview-box">
-            <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:8px;">Live WhatsApp Message Preview:</div>
+            <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:4px;">Live WhatsApp Message Preview:</div>
+            <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px; font-weight:600;">📲 Share with your friends and family or send to yourself as a reminder</div>
             <div class="wa-bubble" id="waMessageText">
               <!-- Message Generated by JS -->
             </div>
@@ -946,6 +987,16 @@
   </div>
 
   <script>
+    function esc(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
     // State
     let currentStep = 1;
     const selections = {
@@ -1177,45 +1228,51 @@
 
         // 4. Render ALL matched properties from DB
         console.log('API returned properties:', properties.length, properties);
-        document.getElementById('matchCount').innerText = `${properties.length} Properties Matched from Database`;
-
         const grid = document.getElementById('propertyGrid');
         grid.innerHTML = '';
-        
-        properties.forEach(topProp => {
-          const priceTxt = topProp.listing_mode === 'for_rent' || topProp.mode === 'for_rent' 
-            ? `PKR ${(topProp.price_numeric || 0).toLocaleString()} /mo` 
-            : `PKR ${formatPKR(topProp.price_numeric || 0)}`;
 
-          const agent = waData.agent || AGENTS[0];
-          const bgUrl = topProp.property_images && topProp.property_images.length > 0 
-            ? topProp.property_images[0].url 
-            : '';
+        if (!properties || properties.length === 0) {
+          document.getElementById('matchCount').innerText = `0 Properties Matched from Database`;
+          grid.innerHTML = `
+            <div style="grid-column:1/-1; text-align:center; padding:3rem 1.5rem; color:#94a3b8; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px;">
+              <div style="font-size:2.5rem; margin-bottom:0.5rem;">🔍</div>
+              <div style="font-size:1.1rem; font-weight:700; color:#fff;">No Database Properties Match Selected Criteria</div>
+              <div style="font-size:0.85rem; margin-top:0.3rem;">No properties currently listed in sector "${esc(selections.city)}" for this budget. Try selecting a different sector or budget range.</div>
+            </div>
+          `;
+        } else {
+          document.getElementById('matchCount').innerText = `${properties.length} Property${properties.length > 1 ? 'ies' : ''} Matched from Database`;
 
-          grid.innerHTML += `
-            <div class="prop-item">
-              <div class="prop-banner" style="${bgUrl ? `background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(15,23,42,0.9) 100%), url('${bgUrl}'); background-size: cover; background-position: center;` : ''}">
-                <div class="prop-tag">${topProp.listing_mode === 'for_rent' || topProp.mode === 'for_rent' ? 'FOR RENT' : 'FOR SALE'}</div>
-                <div class="prop-price">${priceTxt}</div>
-              </div>
-              <div class="prop-body">
-                <div class="prop-title">${topProp.title}</div>
-                <div class="prop-details">
-                  <span>📍 ${topProp.city}</span>
-                  <span>🛏️ ${topProp.beds} Bed</span>
-                  <span>📐 ${topProp.area}</span>
+          properties.forEach(topProp => {
+            const priceTxt = topProp.price || (topProp.price_numeric ? `PKR ${Number(topProp.price_numeric).toLocaleString()}` : 'Contact for Price');
+            const agent = waData.agent || (typeof AGENTS !== 'undefined' ? AGENTS[0] : { name: 'Islamabad Desk', agency: 'RealEstate AI', avatar: '🏛️' });
+            const bgUrl = topProp.image_url || '/static/images/default_property.png';
+
+            grid.innerHTML += `
+              <div class="prop-item">
+                <div class="prop-banner" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(15,23,42,0.9) 100%), url('${bgUrl}'); background-size: cover; background-position: center;">
+                  <div class="prop-tag">${topProp.listing_mode === 'for_rent' || topProp.mode === 'for_rent' ? 'FOR RENT' : 'FOR SALE'}</div>
+                  <div class="prop-price">${priceTxt}</div>
                 </div>
-                <div class="agent-box">
-                  <div class="agent-avatar">${agent.avatar || 'A'}</div>
-                  <div>
-                    <div style="font-weight:700;">${agent.name}</div>
-                    <div style="font-size:0.75rem; color:var(--text-muted);">${agent.agency || 'Agent'}</div>
+                <div class="prop-body">
+                  <div class="prop-title">${esc(topProp.title)}</div>
+                  <div class="prop-details">
+                    <span>📍 ${esc(topProp.city || topProp.address || 'Islamabad')}</span>
+                    <span>🛏️ ${topProp.beds || 0} Bed</span>
+                    <span>📐 ${esc(topProp.area || 'N/A')}</span>
+                  </div>
+                  <div class="agent-box">
+                    <div class="agent-avatar">${agent.avatar || '🏛️'}</div>
+                    <div>
+                      <div style="font-weight:700;">${esc(agent.name)}</div>
+                      <div style="font-size:0.75rem; color:var(--text-muted);">${esc(agent.agency || 'RealEstate AI')}</div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          `;
-        });
+            `;
+          });
+        }
 
         // 5. WhatsApp Message
         window.activeAgentPhone = waData.agent ? waData.agent.phone : (waData.recipient_phone || "+923005551234");
@@ -1326,5 +1383,6 @@
       });
     }
   </script>
+  <script src="/static/js/user_auth_banner.js"></script>
 </body>
 </html>

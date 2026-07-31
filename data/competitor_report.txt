@@ -1,15 +1,15 @@
 ========================================================================
  ZAMEEN.COM COMPETITOR INTELLIGENCE REPORT
- Generated: July 24, 2026 • 06:52 PM
+ Generated: July 29, 2026 • 09:55 PM
 ========================================================================
 
 EXECUTIVE OVERVIEW
 ----------------------------------------
- Total unique listings  : 2,077
+ Total unique listings  : 2,019
  Segments (category×city) : 16 (8 real cities × 2 categories)
- Overall average price  : PKR 65,461,654
- Featured listings    : 1040 (50.1%)
- Extraction completeness : 98.5% (scraper field coverage, not Zameen data quality)
+ Overall average price  : PKR 70,297,219
+ Featured listings    : 1071 (53.0%)
+ Extraction completeness : 98.4% (scraper field coverage, not Zameen data quality)
  Avg photos / listing   : 20.7
  Avg description length  : 87 chars (card snippet only, not full listing page)
 
@@ -17,18 +17,18 @@ CITY-BY-CITY PRICE INTELLIGENCE
 ----------------------------------------
 
  Houses · Karachi
-  Avg Price    : PKR 126,491,129 | Median: PKR 86,750,000
-  Min / Max    : PKR 3,000,000 — PKR 700,000,000
-  Price/sqft   : PKR 33,574
-  Featured Premium: +21.7%
-  Segments    : Budget 3 | Mid 19 | Premium 50 | Luxury 176
+  Avg Price    : PKR 150,244,000 | Median: PKR 92,000,000
+  Min / Max    : PKR 8,500,000 — PKR 1,350,000,000
+  Price/sqft   : PKR 36,528
+  Featured Premium: +13.5%
+  Segments    : Budget 0 | Mid 14 | Premium 57 | Luxury 179
 
  Houses · Islamabad
-  Avg Price    : PKR 120,617,544 | Median: PKR 55,000,000
-  Min / Max    : PKR 9,000,000 — PKR 1,750,000,000
-  Price/sqft   : PKR 29,879
-  Featured Premium: -14.3%
-  Segments    : Budget 0 | Mid 11 | Premium 77 | Luxury 140
+  Avg Price    : PKR 115,141,532 | Median: PKR 67,250,000
+  Min / Max    : PKR 4,700,000 — PKR 2,100,000,000
+  Price/sqft   : PKR 29,308
+  Featured Premium: +30.2%
+  Segments    : Budget 3 | Mid 17 | Premium 67 | Luxury 161
 
  Houses · Quetta
   Avg Price    : PKR 107,500,000 | Median: PKR 107,500,000
@@ -37,89 +37,89 @@ CITY-BY-CITY PRICE INTELLIGENCE
   Featured Premium: +0.0%
   Segments    : Budget 0 | Mid 0 | Premium 0 | Luxury 2
 
- Flats · Islamabad
-  Avg Price    : PKR 68,549,722 | Median: PKR 21,750,000
-  Min / Max    : PKR 4,800,000 — PKR 1,350,000,000
-  Price/sqft   : PKR 19,430
-  Featured Premium: +21.3%
-  Segments    : Budget 2 | Mid 28 | Premium 44 | Luxury 23
-
  Houses · Lahore
-  Avg Price    : PKR 67,192,531 | Median: PKR 45,950,000
-  Min / Max    : PKR 8,500,000 — PKR 550,000,000
-  Price/sqft   : PKR 21,861
-  Featured Premium: +6.1%
-  Segments    : Budget 0 | Mid 16 | Premium 116 | Luxury 109
+  Avg Price    : PKR 75,445,833 | Median: PKR 46,250,000
+  Min / Max    : PKR 9,000,000 — PKR 1,100,000,000
+  Price/sqft   : PKR 21,619
+  Featured Premium: +25.4%
+  Segments    : Budget 0 | Mid 17 | Premium 112 | Luxury 111
 
- Houses · Peshawar
-  Avg Price    : PKR 54,422,400 | Median: PKR 36,000,000
-  Min / Max    : PKR 6,000,000 — PKR 800,000,000
-  Price/sqft   : PKR 21,906
-  Featured Premium: +58.2%
-  Segments    : Budget 0 | Mid 25 | Premium 140 | Luxury 85
+ Flats · Islamabad
+  Avg Price    : PKR 59,180,814 | Median: PKR 31,500,000
+  Min / Max    : PKR 5,000,000 — PKR 750,000,000
+  Price/sqft   : PKR 21,719
+  Featured Premium: +28.4%
+  Segments    : Budget 1 | Mid 25 | Premium 35 | Luxury 25
 
  Houses · Rawalpindi
-  Avg Price    : PKR 48,280,000 | Median: PKR 37,250,000
-  Min / Max    : PKR 6,000,000 — PKR 390,000,000
-  Price/sqft   : PKR 19,002
-  Featured Premium: +30.2%
-  Segments    : Budget 0 | Mid 24 | Premium 145 | Luxury 81
+  Avg Price    : PKR 56,698,000 | Median: PKR 43,500,000
+  Min / Max    : PKR 7,000,000 — PKR 350,000,000
+  Price/sqft   : PKR 20,886
+  Featured Premium: +11.1%
+  Segments    : Budget 0 | Mid 11 | Premium 131 | Luxury 108
 
- Flats · Karachi
-  Avg Price    : PKR 45,185,366 | Median: PKR 29,500,000
-  Min / Max    : PKR 2,500,000 — PKR 261,800,000
-  Price/sqft   : PKR 21,165
-  Featured Premium: +12.6%
-  Segments    : Budget 5 | Mid 28 | Premium 56 | Luxury 34
+ Houses · Peshawar
+  Avg Price    : PKR 48,214,400 | Median: PKR 34,000,000
+  Min / Max    : PKR 6,000,000 — PKR 260,000,000
+  Price/sqft   : PKR 22,032
+  Featured Premium: +28.1%
+  Segments    : Budget 0 | Mid 25 | Premium 146 | Luxury 79
 
  Flats · Lahore
-  Avg Price    : PKR 42,359,821 | Median: PKR 32,500,000
-  Min / Max    : PKR 5,500,000 — PKR 265,000,000
-  Price/sqft   : PKR 22,278
-  Featured Premium: +28.1%
-  Segments    : Budget 0 | Mid 7 | Premium 37 | Luxury 12
+  Avg Price    : PKR 41,920,000 | Median: PKR 22,550,000
+  Min / Max    : PKR 2,500,000 — PKR 400,000,000
+  Price/sqft   : PKR 19,051
+  Featured Premium: +5.9%
+  Segments    : Budget 2 | Mid 8 | Premium 13 | Luxury 2
 
  Houses · Faisalabad
-  Avg Price    : PKR 39,814,400 | Median: PKR 31,500,000
+  Avg Price    : PKR 41,667,200 | Median: PKR 30,000,000
   Min / Max    : PKR 7,000,000 — PKR 450,000,000
-  Price/sqft   : PKR 19,343
-  Featured Premium: +19.6%
-  Segments    : Budget 0 | Mid 37 | Premium 165 | Luxury 48
-
- Flats · Multan
-  Avg Price    : PKR 34,598,279 | Median: PKR 19,000,000
-  Min / Max    : PKR 4,050,000 — PKR 330,000,000
-  Price/sqft   : PKR 15,988
-  Featured Premium: +34.9%
-  Segments    : Budget 2 | Mid 13 | Premium 20 | Luxury 8
-
- Flats · Faisalabad
-  Avg Price    : PKR 33,785,714 | Median: PKR 8,750,000
-  Min / Max    : PKR 3,500,000 — PKR 125,000,000
-  Price/sqft   : PKR 12,706
-  Featured Premium: +14.4%
-  Segments    : Budget 3 | Mid 2 | Premium 0 | Luxury 2
+  Price/sqft   : PKR 19,888
+  Featured Premium: +23.7%
+  Segments    : Budget 0 | Mid 24 | Premium 183 | Luxury 43
 
  Houses · Multan
-  Avg Price    : PKR 32,637,295 | Median: PKR 27,000,000
-  Min / Max    : PKR 5,500,000 — PKR 200,000,000
-  Price/sqft   : PKR 13,873
-  Featured Premium: +23.8%
-  Segments    : Budget 0 | Mid 38 | Premium 160 | Luxury 46
+  Avg Price    : PKR 39,026,230 | Median: PKR 32,250,000
+  Min / Max    : PKR 7,000,000 — PKR 460,000,000
+  Price/sqft   : PKR 14,789
+  Featured Premium: +3.4%
+  Segments    : Budget 0 | Mid 22 | Premium 156 | Luxury 66
+
+ Flats · Faisalabad
+  Avg Price    : PKR 38,675,000 | Median: PKR 11,200,000
+  Min / Max    : PKR 3,500,000 — PKR 139,200,000
+  Price/sqft   : PKR 11,036
+  Featured Premium: +43.2%
+  Segments    : Budget 5 | Mid 3 | Premium 0 | Luxury 4
+
+ Flats · Multan
+  Avg Price    : PKR 34,075,000 | Median: PKR 8,000,000
+  Min / Max    : PKR 2,622,000 — PKR 330,000,000
+  Price/sqft   : PKR 12,389
+  Featured Premium: +56.1%
+  Segments    : Budget 3 | Mid 8 | Premium 0 | Luxury 1
+
+ Flats · Karachi
+  Avg Price    : PKR 33,695,743 | Median: PKR 19,500,000
+  Min / Max    : PKR 2,900,000 — PKR 190,000,000
+  Price/sqft   : PKR 19,162
+  Featured Premium: +32.5%
+  Segments    : Budget 2 | Mid 32 | Premium 50 | Luxury 17
 
  Flats · Peshawar
-  Avg Price    : PKR 23,566,667 | Median: PKR 23,600,000
-  Min / Max    : PKR 9,000,000 — PKR 38,900,000
-  Price/sqft   : PKR 10,561
-  Featured Premium: -8.3%
-  Segments    : Budget 0 | Mid 5 | Premium 10 | Luxury 0
+  Avg Price    : PKR 23,893,750 | Median: PKR 28,750,000
+  Min / Max    : PKR 5,000,000 — PKR 39,000,000
+  Price/sqft   : PKR 11,409
+  Featured Premium: -37.2%
+  Segments    : Budget 1 | Mid 5 | Premium 10 | Luxury 0
 
  Flats · Rawalpindi
-  Avg Price    : PKR 21,435,789 | Median: PKR 14,250,000
-  Min / Max    : PKR 5,500,000 — PKR 75,000,000
-  Price/sqft   : PKR 15,416
-  Featured Premium: -16.9%
-  Segments    : Budget 0 | Mid 9 | Premium 8 | Luxury 2
+  Avg Price    : PKR 17,265,172 | Median: PKR 12,600,000
+  Min / Max    : PKR 2,800,000 — PKR 45,500,000
+  Price/sqft   : PKR 14,182
+  Featured Premium: -19.9%
+  Segments    : Budget 2 | Mid 14 | Premium 13 | Luxury 0
 
  Flats · Quetta
   Avg Price    : PKR 6,969,000 | Median: PKR 7,140,000
@@ -130,27 +130,27 @@ CITY-BY-CITY PRICE INTELLIGENCE
 
 MARKETING STRATEGY ANALYSIS
 ----------------------------------------
- Luxury messaging   : 35.8%
- Location signals   : 23.5%
- Deal / Discount   : 3.7%
- New construction   : 20.3%
- Investment focus   : 0.3% << GAP
- Urgency / FOMO    : 0.3%  << GAP
+ Luxury messaging   : 37.4%
+ Location signals   : 21.9%
+ Deal / Discount   : 5.0%
+ New construction   : 20.2%
+ Investment focus   : 0.7% << GAP
+ Urgency / FOMO    : 0.6%  << GAP
 
- Top SEO keywords: house(1581), marla(966), brand(424), location(415), prime(334), phase(304), luxury(250), kanal(221), town(205), block(195)
+ Top SEO keywords: house(1502), marla(912), brand(412), location(373), phase(358), prime(296), luxury(279), kanal(263), town(248), block(194)
 
 COMPETITIVE OPPORTUNITIES
 ----------------------------------------
 
  1. [HIGHEST]  Urgency Messaging Barely Used
-   Stat  : 0.3% of listings
-   Why  : Only 0.3% of Zameen listings use urgency language. Buyers respond strongly to scarcity cues.
+   Stat  : 0.6% of listings
+   Why  : Only 0.6% of Zameen listings use urgency language. Buyers respond strongly to scarcity cues.
    Action : Add 'Limited Time', 'Last Chance', countdown banners, and FOMO-driven push notifications.
    Impact : Higher engagement from high-intent buyers
 
  2. [HIGHEST]  Investor Audience Ignored
-   Stat  : 0.3% investment focus
-   Why  : Only 0.3% of listings target investors, yet investors make up 30–40% of real-estate buyers in Pakistan.
+   Stat  : 0.7% investment focus
+   Why  : Only 0.7% of listings target investors, yet investors make up 30–40% of real-estate buyers in Pakistan.
    Action : Build an 'Investor Hub' with ROI calculators, rental-yield data, and market reports.
    Impact : New high-value segment unlocked
 
@@ -160,116 +160,22 @@ COMPETITIVE OPPORTUNITIES
    Action : Provide AI-assisted description builder and require 200+ character descriptions.
    Impact : Better SEO + higher buyer trust
 
- 4. [MEDIUM]  Luxury Premium in Karachi
-   Stat  : PKR 126,491,129 avg
-   Why  : Karachi commands a 132% premium over the national average.
+ 4. [MEDIUM]  Budget Opportunity in Quetta
+   Stat  : PKR 6,969,000 avg
+   Why  : Quetta is 87% cheaper than the national average — a clear entry-point for first-time buyers.
+   Action : Run targeted 'Affordable Homes in Quetta' campaigns for first-time buyers and middle-income families.
+   Impact : High volume, price-sensitive segment
+
+ 5. [MEDIUM]  Luxury Premium in Karachi
+   Stat  : PKR 150,244,000 avg
+   Why  : Karachi commands a 170% premium over the national average.
    Action : Develop white-glove luxury service tier for Karachi — dedicated agents, VIP tours, premium branding.
    Impact : Higher margin per transaction
 
 RENTAL MARKET INTELLIGENCE
 ----------------------------------------
-  Rental listings collected : 2,561
-  Overall avg monthly rent   : PKR 271,648
-  Note: All rental prices are PKR/month and are analysed separately from sale data.
-
-
-  Houses Rent - Islamabad
-    Avg rent   : PKR 866,348/month
-    Median     : PKR 550,000/month
-    Range      : PKR 45,000  -  PKR 12,500,000
-    Featured   : +10.0%
-    Listings   : 247
-
-  Houses Rent - Karachi
-    Avg rent   : PKR 584,696/month
-    Median     : PKR 450,000/month
-    Range      : PKR 30,000  -  PKR 5,000,000
-    Featured   : +15.5%
-    Listings   : 250
-
-  Houses Rent - Lahore
-    Avg rent   : PKR 230,566/month
-    Median     : PKR 177,500/month
-    Range      : PKR 30,000  -  PKR 750,000
-    Featured   : +9.3%
-    Listings   : 173
-
-  Houses Rent - Rawalpindi
-    Avg rent   : PKR 229,600/month
-    Median     : PKR 160,000/month
-    Range      : PKR 30,000  -  PKR 1,000,000
-    Featured   : +64.7%
-    Listings   : 250
-
-  Flats Rent - Karachi
-    Avg rent   : PKR 212,068/month
-    Median     : PKR 200,000/month
-    Range      : PKR 20,000  -  PKR 850,000
-    Featured   : +6.8%
-    Listings   : 249
-
-  Flats Rent - Islamabad
-    Avg rent   : PKR 195,150/month
-    Median     : PKR 125,000/month
-    Range      : PKR 18,000  -  PKR 778,000
-    Featured   : +3.6%
-    Listings   : 240
-
-  Houses Rent - Peshawar
-    Avg rent   : PKR 168,344/month
-    Median     : PKR 125,000/month
-    Range      : PKR 27,000  -  PKR 1,300,000
-    Featured   : -8.4%
-    Listings   : 90
-
-  Houses Rent - Faisalabad
-    Avg rent   : PKR 163,037/month
-    Median     : PKR 100,000/month
-    Range      : PKR 25,000  -  PKR 1,500,000
-    Featured   : +30.7%
-    Listings   : 205
-
-  Flats Rent - Lahore
-    Avg rent   : PKR 148,681/month
-    Median     : PKR 144,000/month
-    Range      : PKR 28,000  -  PKR 900,000
-    Featured   : -2.7%
-    Listings   : 249
-
-  Houses Rent - Multan
-    Avg rent   : PKR 101,516/month
-    Median     : PKR 90,000/month
-    Range      : PKR 35,000  -  PKR 300,000
-    Featured   : -9.6%
-    Listings   : 250
-
-  Flats Rent - Peshawar
-    Avg rent   : PKR 92,972/month
-    Median     : PKR 65,000/month
-    Range      : PKR 20,000  -  PKR 800,000
-    Featured   : +38.5%
-    Listings   : 36
-
-  Flats Rent - Multan
-    Avg rent   : PKR 81,613/month
-    Median     : PKR 55,000/month
-    Range      : PKR 25,000  -  PKR 295,000
-    Featured   : -25.6%
-    Listings   : 31
-
-  Flats Rent - Rawalpindi
-    Avg rent   : PKR 78,392/month
-    Median     : PKR 62,000/month
-    Range      : PKR 15,000  -  PKR 300,000
-    Featured   : +62.7%
-    Listings   : 241
-
-  Flats Rent - Faisalabad
-    Avg rent   : PKR 57,120/month
-    Median     : PKR 65,000/month
-    Range      : PKR 16,000  -  PKR 110,000
-    Featured   : +20.7%
-    Listings   : 50
+  Rental listings collected : 0
+  No rental data collected in this run.
 
 ========================================================================
   Report generated by AI-Powered Competitor Intelligence Engine

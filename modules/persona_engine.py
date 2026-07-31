@@ -215,29 +215,85 @@ def generate_whatsapp_post(listing: dict, persona_key: str = "investor", agent: 
     if not agent:
         agent = random.choice(VERIFIED_AGENTS)
 
-    title = listing.get("title", "Featured Property")
-    raw_city = listing.get("city", "Islamabad")
+    title   = listing.get("title", "Featured Property")
+    raw_city= listing.get("city", "Islamabad")
     city_name = raw_city.split("_")[-1] if "_" in raw_city else raw_city
-    price = listing.get("price", "Contact for Price")
-    area = listing.get("area", "N/A")
-    beds = listing.get("beds", "N/A")
-    mode = "For Rent" if listing.get("listing_mode") == "for_rent" else "For Sale"
+    sector  = listing.get("sector") or listing.get("address") or city_name
+    price   = listing.get("price", "Contact for Price")
+    area    = listing.get("area", "N/A")
+    beds    = listing.get("beds", "N/A")
+    baths   = listing.get("baths", "N/A")
+    prop_type = listing.get("property_type", "Property")
+    mode    = "For Rent" if listing.get("listing_mode") == "for_rent" else "For Sale"
+    desc    = (listing.get("description") or "")[:120]
+
+    # ── Persona-specific urgency lines ───────────────────────────────────
+    URGENCY = {
+        "investor": [
+            "⚡ Only 2 units left at launch pricing — prices rise next week.",
+            "📊 Rental yield estimated at 6–8% p.a. — outperforms fixed deposits.",
+            "🔒 NOC-verified | Capital-gain safe | Freehold title.",
+        ],
+        "luxury": [
+            "✨ Exclusive VIP listing — not publicly advertised.",
+            "🏆 Architecturally designed by award-winning firm.",
+            "🔐 Private gated access | Concierge-ready | Investment-grade address.",
+        ],
+        "family": [
+            "🌳 Quiet street | Top school within 5 min drive.",
+            "🔐 Gated community with 24/7 security guards.",
+            "🛝 Parks, mosque & market all within walking distance.",
+        ],
+        "first_time": [
+            "💳 Easy 3-year installment plan available.",
+            "📋 Clear title, NOC approved — zero legal hassle.",
+            "🎁 Free home inspection + legal fee support on booking.",
+        ],
+    }
+    urgency_lines = "\n".join(URGENCY.get(persona_key, URGENCY["investor"]))
+
+    # ── Property specs bullets ────────────────────────────────────────────
+    specs_parts = []
+    if area and area != "N/A":
+        specs_parts.append(f"📐 {area}")
+    if beds and beds != "N/A":
+        specs_parts.append(f"🛏 {beds} Bed")
+    if baths and baths != "N/A":
+        specs_parts.append(f"🚿 {baths} Bath")
+    specs_parts.append(f"🏷 {prop_type}")
+    specs_line = "  |  ".join(specs_parts)
+
+    # ── Description line (only if available) ─────────────────────────────
+    desc_block = f"\n📝 _{desc}..._\n" if desc else ""
+
+    # ── Date stamp for urgency ────────────────────────────────────────────
+    today = datetime.now().strftime("%d %b %Y")
 
     message = (
-        f"{persona['hook']}\n\n"
-        f"Hello! Based on your preferred *{persona['title']}* profile, here is a curated verified listing:\n\n"
-        f"🏡 *{title}*\n"
-        f"📍 *Location:* {city_name}, Pakistan ({mode})\n"
-        f"💰 *Price:* {price}\n"
-        f"📐 *Specs:* {area} | {beds} Bedrooms | Verified Title\n\n"
-        f"💡 *Why This Fits You:*\n"
-        f"✓ Handpicked for {city_name} buyers seeking high market value.\n"
-        f"✓ Verified seller title & clear documentation guaranteed.\n\n"
-        f"👤 *Assigned Consultant:*\n"
-        f"*{agent['name']}* ({agent['title']})\n"
+        f"{persona['hook']}\n"
+        f"─────────────────\n\n"
+        f"*🏙 {title}*\n"
+        f"📍 *{sector}*   |   {mode}\n"
+        f"💰 *Asking Price: {price}*\n\n"
+        f"▪ {specs_line}\n"
+        f"{desc_block}\n"
+        f"─────────────────\n"
+        f"*🎯 Why This Is The Right Move For You:*\n"
+        f"{urgency_lines}\n\n"
+        f"─────────────────\n"
+        f"*👤 Your Dedicated Property Advisor:*\n"
+        f"🧑‍💼 *{agent['name']}*  —  {agent['title']}\n"
         f"🏢 {agent['agency']}\n"
-        f"📞 Call / WhatsApp: {agent['phone']}\n\n"
-        f"Reply *YES* to schedule a private video walkthrough or site visit!\n\n🔗 Visit our platform: {OUR_PLATFORM_URL}\n🤝 Connect on LinkedIn: {OUR_LINKEDIN_URL}\n🔗 Facebook: {OUR_FACEBOOK_URL}\n📸 Instagram: {OUR_INSTAGRAM_URL}"
+        f"📞 Call / WhatsApp: *{agent['phone']}*\n\n"
+        f"*📅 Book a FREE site visit or video tour today!*\n"
+        f"Simply reply *VISIT* or tap the link below:\n"
+        f"🔗 {OUR_PLATFORM_URL}\n\n"
+        f"📲 *Share with your friends and family, or save to yourself as a reminder.*\n\n"
+        f"_Follow us for daily verified listings:_\n"
+        f"💼 LinkedIn: {OUR_LINKEDIN_URL}\n"
+        f"📘 Facebook: {OUR_FACEBOOK_URL}\n"
+        f"📸 Instagram: {OUR_INSTAGRAM_URL}\n\n"
+        f"_Listing verified as of {today}. Limited availability._"
     )
 
     encoded_msg = urllib.parse.quote(message)
@@ -247,14 +303,14 @@ def generate_whatsapp_post(listing: dict, persona_key: str = "investor", agent: 
         clean_phone = "92" + clean_phone[1:]
 
     wa_target_url = f"https://api.whatsapp.com/send?phone={clean_phone}&text={encoded_msg}" if clean_phone else f"https://api.whatsapp.com/send?text={encoded_msg}"
-    wa_share_url = f"https://api.whatsapp.com/send?text={encoded_msg}"
+    wa_share_url  = f"https://api.whatsapp.com/send?text={encoded_msg}"
 
     return {
-        "text": message,
-        "wa_link": wa_target_url,
-        "wa_share_link": wa_share_url,
-        "persona_title": persona["title"],
-        "agent": agent,
+        "text":           message,
+        "wa_link":        wa_target_url,
+        "wa_share_link":  wa_share_url,
+        "persona_title":  persona["title"],
+        "agent":          agent,
         "recipient_phone": clean_phone,
     }
 # ---------------------------------------------------------------------------
