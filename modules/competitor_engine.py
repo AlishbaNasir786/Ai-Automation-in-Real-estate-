@@ -397,6 +397,44 @@ def save_to_csv(listings: list, filename: str = "data/zameen_listings.csv"):
 
 
 # ---------------------------------------------------------------------------
+# HTML file scraper (local saved HTML)
+# ---------------------------------------------------------------------------
+
+def scrape_from_html_file(html_path: str, city_label: str = None) -> list:
+    """
+    Scrape listings from a locally saved Zameen.com HTML file.
+    This is a thin wrapper around _parse_listings() — no logic is duplicated.
+
+    Parameters
+    ----------
+    html_path   : str  — absolute or relative path to the .html file
+    city_label  : str  — optional city name that will be tagged on each listing
+
+    Returns
+    -------
+    list of enriched listing dicts (same schema as scrape_zameen())
+    """
+    if not os.path.exists(html_path):
+        print(f"❌  File not found: {html_path}")
+        return []
+
+    print(f"📂  Reading HTML file: {html_path}")
+    with open(html_path, "r", encoding="utf-8", errors="replace") as fh:
+        html = fh.read()
+
+    if len(html) < 1500:
+        print("⚠️  File is too small — may not contain listing data.")
+        return []
+
+    # Derive a page_url stub so the existing pipeline stays unchanged
+    page_url = f"file://{os.path.abspath(html_path)}"
+    listings = _parse_listings(html, city_label, page_url)
+    print(f"✅  scrape_from_html_file: extracted {len(listings)} listings from {os.path.basename(html_path)}")
+    return listings
+
+
+
+# ---------------------------------------------------------------------------
 # Deep analytics
 # ---------------------------------------------------------------------------
 

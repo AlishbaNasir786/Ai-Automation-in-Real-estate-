@@ -21,6 +21,8 @@ async function initAuthAndBanner() {
 
     if (data.authenticated && data.user) {
       currentUser = data.user;
+      // Restore phone globally for persona auto-send
+      window.currentClientPhone = data.user.phone || '';
       renderUserHeaderBadge(true);
 
       if (!currentUser.segment) {
@@ -101,6 +103,10 @@ function renderUserHeaderBadge(isLoggedIn) {
   }
 
   nav.appendChild(container);
+
+  // ── Set body data-role so CSS can show/hide admin action bars ──
+  // body[data-role='admin'] .admin-action-bar { display: flex }
+  document.body.dataset.role = isAdmin ? 'admin' : 'client';
 }
 
 /* ── LOAD & INJECT PERSONALIZED TOP BANNER ──────────────────── */
@@ -129,6 +135,12 @@ function renderTopBanner(ad, listing, segment) {
   const banner = document.createElement('div');
   banner.id = 'personalizedTopBanner';
   banner.className = 'personalized-banner';
+
+  // Use segment's general_tagline for the sub-text (no specific property shown)
+  const benefitText = (segment && segment.general_tagline)
+    ? segment.general_tagline
+    : (ad.body || `Islamabad's prime real estate — verified listings, zero hidden costs.`);
+
   banner.innerHTML = `
     <div class="p-banner-left">
       <div class="p-banner-icon-ring">${icon}</div>
@@ -138,15 +150,14 @@ function renderTopBanner(ad, listing, segment) {
         </div>
         <div class="p-banner-title">${esc(ad.headline)}</div>
         <div class="p-banner-sub">
-          <span class="p-sub-title">📍 ${esc(listing.title || listing.location)}</span> · 
-          <span class="p-sub-price">${esc(listing.price || 'Contact for Price')}</span>
+          <span class="p-sub-title">${esc(benefitText)}</span>
         </div>
       </div>
     </div>
 
     <div class="p-banner-right">
-      <button class="p-banner-btn-primary" onclick="window.open('https://wa.me/923165756055?text=' + encodeURIComponent('Hi, I saw your feature offer: ${esc(ad.headline)} for ${esc(listing.title)}. Please send virtual tour details.'), '_blank')">
-        ${esc(ad.cta || 'Claim Offer &amp; Virtual Tour')}
+      <button class="p-banner-btn-primary" id="bannerHdTourBtn" onclick="openBannerHdTour()">
+        🎬 Virtual HD Tour
       </button>
       <button class="p-banner-close" onclick="document.getElementById('personalizedTopBanner').remove()" title="Dismiss ad">✕</button>
     </div>
@@ -199,6 +210,11 @@ function injectAuthModal() {
           <label>Password</label>
           <input type="password" id="authPassword" class="form-control" placeholder="••••••••" required />
         </div>
+        <div id="phoneGroup" class="form-group">
+          <label id="phoneLabel">📱 WhatsApp / Mobile Number</label>
+          <input type="tel" id="authPhone" class="form-control" placeholder="e.g. 03001234567 or +923001234567" />
+          <span style="font-size:0.7rem; color:#64748b; margin-top:2px; display:block;">Used to auto-send personalised property posts to you via WhatsApp</span>
+        </div>
 
         <div id="authError" class="auth-error" style="display:none;"></div>
 
@@ -246,6 +262,13 @@ function switchAuthTab(mode) {
   document.getElementById('nameGroup').style.display = mode === 'signup' ? 'block' : 'none';
   document.getElementById('authSubmitBtn').textContent = mode === 'signup' ? 'Create Account & Continue' : 'Sign In & Continue';
   document.getElementById('authError').style.display = 'none';
+  // Phone field: always visible but label changes per mode
+  const phoneLabel = document.getElementById('phoneLabel');
+  if (phoneLabel) {
+    phoneLabel.textContent = mode === 'signup'
+      ? '📱 WhatsApp / Mobile Number'
+      : '📱 WhatsApp Number (optional — save / update)';
+  }
 }
 
 async function handleAuthSubmit(e) {
@@ -256,9 +279,12 @@ async function handleAuthSubmit(e) {
   const email = document.getElementById('authEmail').value;
   const password = document.getElementById('authPassword').value;
   const fullName = document.getElementById('authName').value;
+  const phone = (document.getElementById('authPhone')?.value || '').trim();
 
   const url = currentAuthMode === 'signup' ? '/api/auth/signup' : '/api/auth/login';
-  const payload = currentAuthMode === 'signup' ? { email, password, full_name: fullName } : { email, password };
+  const payload = currentAuthMode === 'signup'
+    ? { email, password, full_name: fullName, phone: phone || undefined }
+    : { email, password, phone: phone || undefined };
 
   try {
     const res = await fetch(url, {
@@ -270,6 +296,8 @@ async function handleAuthSubmit(e) {
 
     if (data.status === 'success' && data.user) {
       currentUser = data.user;
+      // Store client phone globally so persona engine can auto-send to this number
+      window.currentClientPhone = data.user.phone || phone || '';
       closeAuthModal();
       renderUserHeaderBadge(true);
       // ALWAYS open persona onboarding screen immediately right after login/signup
@@ -596,12 +624,12 @@ function injectAuthStyles() {
       width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
       box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); flex-shrink: 0;
     }
-    .p-banner-content { text-align: left; }
+    .p-banner-content { text-align: left; flex: 1; }
     .p-banner-badge { font-size: 0.7rem; font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.15rem; }
     .p-banner-badge span { color: #38bdf8; }
     .p-banner-title { font-weight: 800; font-size: 1.05rem; color: #fff; line-height: 1.3; }
-    .p-banner-sub { font-size: 0.82rem; color: #cbd5e1; margin-top: 0.15rem; }
-    .p-sub-title { color: #f8fafc; font-weight: 600; }
+    .p-banner-sub { font-size: 0.88rem; color: #cbd5e1; margin-top: 0.35rem; text-align: center; width: 100%; }
+    .p-sub-title { color: #38bdf8; font-weight: 600; text-align: center; display: block; line-height: 1.5; letter-spacing: 0.3px; text-shadow: 0 0 10px rgba(56,189,248,0.15); }
     .p-sub-price { color: #10b981; font-weight: 800; }
     .p-banner-right { display: flex; align-items: center; gap: 0.75rem; }
     .p-banner-btn-primary {
@@ -637,16 +665,18 @@ function injectAuthStyles() {
 
     .auth-modal-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(9, 13, 22, 0.85); backdrop-filter: blur(16px);
-      display: none; align-items: center; justify-content: center; z-index: 10000;
+      background: rgba(9, 13, 22, 0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      display: none; align-items: center; justify-content: center; z-index: 999999;
+      overflow-y: auto; padding: 2rem 1rem; box-sizing: border-box;
     }
     .auth-modal-overlay.visible { display: flex; }
     .auth-modal-card, .persona-modal-card {
       background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
-      border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 24px;
-      padding: 2.2rem 2rem; width: 100%; max-width: 440px; position: relative;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 24px;
+      padding: 2.2rem 2rem; width: 100%; max-width: 440px; margin: auto; position: relative;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), 0 0 35px rgba(56, 189, 248, 0.18);
       animation: modalFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      max-height: 90vh; overflow-y: auto; box-sizing: border-box;
     }
     @keyframes modalFadeIn {
       from { opacity: 0; transform: scale(0.95) translateY(10px); }
@@ -654,43 +684,45 @@ function injectAuthStyles() {
     }
     .persona-modal-card { max-width: 680px; text-align: center; }
     .modal-close {
-      position: absolute; top: 18px; right: 18px; background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.1); color: #94a3b8; font-size: 1rem;
-      width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease;
-      display: flex; align-items: center; justify-content: center;
+      position: absolute; top: 18px; right: 18px; background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15); color: #cbd5e1; font-size: 1rem;
+      width: 34px; height: 34px; border-radius: 50%; cursor: pointer; transition: all 0.2s ease;
+      display: flex; align-items: center; justify-content: center; z-index: 10;
     }
-    .modal-close:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
+    .modal-close:hover { background: rgba(255, 255, 255, 0.2); color: #fff; transform: scale(1.05); }
 
-    .auth-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.5rem; }
-    .auth-tabs button { background: none; border: none; color: #94a3b8; font-weight: 700; font-size: 0.95rem; cursor: pointer; padding: 0.4rem 0.8rem; transition: color 0.2s ease; }
+    .auth-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 0.5rem; justify-content: center; }
+    .auth-tabs button { background: none; border: none; color: #94a3b8; font-weight: 700; font-size: 0.95rem; cursor: pointer; padding: 0.4rem 1.2rem; transition: all 0.2s ease; }
     .auth-tabs button.active { color: #38bdf8; border-bottom: 2px solid #38bdf8; }
 
     .form-group { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.9rem; text-align: left; }
-    .form-group label { font-size: 0.78rem; font-weight: 600; color: #94a3b8; }
+    .form-group label { font-size: 0.8rem; font-weight: 700; color: #cbd5e1; }
     .form-control {
-      background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 10px; padding: 0.65rem 0.9rem; color: #fff; font-size: 0.88rem;
+      background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 10px; padding: 0.7rem 0.95rem; color: #ffffff; font-size: 0.9rem;
       outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      box-sizing: border-box; width: 100%;
     }
-    .form-control:focus { border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.25); }
+    .form-control::placeholder { color: #64748b; }
+    .form-control:focus { border-color: #38bdf8; box-shadow: 0 0 14px rgba(56, 189, 248, 0.3); }
 
     .btn-auth-submit {
       background: linear-gradient(135deg, #10b981 0%, #38bdf8 100%); color: #042f2e; font-weight: 800;
-      width: 100%; padding: 0.8rem; border: none; border-radius: 12px; cursor: pointer; margin-top: 0.8rem;
-      font-size: 0.92rem; transition: all 0.25s ease; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+      width: 100%; padding: 0.85rem; border: none; border-radius: 12px; cursor: pointer; margin-top: 0.8rem;
+      font-size: 0.95rem; transition: all 0.25s ease; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
     }
-    .btn-auth-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45); }
+    .btn-auth-submit:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(16, 185, 129, 0.5); }
 
-    .auth-divider { text-align: center; margin: 1.2rem 0; font-size: 0.72rem; font-weight: 700; color: #64748b; position: relative; letter-spacing: 0.5px; }
-    .auth-divider::before, .auth-divider::after { content: ''; position: absolute; top: 50%; width: 35%; height: 1px; background: rgba(255,255,255,0.08); }
+    .auth-divider { text-align: center; margin: 1.2rem 0; font-size: 0.72rem; font-weight: 700; color: #94a3b8; position: relative; letter-spacing: 0.5px; }
+    .auth-divider::before, .auth-divider::after { content: ''; position: absolute; top: 50%; width: 32%; height: 1px; background: rgba(255,255,255,0.12); }
     .auth-divider::before { left: 0; } .auth-divider::after { right: 0; }
     .btn-google-large {
-      background: #ffffff; color: #1e293b; font-weight: 700; font-size: 0.88rem; width: 100%;
-      padding: 0.75rem; border: none; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.65rem;
-      transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      background: #ffffff; color: #1e293b; font-weight: 700; font-size: 0.9rem; width: 100%;
+      padding: 0.8rem; border: none; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.65rem;
+      transition: all 0.2s ease; box-shadow: 0 4px 14px rgba(0,0,0,0.3);
     }
-    .btn-google-large:hover { background: #f8fafc; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
-    .auth-error { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); padding: 0.55rem; border-radius: 8px; font-size: 0.8rem; margin-top: 0.6rem; text-align: center; }
+    .btn-google-large:hover { background: #f8fafc; transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,0.4); }
+    .auth-error { background: rgba(239, 68, 68, 0.18); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.4); padding: 0.6rem; border-radius: 10px; font-size: 0.82rem; margin-top: 0.6rem; text-align: center; font-weight: 600; }
 
     .u-role-admin {
       background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(249, 115, 22, 0.2));
@@ -709,17 +741,17 @@ function injectAuthStyles() {
     .u-btn-add-prop:hover { transform: translateY(-1px); box-shadow: 0 0 18px rgba(16, 185, 129, 0.5); }
 
     .preset-credentials-bar {
-      background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px; padding: 0.65rem 0.9rem; margin-bottom: 1.1rem; text-align: left;
+      background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 14px; padding: 0.75rem 1rem; margin-bottom: 1.1rem; text-align: left;
     }
     .preset-btn {
-      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.65rem; border-radius: 8px; cursor: pointer;
-      transition: all 0.2s ease;
+      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff; font-size: 0.78rem; font-weight: 700; padding: 0.4rem 0.8rem; border-radius: 8px; cursor: pointer;
+      transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 0.3rem;
     }
-    .preset-btn:hover { background: rgba(255, 255, 255, 0.18); }
-    .preset-btn.admin-p { border-color: rgba(239, 68, 68, 0.4); color: #fca5a5; }
-    .preset-btn.client-p { border-color: rgba(56, 189, 248, 0.4); color: #7dd3fc; }
+    .preset-btn:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-1px); }
+    .preset-btn.admin-p { border-color: rgba(239, 68, 68, 0.5); color: #fca5a5; background: rgba(239, 68, 68, 0.12); }
+    .preset-btn.client-p { border-color: rgba(56, 189, 248, 0.5); color: #7dd3fc; background: rgba(56, 189, 248, 0.12); }
 
     .p-modal-title { font-family: 'Outfit', sans-serif; font-size: 1.7rem; font-weight: 800; color: #fff; margin-bottom: 0.4rem; }
     .p-modal-sub { color: #94a3b8; font-size: 0.88rem; margin-bottom: 1.5rem; line-height: 1.5; }
@@ -769,4 +801,321 @@ function _showAccessToast(message) {
 function esc(str) {
   if (!str) return '';
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   VIRTUAL HD TOUR  —  Self-contained, works on every page
+   Triggered by the "🎬 Virtual HD Tour" button in the banner ad.
+   Injects its own modal HTML, fetches sectors from /api/sector-videos
+   and shows the selected sector's promo video.
+══════════════════════════════════════════════════════════════════ */
+let _hdTourVideos   = [];
+let _hdTourLoaded   = false;
+let _hdTourInjected = false;
+
+function _injectHdTourModal() {
+  if (_hdTourInjected) return;
+  _hdTourInjected = true;
+
+  // ── Styles ──────────────────────────────────────────────────────
+  const style = document.createElement('style');
+  style.textContent = `
+    #hdTourModalOverlay {
+      display:none; position:fixed; inset:0;
+      background:rgba(0,0,0,0.72); z-index:99000;
+      backdrop-filter:blur(6px);
+      align-items:center; justify-content:center;
+    }
+    #hdTourModalOverlay.open { display:flex; }
+    #hdTourModal {
+      background:#0f172a;
+      border:1px solid rgba(56,189,248,0.28);
+      border-radius:18px;
+      box-shadow:0 30px 80px rgba(0,0,0,0.7);
+      width:min(620px,95vw);
+      max-height:90vh;
+      display:flex; flex-direction:column;
+      overflow:hidden;
+      animation: hdModalIn 0.35s cubic-bezier(.16,1,.3,1);
+    }
+    @keyframes hdModalIn {
+      from { opacity:0; transform:scale(0.94) translateY(16px); }
+      to   { opacity:1; transform:scale(1)    translateY(0);    }
+    }
+    .hdm-header {
+      padding:1.1rem 1.4rem;
+      background:linear-gradient(135deg,#0a1628,#0f1f3d);
+      border-bottom:1px solid rgba(56,189,248,0.18);
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .hdm-header h3 {
+      margin:0; font-size:1rem; font-weight:800; color:#fff;
+    }
+    .hdm-close {
+      background:rgba(255,255,255,0.08); border:none;
+      color:#94a3b8; width:32px; height:32px;
+      border-radius:8px; cursor:pointer; font-size:1.1rem;
+      transition:all .2s;
+    }
+    .hdm-close:hover { background:rgba(239,68,68,0.18); color:#f87171; }
+    .hdm-body { flex:1; overflow-y:auto; padding:1.2rem; }
+    .hdm-body::-webkit-scrollbar { width:5px; }
+    .hdm-body::-webkit-scrollbar-track { background:#0f172a; }
+    .hdm-body::-webkit-scrollbar-thumb { background:#253046; border-radius:4px; }
+    .hdm-label {
+      font-size:0.8rem; color:#94a3b8; font-weight:600;
+      display:block; margin-bottom:6px;
+    }
+    #hdTourDropdown {
+      width:100%; padding:11px 14px;
+      border-radius:9px;
+      background:#1e293b;
+      color:#f1f5f9;
+      border:1px solid rgba(56,189,248,0.4);
+      font-size:0.9rem; font-weight:700;
+      cursor:pointer; margin-bottom:1.2rem;
+      outline:none;
+    }
+    #hdTourVideoWrap {
+      width:100%;
+      border-radius:12px; overflow:hidden;
+      border:1px solid rgba(56,189,248,0.22);
+      background:#0a0a0a; display:none;
+      margin-bottom:0.9rem;
+      position:relative; cursor:pointer;
+    }
+    #hdTourThumb {
+      width:100%; display:block;
+      aspect-ratio:16/9; object-fit:cover;
+    }
+    .hd-play-btn {
+      position:absolute; top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      width:64px; height:64px;
+      background:rgba(255,0,0,0.88);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.8rem; color:#fff;
+      box-shadow:0 0 0 0 rgba(255,0,0,0.5);
+      animation:playPulse 2s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes playPulse {
+      0%   { box-shadow:0 0 0 0 rgba(255,0,0,0.45); }
+      70%  { box-shadow:0 0 0 14px rgba(255,0,0,0);  }
+      100% { box-shadow:0 0 0 0 rgba(255,0,0,0);     }
+    }
+    .hd-yt-label {
+      position:absolute; bottom:8px; left:50%;
+      transform:translateX(-50%);
+      background:rgba(0,0,0,0.7);
+      color:#fff; font-size:0.72rem; font-weight:700;
+      padding:3px 10px; border-radius:20px;
+      white-space:nowrap;
+    }
+    .hdm-act-yt {
+      background:rgba(255,0,0,0.12);
+      border:1px solid rgba(255,0,0,0.35);
+      color:#ff4444;
+    }
+    #hdTourSectorInfo { display:none; }
+    .hdm-sector-title {
+      font-size:1rem; font-weight:800; color:#fff;
+      margin-bottom:3px;
+    }
+    .hdm-sector-tag {
+      font-size:0.78rem; color:#38bdf8;
+      font-weight:600; margin-bottom:0.7rem;
+    }
+    .hdm-sector-desc {
+      font-size:0.85rem; color:#94a3b8;
+      line-height:1.7; margin-bottom:1rem;
+    }
+    .hdm-actions {
+      display:flex; gap:0.7rem;
+    }
+    .hdm-actions a {
+      flex:1; padding:0.6rem; text-align:center;
+      border-radius:8px; font-size:0.8rem;
+      font-weight:700; text-decoration:none;
+    }
+    .hdm-act-find {
+      background:rgba(16,185,129,0.12);
+      border:1px solid rgba(16,185,129,0.3);
+      color:#10b981;
+    }
+    .hdm-act-wa {
+      background:rgba(37,211,102,0.12);
+      border:1px solid rgba(37,211,102,0.3);
+      color:#25d366;
+    }
+    .hdm-placeholder {
+      text-align:center; padding:2rem;
+      color:#475569; font-size:0.9rem;
+    }
+  `;
+  document.head.appendChild(style);
+
+  // ── Modal HTML ──────────────────────────────────────────────────
+  const overlay = document.createElement('div');
+  overlay.id = 'hdTourModalOverlay';
+  overlay.innerHTML = `
+    <div id="hdTourModal">
+      <div class="hdm-header">
+        <h3>🎬 Virtual HD Tour — Select a Sector</h3>
+        <button class="hdm-close" onclick="closeHdTourModal()">×</button>
+      </div>
+      <div class="hdm-body">
+        <label class="hdm-label" for="hdTourDropdown">📍 Choose Islamabad Sector / Area:</label>
+        <select id="hdTourDropdown" onchange="playHdTourSector(this.value)">
+          <option value="">-- Select a Sector to Watch --</option>
+        </select>
+
+        <div id="hdTourVideoWrap" onclick="_openHdTourVideo()">
+          <img id="hdTourThumb" src="" alt="Sector video thumbnail" />
+          <div class="hd-play-btn">&#9654;</div>
+          <div class="hd-yt-label">▶ Click to Watch on YouTube</div>
+        </div>
+
+        <div id="hdTourSectorInfo">
+          <div class="hdm-sector-title" id="hdmSectorTitle"></div>
+          <div class="hdm-sector-tag"  id="hdmSectorTag"></div>
+          <p   class="hdm-sector-desc" id="hdmSectorDesc"></p>
+          <div class="hdm-actions">
+            <a href="/persona_app.html" class="hdm-act-find" id="hdmFindLink">🏠 Find Properties</a>
+            <a href="#" target="_blank" class="hdm-act-yt" id="hdmYtLink">▶ Watch on YouTube</a>
+            <a href="https://wa.me/923165756055" target="_blank" class="hdm-act-wa" id="hdmAgentLink">💬 Ask Agent</a>
+          </div>
+        </div>
+
+        <div class="hdm-placeholder" id="hdmPlaceholder">
+          ⬆️ Select a sector from the dropdown above to watch its promotional video
+          and discover the benefits of buying or renting in that area.
+        </div>
+      </div>
+    </div>`;
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeHdTourModal();
+  });
+  document.body.appendChild(overlay);
+}
+
+async function openBannerHdTour() {
+  _injectHdTourModal();
+
+  // Show modal immediately
+  document.getElementById('hdTourModalOverlay').classList.add('open');
+
+  // Fetch sector videos if not already loaded
+  if (!_hdTourLoaded) {
+    try {
+      const res  = await fetch('/api/sector-videos');
+      const data = await res.json();
+      _hdTourVideos = data.videos || [];
+      _hdTourLoaded = true;
+
+      const dropdown = document.getElementById('hdTourDropdown');
+      dropdown.innerHTML = '<option value="">-- Select a Sector to Watch --</option>';
+      _hdTourVideos.forEach(v => {
+        const opt = document.createElement('option');
+        opt.value = v.sector;
+        opt.textContent = `${v.sector}  —  ${v.title}`;
+        dropdown.appendChild(opt);
+      });
+    } catch(e) {
+      const placeholder = document.getElementById('hdmPlaceholder');
+      if (placeholder) placeholder.textContent = '❌ Could not load sector videos. Please try again.';
+    }
+  }
+}
+
+function _extractYtId(url) {
+  const m = String(url || '').match(/(?:embed\/|v=|youtu\.be\/|shorts\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+let _currentYtUrl = '';
+
+function _openHdTourVideo() {
+  if (_currentYtUrl) window.open(_currentYtUrl, '_blank');
+}
+
+function playHdTourSector(sector) {
+  const video   = _hdTourVideos.find(v => v.sector === sector);
+  const wrap    = document.getElementById('hdTourVideoWrap');
+  const infoBox = document.getElementById('hdTourSectorInfo');
+  const ph      = document.getElementById('hdmPlaceholder');
+
+  if (!video || !sector) {
+    if (wrap)    wrap.style.display    = 'none';
+    if (infoBox) infoBox.style.display = 'none';
+    if (ph)      ph.style.display      = 'block';
+    return;
+  }
+
+  // ── Thumbnail player (always works, no embed restrictions) ────────
+  const vtId   = _extractYtId(video.video_url);
+  const thumb  = document.getElementById('hdTourThumb');
+  const ytLink = document.getElementById('hdmYtLink');
+
+  // Build the watch URL (Shorts or regular)
+  const watchUrl = vtId
+    ? `https://www.youtube.com/shorts/${vtId}`
+    : video.video_url;
+  _currentYtUrl = watchUrl;
+
+  if (thumb && vtId) {
+    // Use maxresdefault, fall back to hqdefault if not available
+    thumb.src   = `https://i.ytimg.com/vi/${vtId}/hqdefault.jpg`;
+    thumb.onerror = () => { thumb.src = `https://i.ytimg.com/vi/${vtId}/mqdefault.jpg`; };
+  }
+  if (ytLink) {
+    ytLink.href        = watchUrl;
+    ytLink.textContent = '▶ Watch on YouTube';
+  }
+  if (wrap) wrap.style.display = 'block';
+
+  // ── Sector info ──────────────────────────────────────────────────
+  const title     = document.getElementById('hdmSectorTitle');
+  const tag       = document.getElementById('hdmSectorTag');
+  const desc      = document.getElementById('hdmSectorDesc');
+  const findLink  = document.getElementById('hdmFindLink');
+  const agentLink = document.getElementById('hdmAgentLink');
+  if (title)    title.textContent    = video.title;
+  if (tag)      tag.textContent      = video.tagline || '';
+  if (desc)     desc.textContent     = video.description || '';
+  if (findLink) findLink.textContent = `🏠 Find Properties in ${video.sector}`;
+
+  // Pre-filled WhatsApp message
+  if (agentLink) {
+    const msg = encodeURIComponent(
+      `Hello! I watched the Virtual HD Tour for ${video.sector} on your platform.\n` +
+      `I am interested in properties in ${video.sector} — ${video.title}.\n` +
+      `Please send me more details about available properties, pricing, and upcoming deals in ${video.sector}.`
+    );
+    agentLink.href = `https://wa.me/923165756055?text=${msg}`;
+  }
+
+  if (infoBox) infoBox.style.display = 'block';
+  if (ph)      ph.style.display      = 'none';
+}
+
+function closeHdTourModal() {
+  const overlay = document.getElementById('hdTourModalOverlay');
+  if (overlay) overlay.classList.remove('open');
+  // Reset thumbnail and current video URL
+  _currentYtUrl = '';
+  const thumb = document.getElementById('hdTourThumb');
+  if (thumb) thumb.src = '';
+  // Reset dropdown
+  const dropdown = document.getElementById('hdTourDropdown');
+  if (dropdown) dropdown.value = '';
+  // Reset display
+  const wrap    = document.getElementById('hdTourVideoWrap');
+  const infoBox = document.getElementById('hdTourSectorInfo');
+  const ph      = document.getElementById('hdmPlaceholder');
+  if (wrap)    wrap.style.display    = 'none';
+  if (infoBox) infoBox.style.display = 'none';
+  if (ph)      ph.style.display      = 'block';
 }

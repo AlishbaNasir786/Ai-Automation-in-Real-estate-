@@ -149,9 +149,57 @@ def run_engine():
         },
     )
 
-# ---------------------------------------------------------------------------
-# Image upload & retrieval
-# ---------------------------------------------------------------------------
+
+@app.route('/api/scrape_html_file', methods=['POST'])
+@admin_required
+def scrape_html_file():
+    """
+    Upload a locally saved Zameen.com HTML file and scrape it.
+    Form fields:
+      - file   : the .html file (multipart/form-data)
+      - city   : optional city label string
+      - save   : optional 'true' to append results to data/zameen_listings.csv
+    """
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file uploaded'}), 400
+
+    f = request.files['file']
+    if not f.filename.lower().endswith('.html'):
+        return jsonify({'error': 'Only .html files are accepted'}), 400
+
+    city_label = request.form.get('city', 'Islamabad').strip() or 'Islamabad'
+    should_save = request.form.get('save', 'true').lower() == 'true'
+
+    # Write to a temp file so scrape_from_html_file() can read it normally
+    import tempfile
+    with tempfile.NamedTemporaryFile(suffix='.html', delete=False, mode='wb') as tmp:
+        f.save(tmp)
+        tmp_path = tmp.name
+
+    try:
+        from modules.competitor_engine import scrape_from_html_file, save_to_csv
+        listings = scrape_from_html_file(tmp_path, city_label=city_label)
+    finally:
+        try:
+            os.remove(tmp_path)
+        except Exception:
+            pass
+
+    if not listings:
+        return jsonify({'success': False, 'error': 'No listings found in the HTML file.'}), 200
+
+    if should_save:
+        save_to_csv(listings, filename='data/zameen_listings.csv')
+
+    return jsonify({
+        'success':  True,
+        'count':    len(listings),
+        'city':     city_label,
+        'preview':  listings[:5],   # first 5 for quick review
+        'saved':    should_save,
+    }), 200
+
+
 IMAGES_DIR   = os.path.join('static', 'images')
 IMAGES_MAP   = os.path.join('static', 'images', 'property_images.json')
 os.makedirs(IMAGES_DIR, exist_ok=True)
@@ -179,6 +227,7 @@ def get_property_images():
 @app.route('/api/upload_image', methods=['POST'])
 def upload_image():
     """Upload an image for a specific property.
+    Supports multiple images per property — stored as a list.
     Form fields: property_id (string), file (image).
     """
     property_id = request.form.get('property_id', '').strip()
@@ -195,17 +244,54 @@ def upload_image():
     if not _allowed(f.filename):
         return jsonify({'error': 'File type not allowed'}), 400
 
+    m = _load_map()
+
+    # Count existing images for this property to generate unique filename index
+    existing = m.get(property_id, [])
+    if isinstance(existing, str):
+        existing = [existing]  # migrate old single-string format
+    idx = len(existing) + 1
+
     ext      = f.filename.rsplit('.', 1)[1].lower()
-    filename = secure_filename(f'property_{property_id}.{ext}')
+    filename = secure_filename(f'property_{property_id}_{idx}.{ext}')
     filepath = os.path.join(IMAGES_DIR, filename)
     f.save(filepath)
 
     url = f'/static/images/{filename}'
-    m   = _load_map()
-    m[property_id] = url
+    existing.append(url)
+    m[property_id] = existing
     _save_map(m)
 
-    return jsonify({'url': url}), 200
+    return jsonify({'url': url, 'all_images': existing}), 200
+
+
+@app.route('/api/delete_image', methods=['POST'])
+def delete_image():
+    """Remove a specific image URL from a property's image list."""
+    data        = request.get_json(silent=True) or {}
+    property_id = data.get('property_id', '').strip()
+    image_url   = data.get('image_url', '').strip()
+    if not property_id or not image_url:
+        return jsonify({'error': 'property_id and image_url required'}), 400
+
+    m        = _load_map()
+    existing = m.get(property_id, [])
+    if isinstance(existing, str):
+        existing = [existing]
+    existing = [u for u in existing if u != image_url]
+    m[property_id] = existing
+    _save_map(m)
+
+    # Optionally delete the file from disk
+    try:
+        rel = image_url.lstrip('/')
+        path = os.path.join(IMAGES_DIR, os.path.basename(rel))
+        if os.path.exists(path):
+            os.remove(path)
+    except Exception:
+        pass
+
+    return jsonify({'status': 'deleted', 'all_images': existing}), 200
 
 
 if __name__ == '__main__':

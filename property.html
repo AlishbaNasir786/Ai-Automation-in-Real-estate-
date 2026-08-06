@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,21 +8,40 @@
   <link rel="stylesheet" href="/static/css/luxury_theme.css" />
   <style>
     .top-nav {
-      display: flex; justify-content: center; align-items: center; gap: 1rem; padding: 1rem 1.5rem;
-      background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08); position: sticky; top: 0; z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
+
     .top-nav a {
-      background: rgba(16, 185, 129, 0.12); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.25);
-      padding: 0.5rem 1.1rem; border-radius: 30px; text-decoration: none;
-      font-weight: 700; font-size: 0.85rem; transition: all 0.25s ease;
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 0.5rem 1.1rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: all 0.25s ease;
     }
+
     .top-nav a:hover {
-      background: #10b981; color: #042f2e;
-      box-shadow: 0 0 16px rgba(16, 185, 129, 0.4); transform: translateY(-1px);
+      background: #10b981;
+      color: #042f2e;
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);
+      transform: translateY(-1px);
     }
   </style>
 </head>
+
 <body>
 
   <!-- Top Navigation Bar -->
@@ -37,7 +57,7 @@
     <div class="hero-badge">🏛️ Premier Real Estate Portal · Islamabad</div>
     <h1 class="hero-title">Find Your Dream Property in Islamabad</h1>
     <p class="hero-sub">AI-Powered Hyper-Personalized Listings, 100% NOC Clearance &amp; Direct Seller Intelligence</p>
-    
+
     <div class="hero-stats">
       <div class="hero-stat">
         <div class="hero-num">100%</div>
@@ -56,7 +76,8 @@
 
   <!-- Professional Filter Bar -->
   <div class="filter-bar">
-    <input type="text" id="filterKeyword" placeholder="🔍 Search sector, title or keyword..." oninput="applyPropertyFilters()" />
+    <input type="text" id="filterKeyword" placeholder="🔍 Search sector, title or keyword..."
+      oninput="applyPropertyFilters()" />
     <select id="filterType" onchange="applyPropertyFilters()">
       <option value="">All Property Types</option>
       <option value="Residential Villa">Residential Villa</option>
@@ -66,12 +87,7 @@
     </select>
     <select id="filterSector" onchange="applyPropertyFilters()">
       <option value="">All Islamabad Sectors</option>
-      <option value="DHA">DHA Phase 2</option>
-      <option value="F-7">Sector F-7</option>
-      <option value="F-11">Sector F-11</option>
-      <option value="E-11">Sector E-11</option>
-      <option value="G-10">Sector G-10</option>
-      <option value="B-17">Sector B-17</option>
+      <!-- populated dynamically from /api/sectors -->
     </select>
     <select id="filterPrice" onchange="applyPropertyFilters()">
       <option value="">Any Price Range</option>
@@ -90,5 +106,26 @@
 
   <script src="/static/js/home_properties.js"></script>
   <script src="/static/js/user_auth_banner.js"></script>
+  <script>
+    // Populate sector filter dropdown from live database
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch('/api/sectors');
+        const data = await res.json();
+        const sel = document.getElementById('filterSector');
+        if (sel && data.sectors && data.sectors.length) {
+          data.sectors.forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = s;
+            opt.textContent = s;
+            sel.appendChild(opt);
+          });
+        }
+      } catch (e) {
+        console.warn('Could not load sectors from DB:', e);
+      }
+    });
+  </script>
 </body>
+
 </html>

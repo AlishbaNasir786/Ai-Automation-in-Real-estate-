@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RealEstate AI — Buyer Persona Profiler & WhatsApp Match Engine</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --bg-dark: #090d16;
@@ -28,18 +30,37 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-    ::selection { background: rgba(16, 185, 129, 0.35); color: #fff; }
+    ::selection {
+      background: rgba(16, 185, 129, 0.35);
+      color: #fff;
+    }
 
-    ::-webkit-scrollbar { width: 10px; height: 10px; }
-    ::-webkit-scrollbar-track { background: var(--bg-dark); }
-    ::-webkit-scrollbar-thumb { background: #253046; border-radius: 8px; border: 2px solid var(--bg-dark); }
-    ::-webkit-scrollbar-thumb:hover { background: #324066; }
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #253046;
+      border-radius: 8px;
+      border: 2px solid var(--bg-dark);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #324066;
+    }
 
     body {
       background-color: var(--bg-dark);
-      background-image: 
+      background-image:
         radial-gradient(circle at 15% 15%, rgba(16, 185, 129, 0.12) 0%, transparent 40%),
         radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.10) 0%, transparent 40%);
       color: var(--text-main);
@@ -62,8 +83,15 @@
     }
 
     @keyframes dropIn {
-      from { opacity: 0; transform: translateY(-14px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(-14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .badge {
@@ -85,9 +113,17 @@
     }
 
     @keyframes badgePulse {
-      0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.28); }
-      70%  { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+      0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.28);
+      }
+
+      70% {
+        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+      }
     }
 
     h1 {
@@ -114,7 +150,7 @@
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
       padding: 2.5rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.04);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
       margin-bottom: 2rem;
       transition: box-shadow 0.3s ease, border-color 0.3s ease;
       position: relative;
@@ -124,7 +160,9 @@
     .wizard-card::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       height: 3px;
       background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
       background-size: 200% 100%;
@@ -132,8 +170,13 @@
     }
 
     @keyframes shimmer {
-      0%   { background-position: 0% 0; }
-      100% { background-position: 200% 0; }
+      0% {
+        background-position: 0% 0;
+      }
+
+      100% {
+        background-position: 200% 0;
+      }
     }
 
     .step-content {
@@ -141,8 +184,15 @@
     }
 
     @keyframes stepIn {
-      from { opacity: 0; transform: translateX(14px); }
-      to   { opacity: 1; transform: translateX(0); }
+      from {
+        opacity: 0;
+        transform: translateX(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
 
     .step-indicator {
@@ -216,7 +266,7 @@
       border-radius: 12px;
       padding: 1.25rem;
       cursor: pointer;
-      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease;
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -229,7 +279,9 @@
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
     }
 
-    .option-card:active { transform: translateY(-1px); }
+    .option-card:active {
+      transform: translateY(-1px);
+    }
 
     .option-card.selected {
       background: rgba(16, 185, 129, 0.1);
@@ -272,7 +324,9 @@
       gap: 8px;
     }
 
-    .btn:active { transform: translateY(1px) scale(0.98); }
+    .btn:active {
+      transform: translateY(1px) scale(0.98);
+    }
 
     .btn-secondary {
       background: rgba(255, 255, 255, 0.08);
@@ -310,8 +364,15 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .dashboard-grid {
@@ -322,7 +383,9 @@
     }
 
     @media (max-width: 868px) {
-      .dashboard-grid { grid-template-columns: 1fr; }
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .card {
@@ -331,13 +394,13 @@
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
       padding: 1.75rem;
-      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.03);
       transition: border-color 0.25s ease, box-shadow 0.25s ease;
     }
 
     .card:hover {
       border-color: rgba(255, 255, 255, 0.16);
-      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255,255,255,0.04);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.04);
     }
 
     .card-header {
@@ -392,13 +455,20 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease, box-shadow 0.3s ease;
-      animation: cardIn 0.45s cubic-bezier(0.16,1,0.3,1) both;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+      animation: cardIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     @keyframes cardIn {
-      from { opacity: 0; transform: translateY(10px) scale(0.98); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .prop-item:hover {
@@ -486,17 +556,19 @@
     }
 
     @media (max-width: 868px) {
-      .whatsapp-container { grid-template-columns: 1fr; }
+      .whatsapp-container {
+        grid-template-columns: 1fr;
+      }
     }
 
     .wa-preview-box {
       background: #0b141a;
-      background-image: radial-gradient(circle at 50% 0%, rgba(37,211,102,0.06) 0%, transparent 60%);
+      background-image: radial-gradient(circle at 50% 0%, rgba(37, 211, 102, 0.06) 0%, transparent 60%);
       border-radius: 16px;
       padding: 1.25rem;
       border: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 10px 24px rgba(0,0,0,0.3);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 10px 24px rgba(0, 0, 0, 0.3);
     }
 
     .wa-bubble {
@@ -511,12 +583,19 @@
       border: 1px solid rgba(255, 255, 255, 0.06);
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
       position: relative;
-      animation: bubbleIn 0.35s cubic-bezier(0.16,1,0.3,1) both;
+      animation: bubbleIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     @keyframes bubbleIn {
-      from { opacity: 0; transform: translateY(6px) scale(0.98); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
+      from {
+        opacity: 0;
+        transform: translateY(6px) scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .wa-actions {
@@ -548,15 +627,22 @@
       border-radius: 8px;
       font-weight: 700;
       display: none;
-      border: 1px solid rgba(255,255,255,0.25);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
       z-index: 10000;
-      animation: toastUp 0.35s cubic-bezier(0.16,1,0.3,1) both;
+      animation: toastUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     @keyframes toastUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .wa-control-box {
@@ -572,7 +658,10 @@
     /* Modal Overlay */
     .modal-overlay {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: rgba(4, 9, 20, 0.85);
       backdrop-filter: blur(12px);
       display: none;
@@ -584,8 +673,15 @@
     }
 
     @keyframes overlayFade {
-      from { background: rgba(4, 9, 20, 0); backdrop-filter: blur(0px); }
-      to   { background: rgba(4, 9, 20, 0.85); backdrop-filter: blur(12px); }
+      from {
+        background: rgba(4, 9, 20, 0);
+        backdrop-filter: blur(0px);
+      }
+
+      to {
+        background: rgba(4, 9, 20, 0.85);
+        backdrop-filter: blur(12px);
+      }
     }
 
     .modal-card {
@@ -601,8 +697,15 @@
     }
 
     @keyframes modalFade {
-      from { opacity: 0; transform: scale(0.92) translateY(10px); }
-      to { opacity: 1; transform: scale(1) translateY(0); }
+      from {
+        opacity: 0;
+        transform: scale(0.92) translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
     }
 
     .modal-title {
@@ -641,7 +744,9 @@
       box-sizing: border-box;
     }
 
-    .input-field::placeholder { color: rgba(148, 163, 184, 0.6); }
+    .input-field::placeholder {
+      color: rgba(148, 163, 184, 0.6);
+    }
 
     .input-field:focus {
       border-color: var(--primary);
@@ -691,13 +796,15 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="container">
     <header>
       <div class="badge">🤖 RealEstate AI Persona Suite</div>
       <h1>Interactive Persona & WhatsApp Post Engine</h1>
-      <p class="subtitle">Answer 4 quick questions to unlock custom platform ratings, curated property matches, and a WhatsApp marketing message ready to send.</p>
+      <p class="subtitle">Answer 4 quick questions to unlock custom platform ratings, curated property matches, and a
+        WhatsApp marketing message ready to send.</p>
     </header>
 
     <!-- WIZARD CARD -->
@@ -716,7 +823,8 @@
           <div class="option-card selected" onclick="selectOption(this, 'persona', 'investor')">
             <div class="option-icon">📈</div>
             <div class="option-name">Young Investor</div>
-            <div class="option-desc">Focused on high rental yield, capital growth, and rapid portfolio appreciation.</div>
+            <div class="option-desc">Focused on high rental yield, capital growth, and rapid portfolio appreciation.
+            </div>
           </div>
           <div class="option-card" onclick="selectOption(this, 'persona', 'first_time')">
             <div class="option-icon">🔑</div>
@@ -726,80 +834,24 @@
           <div class="option-card" onclick="selectOption(this, 'persona', 'family')">
             <div class="option-icon">🏡</div>
             <div class="option-name">Family Upgrader</div>
-            <div class="option-desc">Prioritizes spacious layouts, 3+ bedrooms, top schools, and gated community safety.</div>
+            <div class="option-desc">Prioritizes spacious layouts, 3+ bedrooms, top schools, and gated community safety.
+            </div>
           </div>
           <div class="option-card" onclick="selectOption(this, 'persona', 'luxury')">
             <div class="option-icon">💎</div>
             <div class="option-name">Luxury Real Estate Seeker</div>
-            <div class="option-desc">Demands prime boulevard locations, high-end architecture, and executive privacy.</div>
+            <div class="option-desc">Demands prime boulevard locations, high-end architecture, and executive privacy.
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- STEP 2: SECTOR -->
+      <!-- STEP 2: SECTOR — dynamically loaded from database -->
       <div class="step-content" id="step2" style="display:none;">
         <div class="step-title">📍 Select your primary target Islamabad sector</div>
-        <div class="grid-options" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
-          <div class="option-card selected" onclick="selectOption(this, 'city', 'Sector F-7')">
-            <div class="option-icon">🏛️</div>
-            <div class="option-name">Sector F-7</div>
-            <div class="option-desc">Jinnah Super hub — prime luxury villas & diplomatic interest.</div>
-          </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'Sector F-6')">
-            <div class="option-icon">🌲</div>
-            <div class="option-name">Sector F-6</div>
-            <div class="option-desc">Diplomatic enclave — executive residences & green avenues.</div>
-          </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'Sector F-8')">
-            <div class="option-icon">⚖️</div>
-            <div class="option-name">Sector F-8</div>
-            <div class="option-desc">Judicial & commercial zone — high capital appreciation.</div>
-          </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'Sector F-10')">
-            <div class="option-icon">🏢</div>
-            <div class="option-name">Sector F-10</div>
-            <div class="option-desc">F-10 Markaz hub — luxury commercial & residential villas.</div>
-          </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'Sector F-11')">
-            <div class="option-icon">🏙️</div>
-            <div class="option-name">Sector F-11</div>
-            <div class="option-desc">Modern high-rises — panoramic Margalla view apartments.</div>
-          </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'Sector E-11')">
-            <div class="option-icon">🏬</div>
-            <div class="option-name">Sector E-11</div>
-            <div class="option-desc">Executive apartment towers — high rental demand & 100% NOC.</div>
-          </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'Sector G-9')">
-            <div class="option-icon">🛍️</div>
-            <div class="option-name">Sector G-9</div>
-            <div class="option-desc">Peshawar Morr hub — central location & high liquidity.</div>
-          </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'Sector G-10')">
-            <div class="option-icon">🏡</div>
-            <div class="option-name">Sector G-10</div>
-            <div class="option-desc">Sub-divisional family living — parks & school proximity.</div>
-          </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'Sector G-11')">
-            <div class="option-icon">🏠</div>
-            <div class="option-name">Sector G-11</div>
-            <div class="option-desc">G-11 Markaz sector — modern townhouses & family homes.</div>
-          </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'DHA Phase 2')">
-            <div class="option-icon">🏰</div>
-            <div class="option-name">DHA Phase 2</div>
-            <div class="option-desc">Gated Defense society — 24/7 security & luxury living.</div>
-          </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'Bahria Town')">
-            <div class="option-icon">🌴</div>
-            <div class="option-name">Bahria Town</div>
-            <div class="option-desc">Master-planned society — world-class infrastructure & parks.</div>
-          </div>
-          <div class="option-card" onclick="selectOption(this, 'city', 'Blue Area')">
-            <div class="option-icon">🏦</div>
-            <div class="option-name">Blue Area</div>
-            <div class="option-desc">Central business district — prime commercial offices & retail.</div>
-          </div>
+        <div class="grid-options" id="sectorGrid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+          <div style="grid-column:1/-1;text-align:center;padding:2rem;color:#94a3b8;font-size:0.9rem;">⏳ Loading sectors
+            from database…</div>
         </div>
       </div>
 
@@ -860,7 +912,7 @@
 
     <!-- RESULTS SECTION -->
     <div class="results-section" id="resultsSection">
-      
+
       <!-- DASHBOARD TOP ROW -->
       <div class="dashboard-grid">
         <!-- PERSONA PROFILE CARD -->
@@ -909,15 +961,18 @@
       <div class="card">
         <div class="card-header">
           <span>💬 Professional WhatsApp Marketing Post</span>
-          <span class="badge" style="background:rgba(37,211,102,0.15); color:#25d366; border-color:rgba(37,211,102,0.3);">
+          <span class="badge"
+            style="background:rgba(37,211,102,0.15); color:#25d366; border-color:rgba(37,211,102,0.3);">
             Ready to Send
           </span>
         </div>
 
         <div class="whatsapp-container">
           <div class="wa-preview-box">
-            <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:4px;">Live WhatsApp Message Preview:</div>
-            <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px; font-weight:600;">📲 Share with your friends and family or send to yourself as a reminder</div>
+            <div style="font-size:0.8rem; color:var(--text-muted); margin-bottom:4px;">Live WhatsApp Message Preview:
+            </div>
+            <div style="font-size:0.75rem; color:#38bdf8; margin-bottom:8px; font-weight:600;">📲 Share with your
+              friends and family or send to yourself as a reminder</div>
             <div class="wa-bubble" id="waMessageText">
               <!-- Message Generated by JS -->
             </div>
@@ -935,7 +990,8 @@
             </div>
           </div>
 
-          <div style="display:flex; flex-direction:column; gap:12px; justify-content:center; padding:1rem; background:rgba(255,255,255,0.02); border-radius:12px;">
+          <div
+            style="display:flex; flex-direction:column; gap:12px; justify-content:center; padding:1rem; background:rgba(255,255,255,0.02); border-radius:12px;">
             <h4 style="font-size:1.05rem; font-weight:700; color:var(--secondary);">💡 Strategic Sales Angle</h4>
             <p id="salesAngle" style="font-size:0.875rem; color:var(--text-muted); line-height:1.5;">
               This message is tailored with ROI &amp; scarcity triggers optimized specifically for investors.
@@ -947,273 +1003,325 @@
         </div>
       </div>
 
-  </div>
+    </div>
 
-  <div class="toast" id="toast">Copied to clipboard!</div>
+    <div class="toast" id="toast">Copied to clipboard!</div>
 
-  <!-- TARGET PHONE MODAL -->
-  <div class="modal-overlay" id="phoneModal">
-    <div class="modal-card">
-      <div class="modal-title">
-        <span>📲</span> Enter Target WhatsApp Number
-      </div>
-      <p class="modal-desc">
-        Specify the client or recipient phone number to receive this property post.
-      </p>
-
-      <div class="input-wrapper">
-        <input type="text" id="targetPhoneInput" class="input-field" placeholder="e.g. 03001234567 or +923001234567">
-      </div>
-
-      <div style="font-size:0.8rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">
-        Quick Select Recipient:
-      </div>
-      <div class="chip-group">
-        <div class="chip active" id="chipAgent" onclick="fillPhoneChip('agent')">
-          👤 Agent: <span id="chipAgentPhone">+923005551234</span>
+    <!-- TARGET PHONE MODAL -->
+    <div class="modal-overlay" id="phoneModal">
+      <div class="modal-card">
+        <div class="modal-title">
+          <span>📲</span> Enter Target WhatsApp Number
         </div>
-        <div class="chip" id="chipCustom" onclick="fillPhoneChip('custom')">
-          ✏️ Custom Input
-        </div>
-      </div>
+        <p class="modal-desc">
+          Specify the client or recipient phone number to receive this property post.
+        </p>
 
-      <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closePhoneModal()">Cancel</button>
-        <button class="btn btn-whatsapp" style="flex-grow:1; justify-content:center;" onclick="confirmSendWhatsApp()">
-          🚀 Send via WhatsApp →
-        </button>
+        <div class="input-wrapper">
+          <input type="text" id="targetPhoneInput" class="input-field" placeholder="e.g. 03001234567 or +923001234567">
+        </div>
+
+        <div
+          style="font-size:0.8rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:8px;">
+          Quick Select Recipient:
+        </div>
+        <div class="chip-group">
+          <div class="chip active" id="chipAgent" onclick="fillPhoneChip('agent')">
+            👤 Agent: <span id="chipAgentPhone">+923005551234</span>
+          </div>
+          <div class="chip" id="chipClient" onclick="fillPhoneChip('client')" style="display:none;">
+            📱 My Number: <span id="chipClientPhone"></span>
+          </div>
+          <div class="chip" id="chipCustom" onclick="fillPhoneChip('custom')">
+            ✏️ Custom Input
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-secondary" onclick="closePhoneModal()">Cancel</button>
+          <button class="btn btn-whatsapp" style="flex-grow:1; justify-content:center;" onclick="confirmSendWhatsApp()">
+            🚀 Send via WhatsApp →
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    function esc(str) {
-      if (!str) return '';
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
+    <script>
+      function esc(str) {
+        if (!str) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
 
-    // State
-    let currentStep = 1;
-    const selections = {
-      persona: 'investor',
-      city: 'Islamabad',
-      mode: 'for_sale',
-      type: 'House',
-      budget: 'mid'
-    };
+      // State
+      let currentStep = 1;
+      const selections = {
+        persona: 'investor',
+        city: '',
+        mode: 'for_sale',
+        type: 'House',
+        budget: 'mid'
+      };
 
-    // Realistic Agent Directory
-    const AGENTS = [
-      { name: "Tariq Mahmood", title: "Senior Investment Advisor", agency: "Premier Real Estate", phone: "+923005551234", avatar: "TM" },
-      { name: "Zainab Chaudhry", title: "Residential Specialist", agency: "Apex Luxury Properties", phone: "+923219876543", avatar: "ZC" },
-      { name: "Bilal Farooq", title: "Commercial Portfolio Manager", agency: "Capital Heights Realty", phone: "+923334445566", avatar: "BF" }
-    ];
+      // Realistic Agent Directory
+      const AGENTS = [
+        { name: "Tariq Mahmood", title: "Senior Investment Advisor", agency: "Premier Real Estate", phone: "+923005551234", avatar: "TM" },
+        { name: "Zainab Chaudhry", title: "Residential Specialist", agency: "Apex Luxury Properties", phone: "+923219876543", avatar: "ZC" },
+        { name: "Bilal Farooq", title: "Commercial Portfolio Manager", agency: "Capital Heights Realty", phone: "+923334445566", avatar: "BF" }
+      ];
 
-    // Comprehensive Fallback Property Dataset covering all 8 cities
-    const MOCK_PROPERTIES = [
-      // Islamabad
-      { id: 101, title: "10 Marla Brand New Modern House in G-13", city: "Islamabad", mode: "for_sale", type: "House", price: 28500000, beds: 5, baths: 6, area: "10 Marla", agentIdx: 0 },
-      { id: 102, title: "1 Kanal Luxury Executive Villa in DHA Phase 2", city: "Islamabad", mode: "for_sale", type: "House", price: 65000000, beds: 6, baths: 7, area: "1 Kanal", agentIdx: 1 },
-      { id: 103, title: "3 Bed Luxury Apartment in E-11 Sector", city: "Islamabad", mode: "for_rent", type: "Flat", price: 110000, beds: 3, baths: 3, area: "2100 Sq Ft", agentIdx: 2 },
-      { id: 104, title: "2 Bed Executive Suite Apartment in F-11", city: "Islamabad", mode: "for_rent", type: "Flat", price: 95000, beds: 2, baths: 2, area: "1450 Sq Ft", agentIdx: 0 },
+      // Comprehensive Fallback Property Dataset covering all 8 cities
+      const MOCK_PROPERTIES = [
+        // Islamabad
+        { id: 101, title: "10 Marla Brand New Modern House in G-13", city: "Islamabad", mode: "for_sale", type: "House", price: 28500000, beds: 5, baths: 6, area: "10 Marla", agentIdx: 0 },
+        { id: 102, title: "1 Kanal Luxury Executive Villa in DHA Phase 2", city: "Islamabad", mode: "for_sale", type: "House", price: 65000000, beds: 6, baths: 7, area: "1 Kanal", agentIdx: 1 },
+        { id: 103, title: "3 Bed Luxury Apartment in E-11 Sector", city: "Islamabad", mode: "for_rent", type: "Flat", price: 110000, beds: 3, baths: 3, area: "2100 Sq Ft", agentIdx: 2 },
+        { id: 104, title: "2 Bed Executive Suite Apartment in F-11", city: "Islamabad", mode: "for_rent", type: "Flat", price: 95000, beds: 2, baths: 2, area: "1450 Sq Ft", agentIdx: 0 },
 
-      // Lahore
-      { id: 201, title: "5 Marla Designer House in Bahria Town Sector C", city: "Lahore", mode: "for_sale", type: "House", price: 18500000, beds: 3, baths: 4, area: "5 Marla", agentIdx: 0 },
-      { id: 202, title: "1 Kanal Corner Luxury House in DHA Phase 6", city: "Lahore", mode: "for_sale", type: "House", price: 58000000, beds: 5, baths: 6, area: "1 Kanal", agentIdx: 1 },
-      { id: 203, title: "2 Bed Park View Apartment in Gulberg III", city: "Lahore", mode: "for_rent", type: "Flat", price: 85000, beds: 2, baths: 2, area: "1350 Sq Ft", agentIdx: 1 },
-      { id: 204, title: "3 Bed Furnished Flat for Rent in Model Town", city: "Lahore", mode: "for_rent", type: "Flat", price: 120000, beds: 3, baths: 3, area: "1800 Sq Ft", agentIdx: 2 },
+        // Lahore
+        { id: 201, title: "5 Marla Designer House in Bahria Town Sector C", city: "Lahore", mode: "for_sale", type: "House", price: 18500000, beds: 3, baths: 4, area: "5 Marla", agentIdx: 0 },
+        { id: 202, title: "1 Kanal Corner Luxury House in DHA Phase 6", city: "Lahore", mode: "for_sale", type: "House", price: 58000000, beds: 5, baths: 6, area: "1 Kanal", agentIdx: 1 },
+        { id: 203, title: "2 Bed Park View Apartment in Gulberg III", city: "Lahore", mode: "for_rent", type: "Flat", price: 85000, beds: 2, baths: 2, area: "1350 Sq Ft", agentIdx: 1 },
+        { id: 204, title: "3 Bed Furnished Flat for Rent in Model Town", city: "Lahore", mode: "for_rent", type: "Flat", price: 120000, beds: 3, baths: 3, area: "1800 Sq Ft", agentIdx: 2 },
 
-      // Karachi
-      { id: 301, title: "4 Bed Sea-Facing Luxury Flat in Clifton Block 5", city: "Karachi", mode: "for_sale", type: "Flat", price: 42000000, beds: 4, baths: 4, area: "2800 Sq Ft", agentIdx: 2 },
-      { id: 302, title: "500 Sq Yd Luxury House for Sale in DHA Phase 8", city: "Karachi", mode: "for_sale", type: "House", price: 95000000, beds: 6, baths: 7, area: "500 Sq Yd", agentIdx: 0 },
-      { id: 303, title: "3 Bed Executive Penthouse in Navy Housing Scheme", city: "Karachi", mode: "for_rent", type: "Flat", price: 175000, beds: 3, baths: 4, area: "2400 Sq Ft", agentIdx: 1 },
-      { id: 304, title: "2 Bed Modern Apartment in PECHS Block 2", city: "Karachi", mode: "for_rent", type: "Flat", price: 75000, beds: 2, baths: 2, area: "1200 Sq Ft", agentIdx: 2 },
+        // Karachi
+        { id: 301, title: "4 Bed Sea-Facing Luxury Flat in Clifton Block 5", city: "Karachi", mode: "for_sale", type: "Flat", price: 42000000, beds: 4, baths: 4, area: "2800 Sq Ft", agentIdx: 2 },
+        { id: 302, title: "500 Sq Yd Luxury House for Sale in DHA Phase 8", city: "Karachi", mode: "for_sale", type: "House", price: 95000000, beds: 6, baths: 7, area: "500 Sq Yd", agentIdx: 0 },
+        { id: 303, title: "3 Bed Executive Penthouse in Navy Housing Scheme", city: "Karachi", mode: "for_rent", type: "Flat", price: 175000, beds: 3, baths: 4, area: "2400 Sq Ft", agentIdx: 1 },
+        { id: 304, title: "2 Bed Modern Apartment in PECHS Block 2", city: "Karachi", mode: "for_rent", type: "Flat", price: 75000, beds: 2, baths: 2, area: "1200 Sq Ft", agentIdx: 2 },
 
-      // Rawalpindi
-      { id: 401, title: "10 Marla House for Sale in DHA Phase 1", city: "Rawalpindi", mode: "for_sale", type: "House", price: 26000000, beds: 4, baths: 5, area: "10 Marla", agentIdx: 1 },
-      { id: 402, title: "5 Marla House in Bahria Town Phase 8", city: "Rawalpindi", mode: "for_sale", type: "House", price: 14500000, beds: 3, baths: 3, area: "5 Marla", agentIdx: 0 },
-      { id: 403, title: "3 Bed Apartment for Rent in Saddar", city: "Rawalpindi", mode: "for_rent", type: "Flat", price: 65000, beds: 3, baths: 3, area: "1600 Sq Ft", agentIdx: 2 },
+        // Rawalpindi
+        { id: 401, title: "10 Marla House for Sale in DHA Phase 1", city: "Rawalpindi", mode: "for_sale", type: "House", price: 26000000, beds: 4, baths: 5, area: "10 Marla", agentIdx: 1 },
+        { id: 402, title: "5 Marla House in Bahria Town Phase 8", city: "Rawalpindi", mode: "for_sale", type: "House", price: 14500000, beds: 3, baths: 3, area: "5 Marla", agentIdx: 0 },
+        { id: 403, title: "3 Bed Apartment for Rent in Saddar", city: "Rawalpindi", mode: "for_rent", type: "Flat", price: 65000, beds: 3, baths: 3, area: "1600 Sq Ft", agentIdx: 2 },
 
-      // Faisalabad
-      { id: 501, title: "1 Kanal Luxury House in Canal Expressway Scheme", city: "Faisalabad", mode: "for_sale", type: "House", price: 38000000, beds: 5, baths: 6, area: "1 Kanal", agentIdx: 0 },
-      { id: 502, title: "10 Marla House in Peoples Colony No 1", city: "Faisalabad", mode: "for_sale", type: "House", price: 22000000, beds: 4, baths: 4, area: "10 Marla", agentIdx: 1 },
-      { id: 503, title: "3 Bed Flat for Rent in Madina Town", city: "Faisalabad", mode: "for_rent", type: "Flat", price: 55000, beds: 3, baths: 3, area: "1500 Sq Ft", agentIdx: 2 },
+        // Faisalabad
+        { id: 501, title: "1 Kanal Luxury House in Canal Expressway Scheme", city: "Faisalabad", mode: "for_sale", type: "House", price: 38000000, beds: 5, baths: 6, area: "1 Kanal", agentIdx: 0 },
+        { id: 502, title: "10 Marla House in Peoples Colony No 1", city: "Faisalabad", mode: "for_sale", type: "House", price: 22000000, beds: 4, baths: 4, area: "10 Marla", agentIdx: 1 },
+        { id: 503, title: "3 Bed Flat for Rent in Madina Town", city: "Faisalabad", mode: "for_rent", type: "Flat", price: 55000, beds: 3, baths: 3, area: "1500 Sq Ft", agentIdx: 2 },
 
-      // Multan
-      { id: 601, title: "10 Marla House in DHA Multan Sector A", city: "Multan", mode: "for_sale", type: "House", price: 21000000, beds: 4, baths: 5, area: "10 Marla", agentIdx: 2 },
-      { id: 602, title: "5 Marla House for Sale in Officers Colony", city: "Multan", mode: "for_sale", type: "House", price: 12500000, beds: 3, baths: 3, area: "5 Marla", agentIdx: 0 },
-      { id: 603, title: "3 Bed Portion for Rent in Model Town", city: "Multan", mode: "for_rent", type: "Flat", price: 48000, beds: 3, baths: 3, area: "1600 Sq Ft", agentIdx: 1 },
+        // Multan
+        { id: 601, title: "10 Marla House in DHA Multan Sector A", city: "Multan", mode: "for_sale", type: "House", price: 21000000, beds: 4, baths: 5, area: "10 Marla", agentIdx: 2 },
+        { id: 602, title: "5 Marla House for Sale in Officers Colony", city: "Multan", mode: "for_sale", type: "House", price: 12500000, beds: 3, baths: 3, area: "5 Marla", agentIdx: 0 },
+        { id: 603, title: "3 Bed Portion for Rent in Model Town", city: "Multan", mode: "for_rent", type: "Flat", price: 48000, beds: 3, baths: 3, area: "1600 Sq Ft", agentIdx: 1 },
 
-      // Peshawar
-      { id: 701, title: "1 Kanal House for Sale in Hayatabad Phase 3", city: "Peshawar", mode: "for_sale", type: "House", price: 45000000, beds: 5, baths: 6, area: "1 Kanal", agentIdx: 1 },
-      { id: 702, title: "10 Marla House in Regi Model Town", city: "Peshawar", mode: "for_sale", type: "House", price: 19500000, beds: 4, baths: 4, area: "10 Marla", agentIdx: 2 },
-      { id: 703, title: "3 Bed Flat for Rent in University Town", city: "Peshawar", mode: "for_rent", type: "Flat", price: 58000, beds: 3, baths: 3, area: "1700 Sq Ft", agentIdx: 0 },
+        // Peshawar
+        { id: 701, title: "1 Kanal House for Sale in Hayatabad Phase 3", city: "Peshawar", mode: "for_sale", type: "House", price: 45000000, beds: 5, baths: 6, area: "1 Kanal", agentIdx: 1 },
+        { id: 702, title: "10 Marla House in Regi Model Town", city: "Peshawar", mode: "for_sale", type: "House", price: 19500000, beds: 4, baths: 4, area: "10 Marla", agentIdx: 2 },
+        { id: 703, title: "3 Bed Flat for Rent in University Town", city: "Peshawar", mode: "for_rent", type: "Flat", price: 58000, beds: 3, baths: 3, area: "1700 Sq Ft", agentIdx: 0 },
 
-      // Quetta
-      { id: 801, title: "10 Marla House in Zarghoon Housing Scheme", city: "Quetta", mode: "for_sale", type: "House", price: 16500000, beds: 4, baths: 4, area: "10 Marla", agentIdx: 0 },
-      { id: 802, title: "1 Kanal House for Sale in Samungli Road", city: "Quetta", mode: "for_sale", type: "House", price: 29000000, beds: 5, baths: 5, area: "1 Kanal", agentIdx: 1 },
-      { id: 803, title: "3 Bed Portion for Rent in Jinnah Town", city: "Quetta", mode: "for_rent", type: "Flat", price: 42000, beds: 3, baths: 3, area: "1500 Sq Ft", agentIdx: 2 }
-    ];
+        // Quetta
+        { id: 801, title: "10 Marla House in Zarghoon Housing Scheme", city: "Quetta", mode: "for_sale", type: "House", price: 16500000, beds: 4, baths: 4, area: "10 Marla", agentIdx: 0 },
+        { id: 802, title: "1 Kanal House for Sale in Samungli Road", city: "Quetta", mode: "for_sale", type: "House", price: 29000000, beds: 5, baths: 5, area: "1 Kanal", agentIdx: 1 },
+        { id: 803, title: "3 Bed Portion for Rent in Jinnah Town", city: "Quetta", mode: "for_rent", type: "Flat", price: 42000, beds: 3, baths: 3, area: "1500 Sq Ft", agentIdx: 2 }
+      ];
 
-    function selectOption(card, key, val) {
-      // Unselect siblings
-      const siblings = card.parentElement.querySelectorAll('.option-card');
-      siblings.forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      selections[key] = val;
-    }
+      function selectOption(card, key, val) {
+        // Unselect siblings
+        const siblings = card.parentElement.querySelectorAll('.option-card');
+        siblings.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        selections[key] = val;
+      }
 
-    function updateDots() {
-      for(let i=1; i<=4; i++) {
-        const dot = document.getElementById(`dot${i}`);
-        if(i === currentStep) {
-          dot.className = "step-dot active";
-        } else if(i < currentStep) {
-          dot.className = "step-dot completed";
+      // ── Load sectors from live database ──────────────────────────────────────
+      let _sectorsLoaded = false;
+
+      function sectorIcon(name) {
+        const n = (name || '').toLowerCase();
+        if (n.includes('dha')) return '🏰';
+        if (n.includes('bahria')) return '🌴';
+        if (n.includes('blue')) return '🏦';
+        if (n.includes('b-17') || n.includes('b17') || n.includes('multi')) return '🌿';
+        if (n.startsWith('f-1') || n.startsWith('f-7') || n.startsWith('f-6')) return '🏛️';
+        if (n.startsWith('f-')) return '🏙️';
+        if (n.startsWith('e-')) return '🏬';
+        if (n.startsWith('g-')) return '🏡';
+        if (n.startsWith('i-')) return '🏢';
+        if (n.includes('pwd') || n.includes('cbr')) return '🏘️';
+        return '📍';
+      }
+
+      async function loadSectorsFromDB() {
+        if (_sectorsLoaded) return;
+        const grid = document.getElementById('sectorGrid');
+        if (!grid) return;
+        try {
+          const res = await fetch('/api/sectors');
+          const data = await res.json();
+          const sectors = (data.sectors || []);
+          if (!sectors.length) {
+            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:#f87171;">No sectors found in database.</div>';
+            return;
+          }
+          grid.innerHTML = '';
+          sectors.forEach((s, i) => {
+            const card = document.createElement('div');
+            card.className = 'option-card' + (i === 0 ? ' selected' : '');
+            card.innerHTML = `<div class="option-icon">${sectorIcon(s)}</div><div class="option-name">${s}</div>`;
+            card.onclick = () => selectOption(card, 'city', s);
+            grid.appendChild(card);
+            if (i === 0) selections.city = s; // auto-select first
+          });
+          _sectorsLoaded = true;
+        } catch (e) {
+          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:#f87171;">Failed to load sectors. Please refresh.</div>';
+        }
+      }
+
+      function updateDots() {
+        for (let i = 1; i <= 4; i++) {
+          const dot = document.getElementById(`dot${i}`);
+          if (i === currentStep) {
+            dot.className = "step-dot active";
+          } else if (i < currentStep) {
+            dot.className = "step-dot completed";
+          } else {
+            dot.className = "step-dot";
+          }
+        }
+      }
+
+      function nextStep() {
+        if (currentStep < 4) {
+          document.getElementById(`step${currentStep}`).style.display = 'none';
+          currentStep++;
+          document.getElementById(`step${currentStep}`).style.display = 'block';
+          document.getElementById('btnBack').style.visibility = 'visible';
+          if (currentStep === 2) {
+            loadSectorsFromDB();  // populate sectors from DB the first time
+          }
+          if (currentStep === 4) {
+            document.getElementById('btnNext').innerText = '✨ Generate Persona & Match →';
+          }
+          updateDots();
         } else {
-          dot.className = "step-dot";
+          renderResults();
         }
       }
-    }
 
-    function nextStep() {
-      if(currentStep < 4) {
-        document.getElementById(`step${currentStep}`).style.display = 'none';
-        currentStep++;
-        document.getElementById(`step${currentStep}`).style.display = 'block';
-        document.getElementById('btnBack').style.visibility = 'visible';
-        if(currentStep === 4) {
-          document.getElementById('btnNext').innerText = '✨ Generate Persona & Match →';
+      function prevStep() {
+        if (currentStep > 1) {
+          document.getElementById(`step${currentStep}`).style.display = 'none';
+          currentStep--;
+          document.getElementById(`step${currentStep}`).style.display = 'block';
+          document.getElementById('btnNext').innerText = 'Next Step →';
+          if (currentStep === 1) {
+            document.getElementById('btnBack').style.visibility = 'hidden';
+          }
+          updateDots();
         }
-        updateDots();
-      } else {
-        renderResults();
       }
-    }
 
-    function prevStep() {
-      if(currentStep > 1) {
-        document.getElementById(`step${currentStep}`).style.display = 'none';
-        currentStep--;
-        document.getElementById(`step${currentStep}`).style.display = 'block';
-        document.getElementById('btnNext').innerText = 'Next Step →';
-        if(currentStep === 1) {
-          document.getElementById('btnBack').style.visibility = 'hidden';
-        }
-        updateDots();
+      function formatPKR(val) {
+        if (val >= 10000000) return (val / 10000000).toFixed(2) + " Crore";
+        if (val >= 100000) return (val / 100000).toFixed(1) + " Lakh";
+        return val.toLocaleString() + " PKR";
       }
-    }
 
-    function formatPKR(val) {
-      if(val >= 10000000) return (val / 10000000).toFixed(2) + " Crore";
-      if(val >= 100000) return (val / 100000).toFixed(1) + " Lakh";
-      return val.toLocaleString() + " PKR";
-    }
+      async function renderResults() {
+        // 1. Show loading state
+        const nextBtn = document.getElementById('btnNext');
+        nextBtn.innerText = 'Generating Match...';
+        nextBtn.disabled = true;
 
-    async function renderResults() {
-      // 1. Show loading state
-      const nextBtn = document.getElementById('btnNext');
-      nextBtn.innerText = 'Generating Match...';
-      nextBtn.disabled = true;
+        try {
+          const response = await fetch('/api/persona/match', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              persona_type: selections.persona,
+              city: selections.city,
+              purpose: selections.mode === 'for_rent' ? 'rent' : 'sale',
+              budget: selections.budget
+            })
+          });
 
-      try {
-        const response = await fetch('/api/persona/match', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            persona_type: selections.persona,
-            city: selections.city,
-            purpose: selections.mode === 'for_rent' ? 'rent' : 'sale',
-            budget: selections.budget
-          })
-        });
+          const data = await response.json();
 
-        const data = await response.json();
-        
-        if (!data.success) {
+          if (!data.success) {
             alert('Error generating match: ' + data.error);
             nextBtn.innerText = '✨ Generate Persona & Match →';
             nextBtn.disabled = false;
             return;
-        }
-
-        const properties = data.properties || [data.property];
-        const waData = data.whatsapp;
-
-        document.getElementById('wizardCard').style.display = 'none';
-        document.getElementById('resultsSection').style.display = 'block';
-
-        // 2. Persona Config
-        const personaMeta = {
-          investor: {
-            title: "Yield & Growth Capitalist",
-            badge: "Investor Archetype",
-            desc: "Targeting high capital gain, ROI predictability, and immediate rental yields.",
-            angle: "Message uses ROI calculation, rental yield highlights, and pre-launch pricing urgency.",
-            platforms: [
-              { name: "WhatsApp Direct Broadcast", score: 96, color: "#25d366" },
-              { name: "LinkedIn Professional Network", score: 84, color: "#0077b5" },
-              { name: "Direct Portal Alerts", score: 78, color: "#38bdf8" },
-              { name: "Email Investment Digest", score: 65, color: "#f59e0b" }
-            ]
-          },
-          first_time: {
-            title: "Security & First-Home Seeker",
-            badge: "First Buyer Archetype",
-            desc: "Prioritizes easy installment plans, builder reputation, and immediate possession.",
-            angle: "Message highlights installment breakdown, clear title verification, and family safety.",
-            platforms: [
-              { name: "Instagram & Reels Showcase", score: 92, color: "#e1306c" },
-              { name: "WhatsApp Advisory Chat", score: 88, color: "#25d366" },
-              { name: "Direct Web Search Portal", score: 85, color: "#38bdf8" },
-              { name: "Facebook Community Groups", score: 74, color: "#1877f2" }
-            ]
-          },
-          family: {
-            title: "Family Nest & Space Upgrader",
-            badge: "Family Archetype",
-            desc: "Seeking 3-5 bedrooms, gated security, nearby top schools, and green parks.",
-            angle: "Message emphasizes neighbourhood tranquility, bedroom count, and proximity to schools.",
-            platforms: [
-              { name: "WhatsApp Video Walkthrough", score: 94, color: "#25d366" },
-              { name: "Facebook Meta Ads", score: 86, color: "#1877f2" },
-              { name: "Direct Portal Search", score: 82, color: "#38bdf8" },
-              { name: "Community Email Newsletter", score: 68, color: "#f59e0b" }
-            ]
-          },
-          luxury: {
-            title: "Executive Portfolio Collector",
-            badge: "Luxury Archetype",
-            desc: "Demands prime boulevard location, modern architectural aesthetics, and privacy.",
-            angle: "Message conveys exclusive white-glove availability, prime location prestige, and luxury finishes.",
-            platforms: [
-              { name: "Private WhatsApp VIP Concierge", score: 98, color: "#25d366" },
-              { name: "LinkedIn Executive Network", score: 90, color: "#0077b5" },
-              { name: "Instagram High-Design Feed", score: 85, color: "#e1306c" },
-              { name: "Bespoke Portfolio Mailer", score: 72, color: "#f59e0b" }
-            ]
           }
-        };
 
-        const meta = personaMeta[selections.persona] || personaMeta.investor;
-        document.getElementById('personaTitle').innerText = meta.title;
-        document.getElementById('personaBadge').innerText = meta.badge;
-        document.getElementById('personaDesc').innerText = meta.desc;
-        document.getElementById('salesAngle').innerText = meta.angle;
+          const properties = data.properties || [data.property];
+          const waData = data.whatsapp;
 
-        const modeLabel = selections.mode === 'for_sale' ? 'For Sale' : 'For Rent';
-        document.getElementById('targetSummary').innerText = `${selections.city} · ${selections.type} · ${modeLabel}`;
+          document.getElementById('wizardCard').style.display = 'none';
+          document.getElementById('resultsSection').style.display = 'block';
 
-        // 3. Render Platforms
-        const pContainer = document.getElementById('platformBars');
-        pContainer.innerHTML = '';
-        meta.platforms.forEach(p => {
-          pContainer.innerHTML += `
+          // 2. Persona Config
+          const personaMeta = {
+            investor: {
+              title: "Yield & Growth Capitalist",
+              badge: "Investor Archetype",
+              desc: "Targeting high capital gain, ROI predictability, and immediate rental yields.",
+              angle: "Message uses ROI calculation, rental yield highlights, and pre-launch pricing urgency.",
+              platforms: [
+                { name: "WhatsApp Direct Broadcast", score: 96, color: "#25d366" },
+                { name: "LinkedIn Professional Network", score: 84, color: "#0077b5" },
+                { name: "Direct Portal Alerts", score: 78, color: "#38bdf8" },
+                { name: "Email Investment Digest", score: 65, color: "#f59e0b" }
+              ]
+            },
+            first_time: {
+              title: "Security & First-Home Seeker",
+              badge: "First Buyer Archetype",
+              desc: "Prioritizes easy installment plans, builder reputation, and immediate possession.",
+              angle: "Message highlights installment breakdown, clear title verification, and family safety.",
+              platforms: [
+                { name: "Instagram & Reels Showcase", score: 92, color: "#e1306c" },
+                { name: "WhatsApp Advisory Chat", score: 88, color: "#25d366" },
+                { name: "Direct Web Search Portal", score: 85, color: "#38bdf8" },
+                { name: "Facebook Community Groups", score: 74, color: "#1877f2" }
+              ]
+            },
+            family: {
+              title: "Family Nest & Space Upgrader",
+              badge: "Family Archetype",
+              desc: "Seeking 3-5 bedrooms, gated security, nearby top schools, and green parks.",
+              angle: "Message emphasizes neighbourhood tranquility, bedroom count, and proximity to schools.",
+              platforms: [
+                { name: "WhatsApp Video Walkthrough", score: 94, color: "#25d366" },
+                { name: "Facebook Meta Ads", score: 86, color: "#1877f2" },
+                { name: "Direct Portal Search", score: 82, color: "#38bdf8" },
+                { name: "Community Email Newsletter", score: 68, color: "#f59e0b" }
+              ]
+            },
+            luxury: {
+              title: "Executive Portfolio Collector",
+              badge: "Luxury Archetype",
+              desc: "Demands prime boulevard location, modern architectural aesthetics, and privacy.",
+              angle: "Message conveys exclusive white-glove availability, prime location prestige, and luxury finishes.",
+              platforms: [
+                { name: "Private WhatsApp VIP Concierge", score: 98, color: "#25d366" },
+                { name: "LinkedIn Executive Network", score: 90, color: "#0077b5" },
+                { name: "Instagram High-Design Feed", score: 85, color: "#e1306c" },
+                { name: "Bespoke Portfolio Mailer", score: 72, color: "#f59e0b" }
+              ]
+            }
+          };
+
+          const meta = personaMeta[selections.persona] || personaMeta.investor;
+          document.getElementById('personaTitle').innerText = meta.title;
+          document.getElementById('personaBadge').innerText = meta.badge;
+          document.getElementById('personaDesc').innerText = meta.desc;
+          document.getElementById('salesAngle').innerText = meta.angle;
+
+          const modeLabel = selections.mode === 'for_sale' ? 'For Sale' : 'For Rent';
+          document.getElementById('targetSummary').innerText = `${selections.city} · ${selections.type} · ${modeLabel}`;
+
+          // 3. Render Platforms
+          const pContainer = document.getElementById('platformBars');
+          pContainer.innerHTML = '';
+          meta.platforms.forEach(p => {
+            pContainer.innerHTML += `
             <div class="platform-row">
               <div class="platform-meta">
                 <span>${p.name}</span>
@@ -1224,31 +1332,31 @@
               </div>
             </div>
           `;
-        });
+          });
 
-        // 4. Render ALL matched properties from DB
-        console.log('API returned properties:', properties.length, properties);
-        const grid = document.getElementById('propertyGrid');
-        grid.innerHTML = '';
+          // 4. Render ALL matched properties from DB
+          console.log('API returned properties:', properties.length, properties);
+          const grid = document.getElementById('propertyGrid');
+          grid.innerHTML = '';
 
-        if (!properties || properties.length === 0) {
-          document.getElementById('matchCount').innerText = `0 Properties Matched from Database`;
-          grid.innerHTML = `
+          if (!properties || properties.length === 0) {
+            document.getElementById('matchCount').innerText = `0 Properties Matched from Database`;
+            grid.innerHTML = `
             <div style="grid-column:1/-1; text-align:center; padding:3rem 1.5rem; color:#94a3b8; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px;">
               <div style="font-size:2.5rem; margin-bottom:0.5rem;">🔍</div>
               <div style="font-size:1.1rem; font-weight:700; color:#fff;">No Database Properties Match Selected Criteria</div>
               <div style="font-size:0.85rem; margin-top:0.3rem;">No properties currently listed in sector "${esc(selections.city)}" for this budget. Try selecting a different sector or budget range.</div>
             </div>
           `;
-        } else {
-          document.getElementById('matchCount').innerText = `${properties.length} Property${properties.length > 1 ? 'ies' : ''} Matched from Database`;
+          } else {
+            document.getElementById('matchCount').innerText = `${properties.length} Property${properties.length > 1 ? 'ies' : ''} Matched from Database`;
 
-          properties.forEach(topProp => {
-            const priceTxt = topProp.price || (topProp.price_numeric ? `PKR ${Number(topProp.price_numeric).toLocaleString()}` : 'Contact for Price');
-            const agent = waData.agent || (typeof AGENTS !== 'undefined' ? AGENTS[0] : { name: 'Islamabad Desk', agency: 'RealEstate AI', avatar: '🏛️' });
-            const bgUrl = topProp.image_url || '/static/images/default_property.png';
+            properties.forEach(topProp => {
+              const priceTxt = topProp.price || (topProp.price_numeric ? `PKR ${Number(topProp.price_numeric).toLocaleString()}` : 'Contact for Price');
+              const agent = waData.agent || (typeof AGENTS !== 'undefined' ? AGENTS[0] : { name: 'Islamabad Desk', agency: 'RealEstate AI', avatar: '🏛️' });
+              const bgUrl = topProp.image_url || '/static/images/default_property.png';
 
-            grid.innerHTML += `
+              grid.innerHTML += `
               <div class="prop-item">
                 <div class="prop-banner" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(15,23,42,0.9) 100%), url('${bgUrl}'); background-size: cover; background-position: center;">
                   <div class="prop-tag">${topProp.listing_mode === 'for_rent' || topProp.mode === 'for_rent' ? 'FOR RENT' : 'FOR SALE'}</div>
@@ -1271,118 +1379,247 @@
                 </div>
               </div>
             `;
-          });
+            });
+          }
+
+          // 5. WhatsApp Message
+          window.activeAgentPhone = waData.agent ? waData.agent.phone : (waData.recipient_phone || "+923005551234");
+          document.getElementById('chipAgentPhone').innerText = window.activeAgentPhone;
+          document.getElementById('waMessageText').innerText = waData.text;
+
+          // 6. Auto-send to client phone if available (set during login/signup)
+          const clientPhone = window.currentClientPhone || '';
+          if (clientPhone) {
+            autoSendToClientPhone(clientPhone, waData.text);
+          }
+
+        } catch (err) {
+          alert('Failed to connect to API: ' + err.message);
+          nextBtn.innerText = '✨ Generate Persona & Match →';
+          nextBtn.disabled = false;
         }
-
-        // 5. WhatsApp Message
-        window.activeAgentPhone = waData.agent ? waData.agent.phone : (waData.recipient_phone || "+923005551234");
-        document.getElementById('chipAgentPhone').innerText = window.activeAgentPhone;
-        document.getElementById('waMessageText').innerText = waData.text;
-
-      } catch (err) {
-        alert('Failed to connect to API: ' + err.message);
-        nextBtn.innerText = '✨ Generate Persona & Match →';
-        nextBtn.disabled = false;
       }
-    }
 
-    function promptPhoneModal() {
-      const input = document.getElementById('targetPhoneInput');
-      input.value = window.activeAgentPhone || '';
-      document.getElementById('chipAgent').className = "chip active";
-      document.getElementById('chipCustom').className = "chip";
-      document.getElementById('phoneModal').style.display = 'flex';
-      input.focus();
-    }
-
-    function closePhoneModal() {
-      document.getElementById('phoneModal').style.display = 'none';
-    }
-
-    function fillPhoneChip(type) {
-      const input = document.getElementById('targetPhoneInput');
-      if (type === 'agent') {
-        input.value = window.activeAgentPhone || '+923005551234';
+      function promptPhoneModal() {
+        const input = document.getElementById('targetPhoneInput');
+        input.value = window.activeAgentPhone || '';
         document.getElementById('chipAgent').className = "chip active";
         document.getElementById('chipCustom').className = "chip";
-      } else {
-        input.value = '';
-        input.placeholder = 'Type recipient phone (e.g. 03001234567)';
-        document.getElementById('chipAgent').className = "chip";
-        document.getElementById('chipCustom').className = "chip active";
+        // Show client chip if we have a phone
+        const clientPhone = window.currentClientPhone || '';
+        const chipClient = document.getElementById('chipClient');
+        const chipClientPhone = document.getElementById('chipClientPhone');
+        if (clientPhone && chipClient && chipClientPhone) {
+          chipClientPhone.innerText = clientPhone;
+          chipClient.style.display = 'inline-flex';
+          chipClient.className = 'chip';
+        } else if (chipClient) {
+          chipClient.style.display = 'none';
+        }
+        document.getElementById('phoneModal').style.display = 'flex';
         input.focus();
       }
-    }
 
-    function cleanPhoneNumber(raw) {
-      let digits = (raw || '').replace(/[^0-9]/g, '');
-      if (digits.startsWith('0')) {
-        digits = '92' + digits.substring(1);
-      }
-      return digits;
-    }
-
-    function confirmSendWhatsApp() {
-      const rawInput = document.getElementById('targetPhoneInput').value;
-      const cleanDigits = cleanPhoneNumber(rawInput);
-
-      if (!cleanDigits || cleanDigits.length < 7) {
-        alert('Please enter a valid target phone number (e.g. 03001234567 or +923001234567).');
-        return;
+      function closePhoneModal() {
+        document.getElementById('phoneModal').style.display = 'none';
       }
 
-      const msg = document.getElementById('waMessageText').innerText;
-      const encoded = encodeURIComponent(msg);
-      const url = `https://api.whatsapp.com/send?phone=${cleanDigits}&text=${encoded}`;
+      function fillPhoneChip(type) {
+        const input = document.getElementById('targetPhoneInput');
+        if (type === 'agent') {
+          input.value = window.activeAgentPhone || '+923005551234';
+          document.getElementById('chipAgent').className = "chip active";
+          document.getElementById('chipCustom').className = "chip";
+          const chipClient = document.getElementById('chipClient');
+          if (chipClient) chipClient.className = 'chip';
+        } else if (type === 'client') {
+          input.value = window.currentClientPhone || '';
+          document.getElementById('chipAgent').className = "chip";
+          document.getElementById('chipCustom').className = "chip";
+          const chipClient = document.getElementById('chipClient');
+          if (chipClient) chipClient.className = 'chip active';
+        } else {
+          input.value = '';
+          input.placeholder = 'Type recipient phone (e.g. 03001234567)';
+          document.getElementById('chipAgent').className = "chip";
+          document.getElementById('chipCustom').className = "chip active";
+          const chipClient = document.getElementById('chipClient');
+          if (chipClient) chipClient.className = 'chip';
+          input.focus();
+        }
+      }
 
-      closePhoneModal();
+      function cleanPhoneNumber(raw) {
+        let digits = (raw || '').replace(/[^0-9]/g, '');
+        if (digits.startsWith('0')) {
+          digits = '92' + digits.substring(1);
+        }
+        return digits;
+      }
 
-      try {
-        const win = window.open(url, '_blank');
-        if (!win || win.closed || typeof win.closed === 'undefined') {
+      function confirmSendWhatsApp() {
+        const rawInput = document.getElementById('targetPhoneInput').value;
+        const cleanDigits = cleanPhoneNumber(rawInput);
+
+        if (!cleanDigits || cleanDigits.length < 7) {
+          alert('Please enter a valid target phone number (e.g. 03001234567 or +923001234567).');
+          return;
+        }
+
+        const msg = document.getElementById('waMessageText').innerText;
+        const encoded = encodeURIComponent(msg);
+        const url = `https://api.whatsapp.com/send?phone=${cleanDigits}&text=${encoded}`;
+
+        closePhoneModal();
+
+        try {
+          const win = window.open(url, '_blank');
+          if (!win || win.closed || typeof win.closed === 'undefined') {
+            window.location.href = url;
+          }
+        } catch (e) {
           window.location.href = url;
         }
-      } catch(e) {
-        window.location.href = url;
-      }
-    }
-
-    function openWhatsApp(type = 'agent') {
-      if (type === 'prompt') {
-        promptPhoneModal();
-        return;
       }
 
-      const msg = document.getElementById('waMessageText').innerText;
-      const encoded = encodeURIComponent(msg);
-      let url = '';
+      function openWhatsApp(type = 'agent') {
+        if (type === 'prompt') {
+          promptPhoneModal();
+          return;
+        }
 
-      if (type === 'agent' && window.activeAgentPhone) {
-        const agentDigits = cleanPhoneNumber(window.activeAgentPhone);
-        url = `https://api.whatsapp.com/send?phone=${agentDigits}&text=${encoded}`;
-      } else {
-        url = `https://api.whatsapp.com/send?text=${encoded}`;
-      }
+        const msg = document.getElementById('waMessageText').innerText;
+        const encoded = encodeURIComponent(msg);
+        let url = '';
 
-      try {
-        const win = window.open(url, '_blank');
-        if (!win || win.closed || typeof win.closed === 'undefined') {
+        if (type === 'agent' && window.activeAgentPhone) {
+          const agentDigits = cleanPhoneNumber(window.activeAgentPhone);
+          url = `https://api.whatsapp.com/send?phone=${agentDigits}&text=${encoded}`;
+        } else {
+          url = `https://api.whatsapp.com/send?text=${encoded}`;
+        }
+
+        try {
+          const win = window.open(url, '_blank');
+          if (!win || win.closed || typeof win.closed === 'undefined') {
+            window.location.href = url;
+          }
+        } catch (e) {
           window.location.href = url;
         }
-      } catch(e) {
-        window.location.href = url;
       }
-    }
 
-    function copyToClipboard() {
-      const msg = document.getElementById('waMessageText').innerText;
-      navigator.clipboard.writeText(msg).then(() => {
-        const toast = document.getElementById('toast');
-        toast.style.display = 'block';
-        setTimeout(() => toast.style.display = 'none', 2500);
-      });
-    }
-  </script>
-  <script src="/static/js/user_auth_banner.js"></script>
+      function copyToClipboard() {
+        const msg = document.getElementById('waMessageText').innerText;
+        navigator.clipboard.writeText(msg).then(() => {
+          const toast = document.getElementById('toast');
+          toast.style.display = 'block';
+          setTimeout(() => toast.style.display = 'none', 2500);
+        });
+      }
+
+      // ── SILENT BACKGROUND WHATSAPP SEND (no tab, no redirect) ─────────────────
+      // Calls the backend /api/persona/send-whatsapp-bg which uses CallMeBot API.
+      // Website stays open. A small toast confirms success/failure.
+
+      function autoSendToClientPhone(rawPhone, messageText) {
+        let digits = (rawPhone || '').replace(/[^0-9]/g, '');
+        if (digits.startsWith('0')) digits = '92' + digits.substring(1);
+        if (!digits || digits.length < 7) return;
+
+        // Show "sending" status toast
+        _showWaStatusToast('sending', rawPhone);
+
+        // Silent fetch → backend handles the actual WhatsApp delivery
+        fetch('/api/persona/send-whatsapp-bg', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: rawPhone, message: messageText })
+        })
+          .then(r => r.json())
+          .then(data => {
+            if (data.success) {
+              _showWaStatusToast('success', rawPhone);
+            } else if (data.setup_required) {
+              _showWaStatusToast('setup', rawPhone, data.setup_instructions);
+            } else {
+              _showWaStatusToast('error', rawPhone, data.error);
+            }
+          })
+          .catch(err => {
+            _showWaStatusToast('error', rawPhone, err.message);
+          });
+      }
+
+      function _showWaStatusToast(state, phone, detail) {
+        let old = document.getElementById('waSendToast');
+        if (old) old.remove();
+
+        const toast = document.createElement('div');
+        toast.id = 'waSendToast';
+
+        const baseStyle = [
+          'position:fixed; bottom:1.5rem; right:1.5rem;',
+          'padding:0.85rem 1.25rem; border-radius:14px; z-index:99999;',
+          'font-family:"Plus Jakarta Sans",sans-serif; font-size:0.84rem; font-weight:600;',
+          'box-shadow:0 8px 32px rgba(0,0,0,0.45); display:flex; align-items:flex-start; gap:0.7rem;',
+          'max-width:360px; animation:waTIn 0.35s cubic-bezier(0.16,1,0.3,1);',
+        ].join('');
+
+        let bg, icon, title, sub;
+
+        if (state === 'sending') {
+          bg = 'background:rgba(30,41,59,0.97); border:1px solid rgba(56,189,248,0.3); color:#f8fafc;';
+          icon = '📲';
+          title = 'Sending WhatsApp post…';
+          sub = `Delivering to ${phone} in the background`;
+        } else if (state === 'success') {
+          bg = 'background:rgba(5,150,105,0.95); border:1px solid rgba(16,185,129,0.5); color:#fff;';
+          icon = '✅';
+          title = 'WhatsApp Message Sent!';
+          sub = `Successfully delivered to ${phone}`;
+        } else if (state === 'setup') {
+          bg = 'background:rgba(30,41,59,0.97); border:1px solid rgba(245,158,11,0.4); color:#fbbf24;';
+          icon = '⚙️';
+          title = 'One-time setup needed';
+          sub = 'Add CALLMEBOT_APIKEY to .env (see server logs for steps)';
+        } else {
+          bg = 'background:rgba(30,41,59,0.97); border:1px solid rgba(239,68,68,0.3); color:#fca5a5;';
+          icon = '⚠️';
+          title = 'Background send failed';
+          sub = detail ? detail.substring(0, 120) : 'Check server logs';
+        }
+
+        toast.style.cssText = baseStyle + bg;
+        toast.innerHTML = `
+        <style>
+          @keyframes waTIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+          #waSendToast .wt-close{background:none;border:none;color:inherit;opacity:0.6;cursor:pointer;font-size:1rem;line-height:1;margin-left:auto;padding:0;}
+          #waSendToast .wt-close:hover{opacity:1;}
+        </style>
+        <span style="font-size:1.4rem;flex-shrink:0;">${icon}</span>
+        <div style="flex:1;">
+          <div style="font-weight:800;margin-bottom:2px;">${title}</div>
+          <div style="font-size:0.76rem;opacity:0.8;line-height:1.4;">${sub}</div>
+        </div>
+        <button class="wt-close" onclick="document.getElementById('waSendToast').remove()">✕</button>
+      `;
+        document.body.appendChild(toast);
+
+        // Auto-dismiss success/error after 6 seconds; keep setup visible longer
+        const delay = (state === 'setup') ? 12000 : 6000;
+        if (state !== 'sending') {
+          setTimeout(() => {
+            if (toast.parentNode) {
+              toast.style.transition = 'opacity 0.4s ease';
+              toast.style.opacity = '0';
+              setTimeout(() => toast.remove(), 400);
+            }
+          }, delay);
+        }
+      }
+    </script>
+    <script src="/static/js/user_auth_banner.js"></script>
 </body>
+
 </html>

@@ -96,17 +96,23 @@ def api_get_reviews():
 @marketing_bp.route('/api/marketing/health', methods=['GET'])
 def api_marketing_health():
     """
-    Lightweight endpoint: returns only the health-score ring data.
-    Used on first page load to show scores before the full report runs.
+    Lightweight endpoint: returns health scores, engagement metrics, and AI insights.
+    Used on page load to populate metrics immediately.
     """
     try:
         reviews = get_all_reviews()
         stats   = compute_review_stats(reviews)
+        from auth_db import get_all_listing_engagement
+        engagement = get_all_listing_engagement()
+        merged = {'reviews': stats, 'engagement': engagement}
+        insights = generate_insights(merged)
         return jsonify({
-            'success':    True,
-            'avg_rating': stats['avg_rating'],
-            'total':      stats['total'],
+            'success':      True,
+            'avg_rating':   stats['avg_rating'],
+            'total':        stats['total'],
             'distribution': stats['distribution'],
+            'engagement':   engagement,
+            'insights':     insights,
         }), 200
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
@@ -154,9 +160,6 @@ def api_marketing_report():
                 'cross_signals':     [],
                 'overall_health':    health,
             }
-            merged = {'reviews': stats, 'website': website_data, 'summary': summary}
-            yield _sse("step", "✅ Cross-signal correlation complete")
-
             yield _sse("step", "❤️ Compiling listing engagement metrics…")
             from auth_db import get_all_listing_engagement
             engagement = get_all_listing_engagement()
@@ -165,10 +168,14 @@ def api_marketing_report():
                 f"{engagement['total_listing_reviews']} listing reviews"
             )
 
+            merged = {'reviews': stats, 'website': website_data, 'summary': summary, 'engagement': engagement}
+            yield _sse("step", "✅ Cross-signal correlation complete")
+
             yield _sse("step", "🤖 Running AI insights engine…")
             insights = generate_insights(merged)
             mode = "Gemini LLM" if insights.get("generated_by") == "gemini" else "Rule Engine"
             yield _sse("step", f"✅ Insights generated via {mode}")
+
 
             # Build final payload
             payload = {
@@ -204,16 +211,19 @@ def api_marketing_report():
 
 @marketing_bp.route('/api/listings/like', methods=['POST'])
 def api_toggle_listing_like():
-    """Body: { "property_id": str }. Uses browser session as identity."""
+    """Body: { "property_id": str }. Saves user identity when logged in."""
     data = request.json or {}
     property_id = (data.get('property_id') or '').strip()
     if not property_id:
         return jsonify({'success': False, 'error': 'property_id required'}), 400
 
-    # Use Flask session id or IP as anonymous session key
-    session_key = session.get('user_id') or request.headers.get('X-Session-Key', '') or request.remote_addr
+    # Use logged-in user_id as session key when available (most reliable)
+    user_id    = session.get('user_id')
+    user_email = session.get('user_email')
+    session_key = user_id or request.headers.get('X-Session-Key', '') or request.remote_addr
+
     from auth_db import toggle_listing_like
-    result = toggle_listing_like(property_id, session_key)
+    result = toggle_listing_like(property_id, session_key, user_id=user_id, user_email=user_email)
     return jsonify({'success': True, **result}), 200
 
 
@@ -248,12 +258,18 @@ def api_get_listing_reviews(property_id):
 
 @marketing_bp.route('/api/listings/review', methods=['POST'])
 def api_submit_listing_review():
-    """Body: { property_id, reviewer_name, rating (1-5), comment }."""
+    """Body: { property_id, reviewer_name, rating (1-5), comment }.
+    If the user is logged in, their account credentials are saved automatically."""
     data = request.json or {}
     property_id   = (data.get('property_id') or '').strip()
-    reviewer_name = (data.get('reviewer_name') or '').strip()
     rating        = data.get('rating')
     comment       = (data.get('comment') or '').strip()
+
+    # Auto-fill reviewer_name from logged-in session when not provided
+    user_id    = session.get('user_id')
+    user_email = session.get('user_email')
+    user_name  = session.get('user_name', '')
+    reviewer_name = (data.get('reviewer_name') or user_name or '').strip()
 
     if not property_id:
         return jsonify({'success': False, 'error': 'property_id required'}), 400
@@ -265,7 +281,10 @@ def api_submit_listing_review():
         return jsonify({'success': False, 'error': 'comment required'}), 400
 
     from auth_db import submit_listing_review
-    result = submit_listing_review(property_id, reviewer_name, rating, comment)
+    result = submit_listing_review(
+        property_id, reviewer_name, rating, comment,
+        user_id=user_id, user_email=user_email
+    )
     return jsonify(result), 201 if result.get('success') else 500
 
 

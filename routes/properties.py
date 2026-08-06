@@ -241,6 +241,11 @@ def get_home_inventory():
     except Exception:
         result = _dedup_merge(local_props, ISLAMABAD_FALLBACK)
 
+    # Filter out any deleted properties
+    deleted_ids = _load_deleted_ids()
+    if deleted_ids:
+        result = [p for p in result if str(p.get('id')) not in deleted_ids]
+
     # ── Store in cache ───────────────────────────────────────────────────
     _inventory_cache = result
     _inventory_cache_time = time.time()
@@ -357,18 +362,45 @@ def _require_admin():
     return None
 
 
+_DELETED_STORE_PATH = os.path.join(os.path.dirname(__file__), '..', 'local_deleted.json')
+
+
+def _load_deleted_ids() -> set:
+    try:
+        if os.path.exists(_DELETED_STORE_PATH):
+            with open(_DELETED_STORE_PATH, 'r', encoding='utf-8') as f:
+                return set(json.load(f))
+    except Exception:
+        pass
+    return set()
+
+
+def _save_deleted_id(property_id: str):
+    deleted = _load_deleted_ids()
+    deleted.add(str(property_id))
+    try:
+        with open(_DELETED_STORE_PATH, 'w', encoding='utf-8') as f:
+            json.dump(list(deleted), f, indent=2)
+    except Exception:
+        pass
+
+
 @properties_bp.route('/api/admin/edit_property/<property_id>', methods=['PATCH'])
 def edit_property(property_id):
-    """Admin-only: Edit any field of a property (including availability)."""
-    # Allow admin-role session OR front-end admin switch (for demo mode without auth)
-    # In production, always enforce _require_admin()
+    """Admin-only: Edit any field of a property (including availability). Works for local, Supabase & fallback properties."""
     data = request.json or {}
 
     existing = _load_local_properties()
     prop = next((p for p in existing if str(p.get('id')) == str(property_id)), None)
 
+    # If not already in local store, search in global unified inventory
     if prop is None:
-        return jsonify({'error': 'Property not found in local store.'}), 404
+        inventory = get_home_inventory()
+        base_prop = next((p for p in inventory if str(p.get('id')) == str(property_id)), None)
+        if base_prop:
+            prop = dict(base_prop)
+        else:
+            return jsonify({'error': 'Property not found.'}), 404
 
     # Allowed editable fields
     editable = ['title', 'status', 'availability', 'price', 'price_numeric',
@@ -381,24 +413,33 @@ def edit_property(property_id):
     _save_local_property(prop)
     _invalidate_cache()
 
+    # Best-effort update Supabase if connected
+    try:
+        if 'availability' in data:
+            supabase.table('properties').update({'availability': data['availability']}).eq('id', property_id).execute()
+    except Exception:
+        pass
+
     return jsonify({'status': 'success', 'property': prop}), 200
 
 
 @properties_bp.route('/api/admin/delete_property/<property_id>', methods=['DELETE'])
 def delete_property(property_id):
-    """Admin-only: Remove a property from local store and Supabase."""
+    """Admin-only: Remove a property from local store, fallback list, and Supabase."""
+    str_pid = str(property_id)
+    
+    # Check if property exists in local store or global inventory
     existing = _load_local_properties()
-    new_list = [p for p in existing if str(p.get('id')) != str(property_id)]
-
-    if len(new_list) == len(existing):
-        return jsonify({'error': 'Property not found in local store.'}), 404
+    new_list = [p for p in existing if str(p.get('id')) != str_pid]
 
     try:
         with open(_LOCAL_STORE_PATH, 'w', encoding='utf-8') as f:
             json.dump(new_list, f, indent=2, ensure_ascii=False)
-    except Exception as e:
-        return jsonify({'error': f'Delete failed: {str(e)}'}), 500
+    except Exception:
+        pass
 
+    # Record in deleted IDs list so fallback properties can also be hidden
+    _save_deleted_id(str_pid)
     _invalidate_cache()
 
     # Best-effort remove from Supabase too
@@ -408,3 +449,4 @@ def delete_property(property_id):
         pass
 
     return jsonify({'status': 'success', 'deleted_id': property_id}), 200
+

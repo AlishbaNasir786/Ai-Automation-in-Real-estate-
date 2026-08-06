@@ -18,5 +18,8 @@
   "bfa10022-378c-44f4-a82c-57681d7f0b71": "/static/images/property_bfa10022-378c-44f4-a82c-57681d7f0b71_1.png",
   "db577e63-d738-4a00-8ce9-f933ad53f0df": "/static/images/isb_dha_villa.png",
   "1f21afa5-3fc1-4970-b9f4-7d598890e9de": "/static/images/isb_bahria_villa.png",
-  "37becf8d-097d-4af9-8c24-704a1a005572": "/static/images/property_37becf8d-097d-4af9-8c24-704a1a005572.png"
+  "37becf8d-097d-4af9-8c24-704a1a005572": [
+    "/static/images/property_37becf8d-097d-4af9-8c24-704a1a005572.png",
+    "/static/images/property_37becf8d-097d-4af9-8c24-704a1a005572_2.png"
+  ]
 }

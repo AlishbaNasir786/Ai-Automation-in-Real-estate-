@@ -34,208 +34,119 @@ LOW    = "low"
 
 def _rule_based_insights(data: dict) -> dict:
     """
-    Generates structured insights purely from thresholds and pattern matching.
-    Works without any API key.
+    Generates structured AI insights and weak points purely based on
+    customer reviews, star ratings, comments, and property likes.
     """
-    reviews = data.get("reviews", {})
-    website = data.get("website", {})
-    summary = data.get("summary", {})
-    health  = summary.get("overall_health", {})
+    reviews    = data.get("reviews", {})
+    engagement = data.get("engagement", {})
 
-    weak_points      = []
-    recommendations  = []
-    strengths        = []
+    weak_points     = []
+    recommendations = []
+    strengths       = []
 
-    avg_rating   = reviews.get("avg_rating",   0.0)
-    total_reviews= reviews.get("total",        0)
-    avg_sentiment= reviews.get("avg_sentiment",0.0)
-    complaints   = reviews.get("complaints",   [])
-    praises      = reviews.get("praises",      [])
-    keywords     = reviews.get("top_keywords", [])
-    kw_words     = [kw[0] for kw in keywords]
+    avg_rating   = float(reviews.get("avg_rating", 0.0))
+    total_reviews= int(reviews.get("total", 0))
+    avg_sentiment= float(reviews.get("avg_sentiment", 0.0))
+    complaints   = reviews.get("complaints", [])
+    praises      = reviews.get("praises", [])
+    dist         = reviews.get("distribution", {})
+    
+    total_likes  = int(engagement.get("total_likes", 0))
+    total_prop_rev = int(engagement.get("total_listing_reviews", 0))
+    top_liked    = engagement.get("top_liked_listings", [])
+    per_prop     = engagement.get("per_property_stats", [])
 
-    all_issues   = website.get("all_issues",   [])
-    avg_load     = website.get("avg_load_time_ms")
-    missing_alt  = website.get("images_missing_alt", 0)
-    pages_no_meta= website.get("pages_without_meta",  0)
-
-    # ── Review-based weak points ─────────────────────────────────────────────
-
+    # 1. Total Reviews & Rating Evaluation
     if total_reviews == 0:
         weak_points.append({
-            "category":    "Social Proof",
-            "severity":    HIGH,
-            "issue":       "No reviews collected yet",
-            "detail":      "Your platform has zero customer reviews. Reviews are the #1 trust signal for property buyers.",
-            "action":      "Add a review prompt to the property listing page and follow-up WhatsApp messages.",
-            "impact":      "Reviews increase buyer trust and conversion by up to 270%",
+            "category": "Customer Reviews",
+            "severity": HIGH,
+            "issue":    "Zero Customer Reviews Logged",
+            "detail":   "The platform currently has 0 customer reviews recorded in the database.",
+            "action":   "Prompt satisfied buyers via automated WhatsApp follow-ups after property viewings.",
+            "impact":   "Verified customer reviews increase buyer conversion by up to 270%.",
         })
-    elif avg_rating < 3.5:
+    elif avg_rating < 3.8:
+        low_stars = int(dist.get("1", 0)) + int(dist.get("2", 0))
         weak_points.append({
-            "category":    "Customer Satisfaction",
-            "severity":    HIGH,
-            "issue":       f"Low average rating: {avg_rating}/5.0",
-            "detail":      f"Based on {total_reviews} reviews. Common complaints: {'; '.join(complaints[:3])}",
-            "action":      "Identify root cause from complaints below, prioritise service/UX fixes.",
-            "impact":      "Every 0.5 star improvement increases inquiries by ~15%",
-        })
-    elif avg_rating < 4.0:
-        weak_points.append({
-            "category":    "Customer Satisfaction",
-            "severity":    MEDIUM,
-            "issue":       f"Below-target rating: {avg_rating}/5.0",
-            "detail":      "Aim for 4.0+ to be competitive in the Pakistani real estate market.",
-            "action":      "Address specific complaints and implement a post-visit feedback loop.",
-            "impact":      "4.0+ rating unlocks better placement in portal search results",
+            "category": "Customer Satisfaction",
+            "severity": HIGH if avg_rating < 3.2 else MEDIUM,
+            "issue":    f"Below-Target Average Rating ({avg_rating:.2f} / 5.0)",
+            "detail":   f"Based on {total_reviews} reviews with {low_stars} critical 1★ & 2★ ratings." + (f" Key complaints: {'; '.join(complaints[:2])}" if complaints else ""),
+            "action":   "Address specific service issues mentioned in low-star reviews and follow up with dissatisfied clients.",
+            "impact":   "Achieving a 4.2+ rating significantly boosts organic buyer inquiries.",
         })
     else:
-        strengths.append(f"Strong customer satisfaction: {avg_rating}/5.0 ({total_reviews} reviews)")
+        strengths.append(f"High customer satisfaction: {avg_rating:.2f} / 5.0 across {total_reviews} verified reviews.")
 
-    if avg_sentiment < 0:
+    # 2. Review Sentiment Analysis
+    if total_reviews > 0 and avg_sentiment < 0:
         weak_points.append({
-            "category":    "Sentiment",
-            "severity":    HIGH,
-            "issue":       "Overall negative review sentiment",
-            "detail":      f"Sentiment score: {avg_sentiment} (negative = below 0). Customers are more often using negative language than positive.",
-            "action":      "Respond to all negative reviews publicly. Train agents on soft skills.",
-            "impact":      "Public responses to complaints improve trust by 45%",
+            "category": "Review Sentiment",
+            "severity": HIGH,
+            "issue":    f"Negative Sentiment Score ({avg_sentiment:.2f})",
+            "detail":   "Negative emotional tone detected in customer comments.",
+            "action":   "Audit recent client conversations and implement quality control for agent interactions.",
+            "impact":   "Positive sentiment directly increases lead closing rates.",
+        })
+    elif avg_sentiment > 0.3 and total_reviews > 0:
+        strengths.append(f"Positive client sentiment ({avg_sentiment:.2f}) across recent review text.")
+
+    # 3. Property Likes & Engagement Evaluation
+    if total_likes == 0:
+        weak_points.append({
+            "category": "Property Engagement",
+            "severity": MEDIUM,
+            "issue":    "Zero Heart/Like Engagement on Property Listings",
+            "detail":   "No property listings have received user hearts/likes yet.",
+            "action":   "Add prominent 'Save / Like Property' buttons and highlight trending properties.",
+            "impact":   "Listing engagement builds buyer interest and repeat website visits.",
+        })
+    elif total_likes < 5:
+        weak_points.append({
+            "category": "Property Engagement",
+            "severity": LOW,
+            "issue":    f"Low Property Like Count ({total_likes} Total Likes)",
+            "detail":   f"Only {total_likes} property likes registered across the active inventory.",
+            "action":   "Feature most-liked properties on the home banner to encourage buyer interactions.",
+            "impact":   "Higher like engagement improves property visibility.",
+        })
+    else:
+        strengths.append(f"Active buyer engagement: {total_likes} total property likes recorded.")
+
+    # 4. Listing-Specific Reviews Evaluation
+    if total_prop_rev == 0 and total_reviews > 0:
+        weak_points.append({
+            "category": "Listing Feedback",
+            "severity": LOW,
+            "issue":    "No Specific Property Listing Reviews",
+            "detail":   "Reviews are general platform feedback rather than property-specific reviews.",
+            "action":   "Add a direct review widget on property detail pages for specific listings.",
+            "impact":   "Property-specific reviews improve trust for individual listings.",
         })
 
-    # Keyword-based complaint themes
-    if any(w in kw_words for w in ["slow", "wait", "delay", "late", "time"]):
-        weak_points.append({
-            "category":    "Response Time",
-            "severity":    HIGH,
-            "issue":       "Customers complain about slow responses",
-            "detail":      "Keywords like 'slow', 'wait', 'delay' appear frequently in reviews.",
-            "action":      "Implement a 2-hour response SLA. Add WhatsApp quick-reply templates for agents.",
-            "impact":      "Fast response time is the top factor in lead conversion",
-        })
+    # ── Dynamic Recommendations ───────────────────────────────────────────────
+    if avg_rating < 4.0:
+        recommendations.append(f"Improve overall rating from {avg_rating:.2f} to 4.2+ by resolving common customer complaints.")
+    else:
+        recommendations.append(f"Prominently display your {avg_rating:.2f}/5.0 star rating on property listing headers as social proof.")
 
-    if any(w in kw_words for w in ["price", "expensive", "cost", "overpriced"]):
-        weak_points.append({
-            "category":    "Pricing Transparency",
-            "severity":    MEDIUM,
-            "issue":       "Pricing concerns in reviews",
-            "detail":      "Customers mention pricing issues — either prices are unclear or feel high.",
-            "action":      "Add a price comparison widget and installment plan calculator to listings.",
-            "impact":      "Pricing transparency reduces drop-off by 30%",
-        })
+    if total_likes < 10:
+        recommendations.append(f"Encourage buyers to heart/save listings to increase the current total of {total_likes} property likes.")
+    else:
+        recommendations.append(f"Create a 'Most Popular Listings' carousel using your top-liked properties ({total_likes} total likes).")
 
-    if any(w in kw_words for w in ["find", "navigate", "confus", "lost", "search"]):
-        weak_points.append({
-            "category":    "UX / Navigation",
-            "severity":    MEDIUM,
-            "issue":       "Navigation difficulty flagged in reviews",
-            "detail":      "Buyers say the platform is hard to navigate or find specific properties.",
-            "action":      "Add a sticky search bar with city/type/budget filters on the home page.",
-            "impact":      "Better navigation increases time-on-site and leads by 20%",
-        })
+    if total_reviews < 15:
+        recommendations.append(f"Expand review collection from current {total_reviews} reviews to 25+ via automated post-viewing WhatsApp prompts.")
 
-    # ── Website-based weak points ─────────────────────────────────────────────
-
-    for issue_dict in all_issues:
-        issue_text = issue_dict.get("issue", "")
-        page_label = issue_dict.get("page", "")
-
-        if "meta description" in issue_text.lower():
-            weak_points.append({
-                "category":    "Search Visibility",
-                "severity":    HIGH,
-                "issue":       f"Missing Search Summary on '{page_label}'",
-                "detail":      "Google does not have a summary snippet to show prospective buyers in search results.",
-                "action":      f"Write a clear 2-sentence overview of your services for the {page_label} page.",
-                "impact":      "Attracts 15% more visitors from Google search results",
-            })
-
-        elif "h1" in issue_text.lower():
-            weak_points.append({
-                "category":    "Search Ranking",
-                "severity":    MEDIUM,
-                "issue":       f"Unclear Main Headline on '{page_label}'",
-                "detail":      "Search engines cannot clearly identify the primary offering of this page.",
-                "action":      f"State your main real estate offering prominently at the top of the {page_label} page.",
-                "impact":      "Improves keyword ranking for local property searches",
-            })
-
-        elif "alt text" in issue_text.lower() or "missing alt" in issue_text.lower():
-            weak_points.append({
-                "category":    "Image Discovery",
-                "severity":    MEDIUM,
-                "issue":       f"Property Photos Missing Search Labels on '{page_label}'",
-                "detail":      f"Multiple images on '{page_label}' lack descriptive text, hiding them from Google Image Search.",
-                "action":      "Add brief text labels describing what each property photo displays.",
-                "impact":      "Drives additional buyer traffic through Google Image Search",
-            })
-
-        elif "thin content" in issue_text.lower() or "word" in issue_text.lower():
-            weak_points.append({
-                "category":    "Customer Engagement",
-                "severity":    MEDIUM,
-                "issue":       f"Limited Information on '{page_label}'",
-                "detail":      "Page contains minimal details, which may cause buyers to leave without making an inquiry.",
-                "action":      "Add neighborhood guides, pricing insights, or property FAQs.",
-                "impact":      "Keeps buyers engaged longer and increases client inquiries",
-            })
-
-        elif "slow" in issue_text.lower() or "load" in issue_text.lower():
-            weak_points.append({
-                "category":    "User Experience",
-                "severity":    HIGH if "slow" in issue_text.lower() else MEDIUM,
-                "issue":       f"Slow Mobile Loading on '{page_label}'",
-                "detail":      f"Page load time ({avg_load}ms) is higher than recommended for mobile users.",
-                "action":      "Compress high-resolution property photos for fast opening on mobile networks.",
-                "impact":      "Retains up to 10% more interested leads on mobile devices",
-            })
-
-    # De-duplicate weak points by (category + issue prefix)
-    seen  = set()
-    deduped = []
-    for wp in weak_points:
-        key = (wp["category"], wp["issue"][:50])
-        if key not in seen:
-            seen.add(key)
-            deduped.append(wp)
-    weak_points = deduped[:12]   # cap at 12 to keep the report focused
-
-    # ── Recommendations ───────────────────────────────────────────────────────
-
-    if missing_alt > 0:
-        recommendations.append(
-            f"Add descriptive labels to {missing_alt} property images so buyers can discover them via Google Image Search."
-        )
-    if pages_no_meta > 0:
-        recommendations.append(
-            f"Add search engine summaries for {pages_no_meta} key page(s) to convert more Google searches into website visitors."
-        )
-    if avg_load and avg_load > 1000:
-        recommendations.append(
-            f"Optimize property photos to reduce load times from {avg_load}ms to under 1000ms for mobile clients."
-        )
-    if total_reviews < 10:
-        recommendations.append(
-            "Launch a WhatsApp review request initiative to gather feedback from recent satisfied buyers."
-        )
-    if avg_rating >= 4.0 and total_reviews >= 5:
-        recommendations.append(
-            f"Highlight your top-rated {avg_rating}/5 customer satisfaction rating as a prominent badge on your home page."
-        )
-        strengths.append(f"Strong customer trust with a {avg_rating}/5 rating across verified buyer reviews")
-
-    recommendations += [
-        "Include clear neighbourhood map links and price range filters for easier buyer browsing.",
-        "Add a dedicated 'Pakistani Real Estate Market Guide' section to answer frequent buyer questions.",
-        "Maintain an easy-to-use WhatsApp quick contact button on every page for immediate client inquiries.",
-    ]
-
-    # Strengths from praises
     if praises:
-        strengths.append(f"Clients appreciate: '{praises[0][:100]}…'" if len(praises[0]) > 100 else f"Clients appreciate: '{praises[0]}'")
+        strengths.append(f"Buyers praise: '{praises[0]}'")
 
-    if health.get("seo", 100) >= 80:
-        strengths.append("Strong organic search presence with well-structured page titles")
-    if health.get("performance", 100) >= 80:
-        strengths.append(f"Fast mobile page loading (average {avg_load}ms) providing a seamless buyer experience")
+    return {
+        "weak_points":     weak_points,
+        "recommendations": recommendations,
+        "strengths":       strengths,
+    }
 
     return {
         "weak_points":      weak_points,

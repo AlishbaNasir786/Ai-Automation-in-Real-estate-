@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RealEstate AI — Person A Unified Intelligence & Lead Suite</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <style>
     :root {
       --bg-dark: #090d16;
@@ -29,18 +31,36 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-    ::selection { background: rgba(16, 185, 129, 0.35); color: #fff; }
+    ::selection {
+      background: rgba(16, 185, 129, 0.35);
+      color: #fff;
+    }
 
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg-dark); }
-    ::-webkit-scrollbar-thumb { background: #253046; border-radius: 8px; }
-    ::-webkit-scrollbar-thumb:hover { background: #324066; }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-dark);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #253046;
+      border-radius: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #324066;
+    }
 
     body {
       background-color: var(--bg-dark);
-      background-image: 
+      background-image:
         radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.12) 0%, transparent 40%),
         radial-gradient(circle at 90% 90%, rgba(56, 189, 248, 0.10) 0%, transparent 40%);
       color: var(--text-main);
@@ -148,7 +168,7 @@
       padding: 6px 14px;
       border-radius: 30px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
     .role-label {
@@ -205,8 +225,15 @@
     }
 
     @keyframes viewFade {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* MODULE HEADER BANNER */
@@ -218,13 +245,15 @@
       margin-bottom: 2rem;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
     }
 
     .module-banner::before {
       content: '';
       position: absolute;
-      top: 0; left: 0; right: 0;
+      top: 0;
+      left: 0;
+      right: 0;
       height: 3px;
       background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
     }
@@ -299,7 +328,12 @@
     }
 
     @media (max-width: 900px) {
-      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* KPI STAT CARDS */
@@ -313,10 +347,32 @@
       gap: 8px;
     }
 
-    .kpi-icon { font-size: 1.5rem; }
-    .kpi-label { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-    .kpi-value { font-size: 1.6rem; font-weight: 800; color: #fff; }
-    .kpi-trend { font-size: 0.8rem; font-weight: 600; color: var(--primary); display: flex; align-items: center; gap: 4px; }
+    .kpi-icon {
+      font-size: 1.5rem;
+    }
+
+    .kpi-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .kpi-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .kpi-trend {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
 
     /* BUTTON STYLES */
     .btn {
@@ -387,27 +443,307 @@
       animation: spin 0.8s linear infinite;
     }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     /* AD PREVIEW CANVAS */
-    .ad-card { background: #0f172a; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 16px; overflow: hidden; box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5); }
-    .ad-header { padding: 1rem; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
-    .ad-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000; }
-    .ad-body { padding: 1.25rem; }
-    .ad-creative-box { height: 220px; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 12px; margin: 1rem 0; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(255, 255, 255, 0.1); }
-    .ad-tag { align-self: flex-start; background: rgba(16, 185, 129, 0.2); border: 1px solid var(--primary); color: var(--primary); font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
-    .ad-headline { font-size: 1.3rem; font-weight: 800; color: #fff; line-height: 1.3; }
-    .ad-footer { padding: 1rem 1.25rem; background: rgba(255, 255, 255, 0.02); border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center; }
+    .ad-card {
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    .ad-header {
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .ad-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      color: #000;
+    }
+
+    .ad-body {
+      padding: 1.25rem;
+    }
+
+    .ad-creative-box {
+      height: 220px;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border-radius: 12px;
+      margin: 1rem 0;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .ad-tag {
+      align-self: flex-start;
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .ad-headline {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .ad-footer {
+      padding: 1rem 1.25rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
     /* RESTRICTED ACCESS SCREEN */
-    .restricted-box { text-align: center; padding: 4rem 2rem; background: rgba(15, 23, 42, 0.7); border: 1px dashed rgba(239, 68, 68, 0.4); border-radius: var(--radius); }
-    .restricted-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .restricted-box {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px dashed rgba(239, 68, 68, 0.4);
+      border-radius: var(--radius);
+    }
+
+    .restricted-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
 
     /* FOOTER */
-    footer { border-top: 1px solid var(--card-border); padding: 1.5rem; text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: auto; }
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+
+    /* ── Virtual HD Tour button on property cards ─────────────────────────────── */
+    .btn-hd-tour {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      background: rgba(56, 189, 248, 0.1);
+      color: #38bdf8;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-hd-tour:hover {
+      background: rgba(56, 189, 248, 0.22);
+      border-color: #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+      transform: translateY(-1px);
+    }
+
+    /* ── HD Tour Side Panel ─────────────────────────────────────────────── */
+    #hdTourOverlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 9000;
+      backdrop-filter: blur(4px);
+    }
+
+    #hdTourPanel {
+      position: fixed;
+      top: 0;
+      right: -700px;
+      width: min(680px, 96vw);
+      height: 100vh;
+      background: #0f172a;
+      border-left: 1px solid rgba(56, 189, 248, 0.25);
+      box-shadow: -20px 0 60px rgba(0, 0, 0, 0.6);
+      z-index: 9001;
+      display: flex;
+      flex-direction: column;
+      transition: right 0.4s cubic-bezier(.16, 1, .3, 1);
+      overflow: hidden;
+    }
+
+    #hdTourPanel.open {
+      right: 0;
+    }
+
+    .hd-tour-header {
+      padding: 1.2rem 1.5rem;
+      background: linear-gradient(135deg, #0a1628, #0f1f3d);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .hd-tour-header h2 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hd-tour-close {
+      background: rgba(255, 255, 255, 0.08);
+      border: none;
+      color: #94a3b8;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all .2s;
+    }
+
+    .hd-tour-close:hover {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+    }
+
+    #hdTourBody {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.2rem;
+    }
+
+    #hdTourBody::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #hdTourBody::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+
+    #hdTourBody::-webkit-scrollbar-thumb {
+      background: #253046;
+      border-radius: 4px;
+    }
+
+    .sector-tour-item {
+      margin-bottom: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+
+    .sector-tour-item.active {
+      border-color: rgba(56, 189, 248, 0.45);
+    }
+
+    .sector-tour-toggle {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #f1f5f9;
+      font-family: inherit;
+      transition: background .2s;
+    }
+
+    .sector-tour-toggle:hover {
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    .sector-tour-toggle .stl {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .sector-tour-toggle .stag {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .sector-tour-toggle .arr {
+      color: #38bdf8;
+      font-size: 1rem;
+      transition: transform .3s;
+    }
+
+    .sector-tour-item.active .arr {
+      transform: rotate(180deg);
+    }
+
+    .sector-tour-body {
+      display: none;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.15);
+    }
+
+    .sector-tour-item.active .sector-tour-body {
+      display: block;
+    }
+
+    .sector-video-frame {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      margin-bottom: 0.9rem;
+    }
+
+    .sector-video-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .sector-desc {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      line-height: 1.7;
+    }
+
+    .hd-tour-loading {
+      text-align: center;
+      padding: 3rem;
+      color: #475569;
+      font-size: 0.9rem;
+    }
   </style>
   <link rel="stylesheet" href="/static/css/luxury_theme.css">
 </head>
+
 <body>
 
   <!-- TOP NAVBAR -->
@@ -456,7 +792,8 @@
         <div class="banner-badge">Person A · Module 1</div>
         <div class="banner-title">Competitor Intelligence &amp; Deep Market Analytics Engine</div>
         <div class="banner-subtitle">
-          Scrapes and analyzes competitor campaigns, city pricing benchmarks, rent-vs-sale yield spreads, and featured listing premiums across Pakistani real estate markets.
+          Scrapes and analyzes competitor campaigns, city pricing benchmarks, rent-vs-sale yield spreads, and featured
+          listing premiums across Pakistani real estate markets.
         </div>
       </div>
 
@@ -470,7 +807,7 @@
               ⚡ Run Live Competitor Analysis
             </button>
           </div>
-          
+
           <div class="grid-3">
             <div>
               <label class="role-label" style="display:block; margin-bottom:6px;">Target City Scope</label>
@@ -511,7 +848,9 @@
         <div class="loader-box" id="compLoader" style="display:none; flex-direction:column; gap:1.5rem; padding:3rem;">
           <!-- Top icon + heading -->
           <div style="text-align:center;">
-            <div style="font-size:2.5rem; margin-bottom:0.5rem; animation: spinGlow 2s linear infinite; display:inline-block;">🤖</div>
+            <div
+              style="font-size:2.5rem; margin-bottom:0.5rem; animation: spinGlow 2s linear infinite; display:inline-block;">
+              🤖</div>
             <h3 style="font-size:1.35rem; font-weight:800; color:#fff; margin-bottom:4px;">
               Scraping &amp; Analyzing Zameen.com Competitor Inventory...
             </h3>
@@ -523,37 +862,74 @@
           <!-- Progress bar -->
           <div style="width:100%; max-width:600px; margin:0 auto;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-              <span style="font-size:0.8rem; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;" id="progressLabel">Starting...</span>
+              <span
+                style="font-size:0.8rem; color:var(--text-muted); font-weight:600; text-transform:uppercase; letter-spacing:0.5px;"
+                id="progressLabel">Starting...</span>
               <span style="font-size:1.1rem; font-weight:800; color:var(--primary);" id="progressPct">0%</span>
             </div>
-            <div style="width:100%; height:14px; background:rgba(255,255,255,0.06); border-radius:99px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); position:relative;">
-              <div id="progressBarFill" style="height:100%; width:0%; border-radius:99px; background:linear-gradient(90deg,#10b981,#38bdf8,#10b981); background-size:200% 100%; transition:width 0.6s ease; animation:barShimmer 2s linear infinite;"></div>
+            <div
+              style="width:100%; height:14px; background:rgba(255,255,255,0.06); border-radius:99px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); position:relative;">
+              <div id="progressBarFill"
+                style="height:100%; width:0%; border-radius:99px; background:linear-gradient(90deg,#10b981,#38bdf8,#10b981); background-size:200% 100%; transition:width 0.6s ease; animation:barShimmer 2s linear infinite;">
+              </div>
             </div>
-            <div style="display:flex; justify-content:space-between; margin-top:6px; font-size:0.72rem; color:var(--text-muted);">
+            <div
+              style="display:flex; justify-content:space-between; margin-top:6px; font-size:0.72rem; color:var(--text-muted);">
               <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
             </div>
           </div>
 
           <!-- Stage indicators -->
           <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-            <div class="stage-chip" id="stage1" style="display:inline-flex; align-items:center; gap:6px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:var(--primary); padding:6px 14px; border-radius:30px; font-size:0.8rem; font-weight:600;">🔗 Connecting</div>
-            <div class="stage-chip" id="stage2" style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:var(--text-muted); padding:6px 14px; border-radius:30px; font-size:0.8rem; font-weight:600;">🏙️ Scraping Cities</div>
-            <div class="stage-chip" id="stage3" style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:var(--text-muted); padding:6px 14px; border-radius:30px; font-size:0.8rem; font-weight:600;">🔁 Deduplicating</div>
-            <div class="stage-chip" id="stage4" style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:var(--text-muted); padding:6px 14px; border-radius:30px; font-size:0.8rem; font-weight:600;">📊 Generating Report</div>
+            <div class="stage-chip" id="stage1"
+              style="display:inline-flex; align-items:center; gap:6px; background:rgba(16,185,129,0.15); border:1px solid rgba(16,185,129,0.3); color:var(--primary); padding:6px 14px; border-radius:30px; font-size:0.8rem; font-weight:600;">
+              🔗 Connecting</div>
+            <div class="stage-chip" id="stage2"
+              style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:var(--text-muted); padding:6px 14px; border-radius:30px; font-size:0.8rem; font-weight:600;">
+              🏙️ Scraping Cities</div>
+            <div class="stage-chip" id="stage3"
+              style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:var(--text-muted); padding:6px 14px; border-radius:30px; font-size:0.8rem; font-weight:600;">
+              🔁 Deduplicating</div>
+            <div class="stage-chip" id="stage4"
+              style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:var(--text-muted); padding:6px 14px; border-radius:30px; font-size:0.8rem; font-weight:600;">
+              📊 Generating Report</div>
           </div>
 
-          <p style="text-align:center; font-size:0.78rem; color:var(--text-muted);">⏱️ This scrape typically takes 5–15 minutes — please don't close the tab.</p>
+          <p style="text-align:center; font-size:0.78rem; color:var(--text-muted);">⏱️ This scrape typically takes 5–15
+            minutes — please don't close the tab.</p>
         </div>
 
         <style>
-          @keyframes barShimmer { 0%{background-position:0% 0} 100%{background-position:200% 0} }
-          @keyframes spinGlow { 0%{transform:rotate(0deg) scale(1);} 50%{transform:rotate(180deg) scale(1.1);} 100%{transform:rotate(360deg) scale(1);} }
+          @keyframes barShimmer {
+            0% {
+              background-position: 0% 0
+            }
+
+            100% {
+              background-position: 200% 0
+            }
+          }
+
+          @keyframes spinGlow {
+            0% {
+              transform: rotate(0deg) scale(1);
+            }
+
+            50% {
+              transform: rotate(180deg) scale(1.1);
+            }
+
+            100% {
+              transform: rotate(360deg) scale(1);
+            }
+          }
         </style>
 
 
         <!-- FULL DETAILED COMPETITOR INTELLIGENCE REPORT EMBEDDED -->
         <div id="compReportOutput">
-          <iframe id="compReportIframe" src="data/competitor_report.html" style="width:100%; height:1250px; border:none; border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.5);"></iframe>
+          <iframe id="compReportIframe" src="data/competitor_report.html"
+            style="width:100%; height:1250px; border:none; border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.5);"></iframe>
         </div>
 
       </div>
@@ -567,12 +943,14 @@
         <div class="banner-badge">Person A · Module 3</div>
         <div class="banner-title">AI Buyer Persona Profiler &amp; WhatsApp Engine</div>
         <div class="banner-subtitle">
-          Qualifies real estate leads into dynamic buyer personas, recommends platform channel ratings, and auto-generates formatted WhatsApp posts with recipient phone deep-linking.
+          Qualifies real estate leads into dynamic buyer personas, recommends platform channel ratings, and
+          auto-generates formatted WhatsApp posts with recipient phone deep-linking.
         </div>
       </div>
 
       <!-- EMBEDDED PERSONA WIZARD APPLICATION -->
-      <iframe src="persona_app.html" style="width:100%; height:950px; border:none; border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.5);"></iframe>
+      <iframe src="persona_app.html"
+        style="width:100%; height:950px; border:none; border-radius:16px; box-shadow:0 20px 40px rgba(0,0,0,0.5);"></iframe>
     </div>
 
     <!-- ================================================================= -->
@@ -583,7 +961,8 @@
         <div class="banner-badge">Person A · Module 5</div>
         <div class="banner-title">Marketing Report Generator &amp; AI Recommendations</div>
         <div class="banner-subtitle">
-          Automatically aggregates multi-channel lead acquisition metrics, generates ROI reports, and provides AI strategic guidance.
+          Automatically aggregates multi-channel lead acquisition metrics, generates ROI reports, and provides AI
+          strategic guidance.
         </div>
       </div>
 
@@ -686,7 +1065,8 @@
         <div class="banner-badge">Person A · Module 8</div>
         <div class="banner-title">Hyper-Personalized Advertisement Engine</div>
         <div class="banner-subtitle">
-          Generates tailored real estate advertisement copy, visual headlines, and targeted specs customized specifically to individual customer buyer preferences.
+          Generates tailored real estate advertisement copy, visual headlines, and targeted specs customized
+          specifically to individual customer buyer preferences.
         </div>
       </div>
 
@@ -738,7 +1118,8 @@
             <div class="ad-avatar">AI</div>
             <div>
               <div style="font-weight:700; font-size:0.9rem; color:#fff;" id="adBrandName">RealEstate AI Marketing</div>
-              <div style="font-size:0.75rem; color:var(--text-muted);" id="adPlatformTag">Sponsored · Instagram Banner</div>
+              <div style="font-size:0.75rem; color:var(--text-muted);" id="adPlatformTag">Sponsored · Instagram Banner
+              </div>
             </div>
           </div>
 
@@ -750,8 +1131,10 @@
               </div>
             </div>
 
-            <p id="adBodyText" style="font-size:0.875rem; color:var(--text-muted); line-height:1.5; margin-bottom:1rem;">
-              Targeted ROI deal with instant pre-launch pricing. High appreciation potential for smart capital deployment.
+            <p id="adBodyText"
+              style="font-size:0.875rem; color:var(--text-muted); line-height:1.5; margin-bottom:1rem;">
+              Targeted ROI deal with instant pre-launch pricing. High appreciation potential for smart capital
+              deployment.
             </p>
           </div>
 
@@ -774,7 +1157,8 @@
         Admin-Only Module Access
       </h2>
       <p style="color:var(--text-muted); max-width:500px; margin:0 auto 1.5rem auto; font-size:0.925rem;">
-        This module is reserved for platform Administrators. Switch to <strong>👑 Admin View</strong> in the top navigation bar to access this module.
+        This module is reserved for platform Administrators. Switch to <strong>👑 Admin View</strong> in the top
+        navigation bar to access this module.
       </p>
       <button class="btn btn-primary" onclick="setRole('admin')">👑 Switch to Admin View</button>
     </div>
@@ -783,7 +1167,8 @@
 
   <!-- FOOTER -->
   <footer>
-    RealEstate AI — Person A Unified Suite | Dual Scraper, Competitor Intelligence, Persona Generator &amp; Hyper-Ad Engine
+    RealEstate AI — Person A Unified Suite | Dual Scraper, Competitor Intelligence, Persona Generator &amp; Hyper-Ad
+    Engine
   </footer>
 
   <script>
@@ -795,16 +1180,16 @@
     function setRole(role) {
       currentRole = role;
       document.body.setAttribute('data-role', role);  // CSS uses this to show/hide admin controls
-      
-      const btnAdmin  = document.getElementById('btnRoleAdmin');
+
+      const btnAdmin = document.getElementById('btnRoleAdmin');
       const btnClient = document.getElementById('btnRoleClient');
 
       if (role === 'admin') {
-        btnAdmin.className  = "switch-btn active-admin";
+        btnAdmin.className = "switch-btn active-admin";
         btnClient.className = "switch-btn";
         document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'inline-flex');
       } else {
-        btnAdmin.className  = "switch-btn";
+        btnAdmin.className = "switch-btn";
         btnClient.className = "switch-btn active-client";
         document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
         // If currently on an admin-only tab, auto-switch to public Module 3
@@ -852,13 +1237,13 @@
       const pct = Math.max(Math.min(rawPct, 100), _displayedPct);
       _displayedPct = pct;
 
-      const fill    = document.getElementById('progressBarFill');
-      const pctEl   = document.getElementById('progressPct');
+      const fill = document.getElementById('progressBarFill');
+      const pctEl = document.getElementById('progressPct');
       const labelEl = document.getElementById('progressLabel');
-      const statusEl= document.getElementById('loaderStatusText');
-      if (fill)              fill.style.width = pct + '%';
-      if (pctEl)             pctEl.innerText  = Math.round(pct) + '%';
-      if (labelEl && labelText)  labelEl.innerText  = labelText;
+      const statusEl = document.getElementById('loaderStatusText');
+      if (fill) fill.style.width = pct + '%';
+      if (pctEl) pctEl.innerText = Math.round(pct) + '%';
+      if (labelEl && labelText) labelEl.innerText = labelText;
       if (statusEl && statusText) statusEl.innerText = statusText;
     }
 
@@ -867,20 +1252,20 @@
         const el = document.getElementById('stage' + i);
         if (!el) continue;
         if (i < n) {
-          el.style.background  = 'rgba(16,185,129,0.08)';
+          el.style.background = 'rgba(16,185,129,0.08)';
           el.style.borderColor = 'rgba(16,185,129,0.2)';
-          el.style.color       = '#0f766e';
-          el.style.boxShadow   = 'none';
+          el.style.color = '#0f766e';
+          el.style.boxShadow = 'none';
         } else if (i === n) {
-          el.style.background  = 'rgba(16,185,129,0.18)';
+          el.style.background = 'rgba(16,185,129,0.18)';
           el.style.borderColor = 'rgba(16,185,129,0.5)';
-          el.style.color       = 'var(--primary)';
-          el.style.boxShadow   = '0 0 12px rgba(16,185,129,0.3)';
+          el.style.color = 'var(--primary)';
+          el.style.boxShadow = '0 0 12px rgba(16,185,129,0.3)';
         } else {
-          el.style.background  = 'rgba(255,255,255,0.04)';
+          el.style.background = 'rgba(255,255,255,0.04)';
           el.style.borderColor = 'rgba(255,255,255,0.1)';
-          el.style.color       = 'var(--text-muted)';
-          el.style.boxShadow   = 'none';
+          el.style.color = 'var(--text-muted)';
+          el.style.boxShadow = 'none';
         }
       }
     }
@@ -922,14 +1307,14 @@
         const response = await fetch('/api/run_competitor_engine', { method: 'GET' });
 
         if (response.ok) {
-          const reader  = response.body.getReader();
+          const reader = response.body.getReader();
           const decoder = new TextDecoder('utf-8');
 
           while (true) {
             const { value, done } = await reader.read();
             if (done) break;
 
-            const chunk = decoder.decode(value, {stream: true});
+            const chunk = decoder.decode(value, { stream: true });
             for (let line of chunk.split('\n')) {
               if (!line.startsWith('data: ')) continue;
               const data = line.replace('data: ', '').trim();
@@ -948,14 +1333,14 @@
 
               } else if (data.includes('%') && data.includes('/')) {
                 // Backend emits progress updates per page/segment
-                const pctM  = data.match(/([\d.]+)%/);
-                const segM  = data.match(/(\d+)\/(\d+)/);
+                const pctM = data.match(/([\d.]+)%/);
+                const segM = data.match(/(\d+)\/(\d+)/);
                 const modeM = data.match(/FOR[_\s](SALE|RENT)/i);
                 if (!pctM) continue;
 
-                const rawPct  = parseFloat(pctM[1]);
-                const segText = segM  ? `${segM[1]} of ${segM[2]} segments` : '';
-                const isRent  = modeM && modeM[1].toUpperCase() === 'RENT';
+                const rawPct = parseFloat(pctM[1]);
+                const segText = segM ? `${segM[1]} of ${segM[2]} segments` : '';
+                const isRent = modeM && modeM[1].toUpperCase() === 'RENT';
 
                 if (isRent) _saleDone = true;
 
@@ -964,13 +1349,13 @@
                 if (!isRent) {
                   // FOR_SALE → 5% to 49%
                   displayPct = 5 + (rawPct / 100) * 44;
-                  stageN     = 2;
-                  modeLabel  = `FOR SALE scrape — ${segText}`;
+                  stageN = 2;
+                  modeLabel = `FOR SALE scrape — ${segText}`;
                 } else {
                   // FOR_RENT → 50% to 93%
                   displayPct = 50 + (rawPct / 100) * 43;
-                  stageN     = rawPct >= 90 ? 3 : 2;
-                  modeLabel  = `FOR RENT scrape — ${segText}`;
+                  stageN = rawPct >= 90 ? 3 : 2;
+                  modeLabel = `FOR RENT scrape — ${segText}`;
                 }
 
                 activateStage(stageN);
@@ -1034,14 +1419,117 @@
         alert('Ad Copy copied to clipboard!');
       });
     }
+  </script>
 
+  <!-- ═══════─ VIRTUAL HD TOUR PANEL ─═══════ -->
+  <div id="hdTourOverlay" onclick="closeHdTourPanel()"></div>
+  <div id="hdTourPanel">
+    <div class="hd-tour-header">
+      <h2>🎬 Virtual HD Tour &mdash; Sector Showcase</h2>
+      <button class="hd-tour-close" onclick="closeHdTourPanel()">×</button>
+    </div>
+    <div id="hdTourBody">
+      <div class="hd-tour-loading">⏳ Loading sector videos from database…</div>
+    </div>
+  </div>
+
+  <script>
+    /* ── HD Tour Panel  —  fully dynamic from /api/sector-videos ────────────── */
+    let _tourVideos = [];    // cached from DB
+    let _tourLoaded = false;
+
+    async function loadSectorTourPanel() {
+      try {
+        const res = await fetch('/api/sector-videos');
+        const data = await res.json();
+        _tourVideos = data.videos || [];
+        _tourLoaded = true;
+        _renderTourBody();
+      } catch (e) {
+        document.getElementById('hdTourBody').innerHTML =
+          '<div class="hd-tour-loading" style="color:#f87171">❌ Failed to load sector videos. Please refresh.</div>';
+      }
+    }
+
+    function _renderTourBody(activeSector) {
+      const body = document.getElementById('hdTourBody');
+      if (!_tourVideos.length) {
+        body.innerHTML = '<div class="hd-tour-loading">No sector videos found in database.</div>';
+        return;
+      }
+      body.innerHTML = '';
+      _tourVideos.forEach(v => {
+        const isActive = activeSector && v.sector.toLowerCase() === activeSector.toLowerCase();
+        const item = document.createElement('div');
+        item.className = 'sector-tour-item' + (isActive ? ' active' : '');
+        item.id = 'tourItem-' + v.sector.replace(/\s+/g, '_');
+        item.innerHTML = `
+        <button class="sector-tour-toggle" onclick="toggleTourItem(this.closest('.sector-tour-item'), '${v.sector.replace(/'/g, "\\'")}')"
+                id="tourToggle-${v.id}">
+          <div>
+            <div class="stl">📍 ${v.sector} &mdash; <span style="color:#38bdf8">${_esc(v.title)}</span></div>
+            <div class="stag">${_esc(v.tagline || '')}</div>
+          </div>
+          <span class="arr">▼</span>
+        </button>
+        <div class="sector-tour-body">
+          <div class="sector-video-frame">
+            <iframe src="${_esc(v.video_url)}" allowfullscreen loading="lazy"
+                    title="${_esc(v.title)}"></iframe>
+          </div>
+          <p class="sector-desc">${_esc(v.description || '')}</p>
+          <div style="display:flex;gap:0.7rem;margin-top:0.9rem;">
+            <a href="/persona_app.html" style="flex:1;padding:0.65rem;text-align:center;border-radius:8px;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);color:#10b981;font-size:0.8rem;font-weight:700;text-decoration:none;"
+               title="Find properties in ${_esc(v.sector)}">🏠 Find Properties in ${_esc(v.sector)}</a>
+            <a href="https://wa.me/923165756055" target="_blank"
+               style="flex:1;padding:0.65rem;text-align:center;border-radius:8px;background:rgba(37,211,102,0.12);border:1px solid rgba(37,211,102,0.3);color:#25d366;font-size:0.8rem;font-weight:700;text-decoration:none;">💬 Ask Agent</a>
+          </div>
+        </div>`;
+        body.appendChild(item);
+      });
+    }
+
+    function toggleTourItem(item, sector) {
+      const wasActive = item.classList.contains('active');
+      document.querySelectorAll('.sector-tour-item').forEach(el => el.classList.remove('active'));
+      if (!wasActive) item.classList.add('active');
+    }
+
+    function openSectorTourPanel(sector) {
+      document.getElementById('hdTourOverlay').style.display = 'block';
+      document.getElementById('hdTourPanel').classList.add('open');
+      if (_tourLoaded) {
+        _renderTourBody(sector);
+        // Scroll to that sector
+        setTimeout(() => {
+          const key = (sector || '').replace(/\s+/g, '_');
+          const el = document.getElementById('tourItem-' + key);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 120);
+      }
+    }
+
+    function closeHdTourPanel() {
+      document.getElementById('hdTourOverlay').style.display = 'none';
+      document.getElementById('hdTourPanel').classList.remove('open');
+    }
+
+    function _esc(s) {
+      return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+  </script>
+
+  <script src="/static/js/home_properties.js"></script>
+
+  <script>
     // INITIALIZATION
     document.addEventListener('DOMContentLoaded', () => {
       setRole('admin');
       generateHyperAd();
+      loadSectorTourPanel();
     });
   </script>
-  <script src="/static/js/home_properties.js"></script>
-  
+
 </body>
+
 </html>

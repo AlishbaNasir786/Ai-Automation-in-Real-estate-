@@ -85,6 +85,8 @@ def init_auth_db():
         id          TEXT PRIMARY KEY,
         property_id TEXT NOT NULL,
         session_key TEXT NOT NULL,
+        user_id     TEXT,
+        user_email  TEXT,
         created_at  TEXT NOT NULL,
         UNIQUE(property_id, session_key)
     )
@@ -98,13 +100,79 @@ def init_auth_db():
         reviewer_name TEXT NOT NULL,
         rating        INTEGER NOT NULL,
         comment       TEXT NOT NULL,
+        user_id       TEXT,
+        user_email    TEXT,
         created_at    TEXT NOT NULL
     )
     """)
 
+    # Sector promotional videos — one per sector/area
+    c.execute("""
+    CREATE TABLE IF NOT EXISTS sector_videos (
+        id          INTEGER PRIMARY KEY AUTOINCREMENT,
+        sector      TEXT NOT NULL UNIQUE,
+        title       TEXT NOT NULL,
+        tagline     TEXT,
+        description TEXT,
+        video_url   TEXT NOT NULL,
+        created_at  TEXT NOT NULL DEFAULT (datetime('now'))
+    )
+    """)
+
+    # Seed dummy sector videos (placeholder — admin can update via SQL or future UI)
+    dummy_videos = [
+        ("F-7",         "Discover F-7 — Islamabad's Premier Address",
+         "Luxury, diplomacy & prestige in one sector.",
+         "F-7 is home to Jinnah Super Market and some of the most sought-after residential plots in Islamabad. Ideal for investors and luxury seekers. Properties here command the highest capital appreciation in the city.",
+         "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+        ("F-6",         "F-6 — Diplomatic Enclave Living",
+         "Green avenues, executive residences & embassies.",
+         "Nestled next to the diplomatic enclave, F-6 offers premium villas and a quiet, secure environment. Perfect for executives and diplomats seeking exclusivity.",
+         "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+        ("F-11",        "F-11 — Margalla View Modern Living",
+         "High-rise living with panoramic mountain views.",
+         "F-11 is the go-to sector for modern apartment seekers. Featuring high-rise towers, easy access to PIMS and Blue Area, and strong rental demand from government employees.",
+         "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+        ("E-11",        "E-11 — Executive Apartment Capital",
+         "100% NOC. High rental yield. Premium towers.",
+         "E-11 is Islamabad's apartment hub. With fully NOC-verified towers, it delivers one of the highest rental yields in the city. Ideal for investors seeking passive rental income.",
+         "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+        ("G-10",        "G-10 — Affordable Family Living",
+         "Spacious plots, parks & top schools nearby.",
+         "G-10 offers the perfect balance between affordability and quality of life. Sub-sectors like G-10/3 have excellent school access, green parks, and a strong community feel.",
+         "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+        ("G-11",        "G-11 — Modern Townhouses & Community",
+         "Family-friendly living with great connectivity.",
+         "G-11 Markaz is a thriving commercial hub. The residential sub-sectors offer modern townhouses and strong resale value driven by proximity to Ring Road and the motorway.",
+         "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+        ("DHA",         "DHA Islamabad — Gated Security & Luxury",
+         "24/7 security. Planned infrastructure. Elite lifestyle.",
+         "Defence Housing Authority Islamabad Phase 2 offers gated, security-controlled living with world-class infrastructure. A top choice for families and executives seeking safety and luxury.",
+         "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+        ("Bahria Town", "Bahria Town — Pakistan's Master-Planned Icon",
+         "Hospitals, malls, schools & golf in one community.",
+         "Bahria Town Islamabad is a self-contained city. With its own hospitals, international schools, shopping malls, and golf course, it is Pakistan's most complete planned community.",
+         "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+        ("B-17",        "B-17 Multi Gardens — The Smart Investment",
+         "Affordable plots with fast appreciation near CPEC corridor.",
+         "B-17 Multi Gardens is one of Islamabad's fastest-growing sectors. Located near the Kashmir Highway and close to CPEC routes, it offers budget-friendly plots with strong future appreciation potential.",
+         "https://www.youtube.com/embed/dQw4w9WgXcQ"),
+    ]
+    for row in dummy_videos:
+        c.execute("""
+        INSERT OR IGNORE INTO sector_videos (sector, title, tagline, description, video_url)
+        VALUES (?, ?, ?, ?, ?)
+        """, row)
+
     # Safe migration: add columns that may not exist in older DB files
     _safe_add_column(c, "users", "role",  "TEXT NOT NULL DEFAULT 'client'")
     _safe_add_column(c, "users", "phone", "TEXT")
+    # Migrate reviews table to add user credentials columns
+    _safe_add_column(c, "listing_reviews", "user_id",    "TEXT")
+    _safe_add_column(c, "listing_reviews", "user_email", "TEXT")
+    # Migrate likes table to add user credentials columns
+    _safe_add_column(c, "listing_likes",   "user_id",    "TEXT")
+    _safe_add_column(c, "listing_likes",   "user_email", "TEXT")
 
     conn.commit()
     conn.close()
@@ -200,13 +268,24 @@ def get_user_by_id(user_id: str) -> dict:
     conn.row_factory = sqlite3.Row
     c = conn.cursor()
     c.execute("""
-        SELECT id, email, full_name, auth_provider, google_id,
+        SELECT id, email, full_name, phone, auth_provider, google_id,
                email_verified, segment, role, created_at, last_login_at
         FROM users WHERE id = ?
     """, (user_id,))
     row = c.fetchone()
     conn.close()
     return dict(row) if row else None
+
+
+def update_user_phone(user_id: str, phone: str) -> dict:
+    """Update user's phone number."""
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
+    c.execute("UPDATE users SET phone = ? WHERE id = ?",
+              (phone.strip() if phone else None, user_id))
+    conn.commit()
+    conn.close()
+    return get_user_by_id(user_id)
 
 
 def authenticate_user(email: str, password: str) -> dict:
@@ -265,8 +344,9 @@ def update_user_segment(user_id: str, segment: str) -> dict:
 
 # ── LISTING LIKES HELPERS ─────────────────────────────────────────────────────
 
-def toggle_listing_like(property_id: str, session_key: str) -> dict:
-    """Toggle a like on a listing. Returns {liked: bool, count: int}."""
+def toggle_listing_like(property_id: str, session_key: str, user_id: str = None, user_email: str = None) -> dict:
+    """Toggle a like on a listing. Records user_id/user_email when available.
+    Returns {liked: bool, count: int}."""
     import uuid
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
@@ -278,8 +358,8 @@ def toggle_listing_like(property_id: str, session_key: str) -> dict:
                   (property_id, session_key))
         liked = False
     else:
-        c.execute("INSERT INTO listing_likes (id, property_id, session_key, created_at) VALUES (?,?,?,?)",
-                  (str(uuid.uuid4()), property_id, session_key, datetime.now().isoformat()))
+        c.execute("INSERT INTO listing_likes (id, property_id, session_key, user_id, user_email, created_at) VALUES (?,?,?,?,?,?)",
+                  (str(uuid.uuid4()), property_id, session_key, user_id, user_email, datetime.now().isoformat()))
         liked = True
     conn.commit()
     c.execute("SELECT COUNT(*) FROM listing_likes WHERE property_id=?", (property_id,))
@@ -315,8 +395,9 @@ def get_user_liked_properties(session_key: str) -> list:
 
 # ── LISTING REVIEWS HELPERS ───────────────────────────────────────────────────
 
-def submit_listing_review(property_id: str, reviewer_name: str, rating: int, comment: str) -> dict:
-    """Insert a review for a specific listing."""
+def submit_listing_review(property_id: str, reviewer_name: str, rating: int, comment: str,
+                          user_id: str = None, user_email: str = None) -> dict:
+    """Insert a review for a specific listing. Saves user_id + user_email when provided."""
     import uuid
     rating = max(1, min(5, int(rating)))
     conn = sqlite3.connect(DB_FILE)
@@ -324,12 +405,25 @@ def submit_listing_review(property_id: str, reviewer_name: str, rating: int, com
     rev_id = str(uuid.uuid4())
     now = datetime.now().isoformat()
     try:
-        c.execute("""INSERT INTO listing_reviews (id, property_id, reviewer_name, rating, comment, created_at)
-                     VALUES (?,?,?,?,?,?)""",
+        c.execute("""INSERT INTO listing_reviews
+                        (id, property_id, reviewer_name, rating, comment, user_id, user_email, created_at)
+                     VALUES (?,?,?,?,?,?,?,?)""",
                   (rev_id, property_id, reviewer_name.strip()[:80],
-                   rating, comment.strip()[:1000], now))
+                   rating, comment.strip()[:1000], user_id, user_email, now))
         conn.commit()
         conn.close()
+
+        # Best-effort sync to Supabase reviews table
+        try:
+            from db import supabase
+            sb_payload = {
+                "rating": rating,
+                "comment": f"[{reviewer_name.strip()[:80]}]: {comment.strip()[:1000]}",
+            }
+            supabase.table('reviews').insert(sb_payload).execute()
+        except Exception:
+            pass
+
         return {"success": True, "id": rev_id}
     except Exception as e:
         conn.close()

@@ -145,14 +145,65 @@ function buildCard(prop, imageMap) {
   const listingModeLabel = isRent ? 'For Rent' : 'For Sale';
   const propType = prop.property_type || 'Residential';
 
-  // Image wrapper
+  // ── MULTI-IMAGE SLIDER ─────────────────────────────────────────
   const imgWrap = document.createElement('div');
   imgWrap.className = 'img-wrap';
+  imgWrap.id = `imgWrap-${prop.id}`;
 
+  // Build images list: stored map value may be array or single string
+  let imgList = [];
+  const mapVal = imageMap[String(prop.id)];
+  if (Array.isArray(mapVal)) {
+    imgList = mapVal;
+  } else if (typeof mapVal === 'string' && mapVal) {
+    imgList = [mapVal];
+  }
+  if (imgList.length === 0 && prop.image_url) imgList = [prop.image_url];
+  if (imgList.length === 0) imgList = [DEFAULT_IMG];
+
+  // Main image element
   const img = document.createElement('img');
-  img.src = imageMap[prop.id] || prop.image_url || DEFAULT_IMG;
+  img.src = imgList[0];
   img.alt = prop.title || 'Islamabad Property';
+  img.dataset.idx = '0';
   imgWrap.appendChild(img);
+
+  // Prev / Next arrows (only if multiple images)
+  if (imgList.length > 1) {
+    const btnPrev = document.createElement('button');
+    btnPrev.className = 'slider-arrow slider-prev';
+    btnPrev.innerHTML = '&#8249;';
+    btnPrev.onclick = (e) => { e.stopPropagation(); slideImage(prop.id, imgList, -1); };
+
+    const btnNext = document.createElement('button');
+    btnNext.className = 'slider-arrow slider-next';
+    btnNext.innerHTML = '&#8250;';
+    btnNext.onclick = (e) => { e.stopPropagation(); slideImage(prop.id, imgList, 1); };
+
+    imgWrap.appendChild(btnPrev);
+    imgWrap.appendChild(btnNext);
+
+    // Dot indicators
+    const dots = document.createElement('div');
+    dots.className = 'slider-dots';
+    dots.id = `sliderDots-${prop.id}`;
+    imgList.forEach((_, di) => {
+      const dot = document.createElement('span');
+      dot.className = 'slider-dot' + (di === 0 ? ' active' : '');
+      dot.onclick = (e) => { e.stopPropagation(); jumpSlide(prop.id, imgList, di); };
+      dots.appendChild(dot);
+    });
+    imgWrap.appendChild(dots);
+  }
+
+  // Image count badge (top-left, only if > 1)
+  if (imgList.length > 1) {
+    const countBadge = document.createElement('div');
+    countBadge.className = 'img-count-badge';
+    countBadge.id = `imgCountBadge-${prop.id}`;
+    countBadge.textContent = `1 / ${imgList.length}`;
+    imgWrap.appendChild(countBadge);
+  }
 
   // Status Badge Overlay — professional 2-state: Available / Not Available
   const statusBadge = document.createElement('div');
@@ -172,22 +223,22 @@ function buildCard(prop, imageMap) {
   typeBadge.textContent = propType;
   imgWrap.appendChild(typeBadge);
 
-  // Upload Photo Button
+  // Add Photo Button (appends to gallery)
   const uploadBtn = document.createElement('label');
-  uploadBtn.title = 'Upload photo';
+  uploadBtn.title = 'Add photo to gallery';
   uploadBtn.style.cssText = [
     'position:absolute; bottom:8px; right:8px;',
     'background:rgba(0,0,0,.65); color:#fff; border-radius:6px;',
     'padding:4px 9px; font-size:0.72rem; cursor:pointer;',
-    'backdrop-filter:blur(4px); font-weight:600;',
+    'backdrop-filter:blur(4px); font-weight:600; z-index:5;',
   ].join('');
-  uploadBtn.textContent = '📷 Edit Photo';
+  uploadBtn.textContent = '\u{1F4F7} Add Photo';
 
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
   fileInput.accept = 'image/*';
   fileInput.style.display = 'none';
-  fileInput.addEventListener('change', () => handleUpload(prop.id, fileInput, img));
+  fileInput.addEventListener('change', () => handleUpload(prop.id, fileInput));
 
   uploadBtn.appendChild(fileInput);
   imgWrap.appendChild(uploadBtn);
@@ -772,7 +823,7 @@ function showPropertyDetailsModal(prop, imageMap) {
       <div style="color:#cbd5e1; font-size:0.9rem; line-height:1.6; margin-bottom:1.2rem;">${esc(prop.description || 'No description provided.')}</div>
 
       <div style="display:flex; gap:0.8rem;">
-        <button class="btn-auth-submit" onclick="alert('📲 Request sent to 03165756055! An agent will send complete floorplan & documents.'); document.getElementById('propDetailsModalOverlay').remove();">Request Virtual Walkthrough</button>
+        <button class="btn-auth-submit" onclick="window.open('https://wa.me/923165756055','_blank'); document.getElementById('propDetailsModalOverlay').remove();">📞 Contact Now</button>
         <button class="preset-btn client-p" style="padding:0.8rem 1.2rem; font-size:0.9rem;" onclick="window.open('https://wa.me/923165756055', '_blank')">💬 WhatsApp 03165756055</button>
       </div>
     </div>
@@ -780,7 +831,7 @@ function showPropertyDetailsModal(prop, imageMap) {
   document.body.appendChild(modal);
 }
 
-async function handleUpload(propertyId, fileInput, imgEl) {
+async function handleUpload(propertyId, fileInput) {
   const file = fileInput.files[0];
   if (!file) return;
 
@@ -791,8 +842,9 @@ async function handleUpload(propertyId, fileInput, imgEl) {
   try {
     const res  = await fetch('/api/upload_image', { method: 'POST', body: formData });
     const data = await res.json();
-    if (data.url) {
-      imgEl.src = data.url + '?t=' + Date.now();   // cache-bust
+    if (data.all_images) {
+      // Reload properties to rebuild slider with new image
+      await loadProperties();
     } else {
       alert('Upload failed: ' + (data.error || 'Unknown error'));
     }
@@ -800,6 +852,42 @@ async function handleUpload(propertyId, fileInput, imgEl) {
     console.error('Upload error:', err);
     alert('Upload failed. Check console.');
   }
+}
+
+/* ── SLIDER HELPERS ─────────────────────────────────────────── */
+function slideImage(propId, imgList, direction) {
+  const wrap = document.getElementById(`imgWrap-${propId}`);
+  if (!wrap) return;
+  const img = wrap.querySelector('img');
+  if (!img) return;
+  let idx = parseInt(img.dataset.idx || '0', 10);
+  idx = (idx + direction + imgList.length) % imgList.length;
+  img.src = imgList[idx] + '?cache=' + idx;
+  img.dataset.idx = String(idx);
+  _updateSliderUI(propId, imgList.length, idx);
+}
+
+function jumpSlide(propId, imgList, idx) {
+  const wrap = document.getElementById(`imgWrap-${propId}`);
+  if (!wrap) return;
+  const img = wrap.querySelector('img');
+  if (!img) return;
+  img.src = imgList[idx] + '?cache=' + idx;
+  img.dataset.idx = String(idx);
+  _updateSliderUI(propId, imgList.length, idx);
+}
+
+function _updateSliderUI(propId, total, activeIdx) {
+  // Update dots
+  const dotsEl = document.getElementById(`sliderDots-${propId}`);
+  if (dotsEl) {
+    dotsEl.querySelectorAll('.slider-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === activeIdx);
+    });
+  }
+  // Update count badge
+  const badge = document.getElementById(`imgCountBadge-${propId}`);
+  if (badge) badge.textContent = `${activeIdx + 1} / ${total}`;
 }
 
 /* ── ADMIN ADD PROPERTY MODAL ───────────────────────────────── */

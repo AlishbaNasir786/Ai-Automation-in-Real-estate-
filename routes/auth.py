@@ -11,7 +11,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from auth_db import (
     create_user, authenticate_user, authenticate_google_user,
-    get_user_by_id, update_user_segment
+    get_user_by_id, update_user_segment, update_user_phone
 )
 from modules.ad_personalization.segments import get_segment, SEGMENTS
 from modules.ad_personalization.ad_generator import generate_ad_campaign
@@ -28,15 +28,20 @@ def signup():
     password = data.get("password", "").strip()
     full_name = data.get("full_name", "").strip()
     segment = data.get("segment")
+    phone = data.get("phone", "").strip()
 
     if not email or not password or not full_name:
         return jsonify({"error": "Name, email, and password are required."}), 400
 
-    res = create_user(email=email, password=password, full_name=full_name, segment=segment)
+    res = create_user(email=email, password=password, full_name=full_name,
+                      segment=segment, phone=phone or None)
     if "error" in res:
         return jsonify(res), 400
 
-    session["user_id"] = res["id"]
+    session["user_id"]    = res["id"]
+    session["user_email"] = res.get("email", "")
+    session["user_name"]  = res.get("full_name", "")
+    session["user_phone"] = res.get("phone", "") or ""
     return jsonify({"status": "success", "user": res})
 
 
@@ -46,6 +51,7 @@ def login():
     data = request.get_json() or {}
     email = data.get("email", "").strip()
     password = data.get("password", "").strip()
+    phone = data.get("phone", "").strip()
 
     if not email or not password:
         return jsonify({"error": "Email and password are required."}), 400
@@ -54,20 +60,30 @@ def login():
     if "error" in res:
         return jsonify(res), 401
 
-    session["user_id"] = res["id"]
+    # If user provided a phone during login, update it in DB
+    if phone:
+        res = update_user_phone(res["id"], phone)
+
+    session["user_id"]    = res["id"]
+    session["user_email"] = res.get("email", "")
+    session["user_name"]  = res.get("full_name", "")
+    session["user_phone"] = res.get("phone", "") or ""
     return jsonify({"status": "success", "user": res})
 
 
 @auth_bp.route('/api/auth/google', methods=['POST'])
 def google_auth():
     """Handle Continue with Google OAuth authentication."""
+
     data = request.get_json() or {}
     email = data.get("email", "user@gmail.com").strip()
     full_name = data.get("full_name", "Google User").strip()
     google_id = data.get("google_id", "google_123456789").strip()
 
     res = authenticate_google_user(email=email, full_name=full_name, google_id=google_id)
-    session["user_id"] = res["id"]
+    session["user_id"]    = res["id"]
+    session["user_email"] = res.get("email", "")
+    session["user_name"]  = res.get("full_name", "")
     return jsonify({"status": "success", "user": res})
 
 
@@ -216,3 +232,28 @@ def _get_matching_listing_for_segment(segment: str) -> dict:
         return props[5] if len(props) > 5 else props[0]
     else:
         return props[0]
+
+
+# ── /api/sector-videos — returns all sector promo videos from DB ──────────────
+@auth_bp.route('/api/sector-videos', methods=['GET'])
+def get_sector_videos():
+    """
+    Returns all sector promotional videos stored in the sector_videos table.
+    Each record contains: id, sector, title, tagline, description, video_url.
+    Fully dynamic — driven entirely by the database.
+    """
+    import sqlite3
+    from auth_db import DB_FILE
+    try:
+        conn = sqlite3.connect(DB_FILE)
+        conn.row_factory = sqlite3.Row
+        rows = conn.execute(
+            "SELECT id, sector, title, tagline, description, video_url FROM sector_videos ORDER BY sector"
+        ).fetchall()
+        conn.close()
+        return jsonify({
+            'success': True,
+            'videos': [dict(r) for r in rows]
+        }), 200
+    except Exception as e:
+        return jsonify({'success': False, 'videos': [], 'error': str(e)}), 500

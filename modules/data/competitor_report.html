@@ -7,121 +7,131 @@
 <style>
 /* ── Reset & base ───────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-   background:#f0f4f8;color:#1e293b;line-height:1.6;padding:32px 20px}
+body{font-family:'Plus Jakarta Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+   background:#090d16;color:#f1f5f9;line-height:1.6;padding:28px 20px}
 a{color:inherit;text-decoration:none}
 
 /* ── Page wrapper ───────────────────────────────── */
-.page{max-width:1200px;margin:0 auto;background:#fff;
-    border-radius:24px;box-shadow:0 25px 60px rgba(0,0,0,.12);overflow:hidden}
+.page{max-width:1200px;margin:0 auto;background:#0f172a;
+    border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.6);overflow:hidden;
+    border:1px solid rgba(255,255,255,0.07)}
 
 /* ── Hero header ────────────────────────────────── */
-.hero{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 45%,#4f46e5 100%);
-    padding:52px 52px 44px;color:#fff;position:relative;overflow:hidden}
+.hero{background:linear-gradient(135deg,#0a1628 0%,#0f1f3d 50%,#0d2240 100%);
+    padding:48px 52px 40px;color:#fff;position:relative;overflow:hidden;
+    border-bottom:1px solid rgba(16,185,129,0.2)}
 .hero::before{content:'';position:absolute;inset:0;
-        background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+    background:radial-gradient(ellipse at 20% 50%,rgba(16,185,129,0.12) 0%,transparent 60%),
+               radial-gradient(ellipse at 80% 20%,rgba(56,189,248,0.08) 0%,transparent 50%);
+    pointer-events:none}
 .hero-inner{position:relative;z-index:1}
-.hero-eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-        color:#a5b4fc;margin-bottom:12px}
-.hero h1{font-size:36px;font-weight:800;line-height:1.15;margin-bottom:8px}
-.hero h1 span{color:#fbbf24}
-.hero-sub{font-size:15px;color:#c7d2fe;margin-top:4px}
-.hero-meta{display:flex;gap:24px;margin-top:28px;flex-wrap:wrap}
-.hero-badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
-       backdrop-filter:blur(8px);border-radius:12px;padding:12px 20px;text-align:center}
-.hero-badge .hb-val{font-size:24px;font-weight:800;color:#fff}
-.hero-badge .hb-lbl{font-size:11px;color:#a5b4fc;text-transform:uppercase;letter-spacing:.8px;margin-top:2px}
-.alert-strip{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
-.alert-pill{background:rgba(239,68,68,.25);border:1px solid rgba(239,68,68,.5);
-       border-radius:99px;padding:6px 16px;font-size:13px;color:#fca5a5;font-weight:600}
-.alert-pill.warn{background:rgba(249,115,22,.2);border-color:rgba(249,115,22,.4);color:#fed7aa}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+    color:#10b981;margin-bottom:12px}
+.hero h1{font-size:34px;font-weight:800;line-height:1.15;margin-bottom:8px;color:#fff}
+.hero h1 span{color:#10b981}
+.hero-sub{font-size:14px;color:#94a3b8;margin-top:4px}
+.hero-meta{display:flex;gap:16px;margin-top:28px;flex-wrap:wrap}
+.hero-badge{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+   backdrop-filter:blur(8px);border-radius:12px;padding:14px 20px;text-align:center;
+   transition:border-color .2s}
+.hero-badge:hover{border-color:rgba(16,185,129,0.4)}
+.hero-badge .hb-val{font-size:26px;font-weight:800;color:#fff}
+.hero-badge .hb-lbl{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-top:3px}
+.alert-strip{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.alert-pill{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.35);
+   border-radius:99px;padding:5px 14px;font-size:12px;color:#fca5a5;font-weight:700}
+.alert-pill.warn{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.3);color:#fcd34d}
 
 /* ── Section wrapper ────────────────────────────── */
-.section{padding:44px 52px;border-bottom:1px solid #f1f5f9}
+.section{padding:40px 52px;border-bottom:1px solid rgba(255,255,255,0.06)}
 .section:last-child{border-bottom:none}
-.section-title{font-size:22px;font-weight:700;color:#1e293b;margin-bottom:6px;
-        display:flex;align-items:center;gap:10px}
-.section-desc{font-size:14px;color:#64748b;margin-bottom:24px}
-.section-sub-title{font-size:15px;font-weight:600;color:#374151;margin-top:24px;margin-bottom:10px}
+.section-title{font-size:20px;font-weight:700;color:#f1f5f9;margin-bottom:6px;
+    display:flex;align-items:center;gap:10px}
+.section-desc{font-size:13px;color:#64748b;margin-bottom:22px}
+.section-sub-title{font-size:14px;font-weight:600;color:#94a3b8;margin-top:22px;margin-bottom:10px}
 
 /* ── KPI grid ───────────────────────────────────── */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
-.kpi-card{background:#f8fafc;border-radius:16px;padding:22px 18px;text-align:center;
-      border:1px solid #e2e8f0;transition:transform .2s,box-shadow .2s}
-.kpi-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
-.kpi-icon{font-size:26px;margin-bottom:8px}
-.kpi-value{font-size:28px;font-weight:800}
-.kpi-label{font-size:12px;color:#64748b;margin-top:4px;line-height:1.3}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.kpi-card{background:rgba(255,255,255,0.04);border-radius:14px;padding:20px 16px;text-align:center;
+    border:1px solid rgba(255,255,255,0.08);transition:transform .2s,border-color .2s}
+.kpi-card:hover{transform:translateY(-3px);border-color:rgba(16,185,129,0.3)}
+.kpi-icon{font-size:24px;margin-bottom:8px}
+.kpi-value{font-size:26px;font-weight:800;color:#10b981}
+.kpi-label{font-size:11px;color:#64748b;margin-top:4px;line-height:1.3;text-transform:uppercase;letter-spacing:.5px}
 
 /* ── City grid ──────────────────────────────────── */
-.city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px}
-.city-card{background:#f8fafc;border-radius:16px;padding:22px;border:1px solid #e2e8f0;
-      transition:transform .2s,box-shadow .2s}
-.city-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.city-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.city-card{background:rgba(255,255,255,0.04);border-radius:14px;padding:20px;
+    border:1px solid rgba(255,255,255,0.08);transition:transform .2s,border-color .2s}
+.city-card:hover{transform:translateY(-3px);border-color:rgba(16,185,129,0.25)}
 .city-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
-.city-name{font-size:16px;font-weight:700}
-.city-price{font-size:20px;font-weight:800}
-.city-sub{font-size:12px;color:#94a3b8;margin-bottom:8px}
-.city-meta{font-size:12px;color:#64748b;display:flex;justify-content:space-between;
-      margin-bottom:10px}
+.city-name{font-size:15px;font-weight:700;color:#f1f5f9}
+.city-price{font-size:18px;font-weight:800;color:#10b981}
+.city-sub{font-size:11px;color:#475569;margin-bottom:8px}
+.city-meta{font-size:11px;color:#64748b;display:flex;justify-content:space-between;margin-bottom:10px}
 .dist-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
 .dist-item{text-align:center}
-.dist-label{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}
-.dist-val{font-size:15px;font-weight:700;color:#1e293b}
+.dist-label{font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.5px}
+.dist-val{font-size:14px;font-weight:700;color:#e2e8f0}
 
 /* ── Marketing grid ─────────────────────────────── */
-.mkt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.mkt-card{border-radius:14px;padding:18px;border:1px solid rgba(0,0,0,.06)}
+.mkt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.mkt-card{border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.08);
+    background:rgba(255,255,255,0.04)}
 .mkt-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.mkt-label{font-size:13px;font-weight:700}
-.mkt-stat{font-size:28px;font-weight:800;margin:4px 0 2px}
-.mkt-count{font-size:12px;color:#64748b}
-.keyword-cloud{background:#f8fafc;border-radius:14px;padding:20px;margin-top:20px;
-        border:1px solid #e2e8f0}
+.mkt-label{font-size:12px;font-weight:700;color:#94a3b8}
+.mkt-stat{font-size:26px;font-weight:800;margin:4px 0 2px}
+.mkt-count{font-size:11px;color:#475569}
+.keyword-cloud{background:rgba(255,255,255,0.03);border-radius:12px;padding:18px;margin-top:18px;
+    border:1px solid rgba(255,255,255,0.06)}
 
 /* ── Property distribution ──────────────────────── */
-.prop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
-.prop-card{background:#f8fafc;border-radius:14px;padding:18px;text-align:center;
-      border:1px solid #e2e8f0}
-.prop-type{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
-.prop-count{font-size:30px;font-weight:800;color:#1e293b;margin:6px 0 2px}
-.prop-pct{font-size:14px;font-weight:600;margin-bottom:6px}
+.prop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.prop-card{background:rgba(255,255,255,0.04);border-radius:12px;padding:16px;text-align:center;
+    border:1px solid rgba(255,255,255,0.08)}
+.prop-type{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8}
+.prop-count{font-size:28px;font-weight:800;color:#f1f5f9;margin:6px 0 2px}
+.prop-pct{font-size:13px;font-weight:600;margin-bottom:6px;color:#10b981}
 
 /* ── Quality cards ──────────────────────────────── */
-.quality-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.quality-card{background:#f8fafc;border-radius:14px;padding:20px;border:1px solid #e2e8f0}
-.quality-label{font-size:13px;color:#64748b;margin-bottom:6px}
-.quality-val{font-size:32px;font-weight:800;color:#1e293b;margin-bottom:6px}
+.quality-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.quality-card{background:rgba(255,255,255,0.04);border-radius:12px;padding:18px;
+    border:1px solid rgba(255,255,255,0.08)}
+.quality-label{font-size:12px;color:#64748b;margin-bottom:6px}
+.quality-val{font-size:30px;font-weight:800;color:#10b981;margin-bottom:6px}
 
 /* ── Suggestions ────────────────────────────────── */
-.suggestion{background:#f8fafc;border-radius:16px;padding:24px;margin-bottom:16px;
-       border:1px solid #e2e8f0}
-.sug-header{display:flex;gap:16px;align-items:flex-start;margin-bottom:12px}
-.sug-icon{font-size:32px;flex-shrink:0}
-.sug-title{font-size:18px;font-weight:700;color:#1e293b}
-.sug-stat{font-size:12px;color:#64748b;font-style:italic}
-.sug-desc{font-size:14px;color:#475569;margin-bottom:12px;line-height:1.65}
-.sug-action{background:#e0e7ff;border-radius:10px;padding:12px 16px;
-       font-size:14px;color:#3730a3;margin-bottom:10px;line-height:1.5}
-.sug-impact{font-size:13px;color:#059669;font-weight:600}
+.suggestion{background:rgba(255,255,255,0.04);border-radius:14px;padding:22px;margin-bottom:14px;
+   border:1px solid rgba(255,255,255,0.08)}
+.sug-header{display:flex;gap:14px;align-items:flex-start;margin-bottom:10px}
+.sug-icon{font-size:30px;flex-shrink:0}
+.sug-title{font-size:16px;font-weight:700;color:#f1f5f9}
+.sug-stat{font-size:11px;color:#64748b;font-style:italic}
+.sug-desc{font-size:13px;color:#94a3b8;margin-bottom:12px;line-height:1.65}
+.sug-action{background:rgba(16,185,129,0.1);border-radius:10px;padding:12px 16px;
+   font-size:13px;color:#34d399;margin-bottom:10px;line-height:1.5;
+   border:1px solid rgba(16,185,129,0.2)}
+.sug-impact{font-size:12px;color:#10b981;font-weight:700}
 
 /* ── Strategy grid ──────────────────────────────── */
-.strategy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-.strat-card{border-radius:16px;padding:24px;border:1px solid rgba(0,0,0,.06)}
-.strat-title{font-size:16px;font-weight:700;color:#1e293b;margin-bottom:10px}
-.strat-body{font-size:14px;color:#475569;line-height:1.7}
+.strategy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.strat-card{border-radius:14px;padding:22px;border:1px solid rgba(255,255,255,0.08);
+    background:rgba(255,255,255,0.04)}
+.strat-title{font-size:15px;font-weight:700;color:#f1f5f9;margin-bottom:10px}
+.strat-body{font-size:13px;color:#94a3b8;line-height:1.7}
 
 /* ── Footer ─────────────────────────────────────── */
-.footer{background:#1e1b4b;padding:28px 52px;display:flex;
-     justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.footer-brand{color:#a5b4fc;font-size:13px;font-weight:600}
-.footer-ts{color:#6366f1;font-size:12px}
+.footer{background:rgba(255,255,255,0.03);padding:24px 52px;display:flex;
+   justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+   border-top:1px solid rgba(255,255,255,0.06)}
+.footer-brand{color:#10b981;font-size:12px;font-weight:700}
+.footer-ts{color:#475569;font-size:11px}
 
 /* ── Responsive ─────────────────────────────────── */
 @media(max-width:640px){
- .hero,.section{padding:28px 24px}
- .hero h1{font-size:24px}
- .footer{padding:20px 24px}
+ .hero,.section{padding:24px 20px}
+ .hero h1{font-size:22px}
+ .footer{padding:18px 20px}
 }
 </style>
 </head>
@@ -131,17 +141,17 @@ a{color:inherit;text-decoration:none}
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <div class="hero">
  <div class="hero-inner">
-  <div class="hero-eyebrow">AI-Powered Competitor Intelligence</div>
+  <div class="hero-eyebrow">Zameen Competitor Intelligence</div>
   <h1> Zameen.com <span>Deep Analysis</span></h1>
   <div class="hero-sub">Pakistan Real Estate Market Intelligence Report</div>
 
   <div class="hero-meta">
    <div class="hero-badge">
-    <div class="hb-val">2,011</div>
+    <div class="hb-val">2,082</div>
     <div class="hb-lbl">Listings</div>
    </div>
    <div class="hero-badge">
-    <div class="hb-val">14</div>
+    <div class="hb-val">16</div>
     <div class="hb-lbl">Segments</div>
    </div>
    <div class="hero-badge">
@@ -149,7 +159,7 @@ a{color:inherit;text-decoration:none}
     <div class="hb-lbl">Cities</div>
    </div>
    <div class="hero-badge">
-    <div class="hb-val">99.0%</div>
+    <div class="hb-val">98.4%</div>
     <div class="hb-lbl">Extraction</div>
    </div>
    <div class="hero-badge">
@@ -162,7 +172,7 @@ a{color:inherit;text-decoration:none}
    <div class="alert-pill"> 2 Critical Gaps Found</div>
    <div class="alert-pill warn"> 1 High Priority Actions</div>
     <div class="alert-pill" style="background:rgba(99,102,241,.25);border-color:rgba(99,102,241,.5);color:#c7d2fe">
-     July 31, 2026 • 10:16 PM
+     August 05, 2026 • 02:25 PM
     </div>
     <a href="../persona_app.html" target="_blank" class="alert-pill" style="background:rgba(16,185,129,.35);border-color:rgba(16,185,129,.7);color:#6ee7b7;text-decoration:none;font-weight:700;box-shadow:0 0 12px rgba(16,185,129,.3)">
      🤖 Launch Persona Profiler & WhatsApp Generator →
@@ -176,36 +186,144 @@ a{color:inherit;text-decoration:none}
  <div class="section-title"> Executive Overview</div>
  <div class="section-desc">High-level metrics from the latest Zameen.com data crawl</div>
  <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-icon" style="color:#6366f1"></div>
-        <div class="kpi-value" style="color:#6366f1">2,011</div>
+      <div class="kpi-card" style="position:relative;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div class="kpi-icon" style="color:#6366f1;font-size:18px">⚡</div>
+          <span style="font-size:10px;font-weight:700;color:#6366f1;background:#6366f118;padding:2px 7px;border-radius:99px">↑ Active</span>
+        </div>
+        <div class="kpi-value" style="color:#6366f1">2,082</div>
         <div class="kpi-label">Unique Listings</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon" style="color:#0ea5e9"></div>
-        <div class="kpi-value" style="color:#0ea5e9">14</div>
+      <div class="kpi-card" style="position:relative;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div class="kpi-icon" style="color:#0ea5e9;font-size:18px">🌐</div>
+          <span style="font-size:10px;font-weight:700;color:#0ea5e9;background:#0ea5e918;padding:2px 7px;border-radius:99px">↑ 8 Cities</span>
+        </div>
+        <div class="kpi-value" style="color:#0ea5e9">16</div>
         <div class="kpi-label">City×Category Segments</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon" style="color:#10b981">PKR</div>
-        <div class="kpi-value" style="color:#10b981">6.7 Cr</div>
+      <div class="kpi-card" style="position:relative;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div class="kpi-icon" style="color:#10b981;font-size:18px">💰</div>
+          <span style="font-size:10px;font-weight:700;color:#10b981;background:#10b98118;padding:2px 7px;border-radius:99px">↑ Market Benchmarks</span>
+        </div>
+        <div class="kpi-value" style="color:#10b981">PKR 6.4 Cr</div>
         <div class="kpi-label">Overall Avg Price</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon" style="color:#f59e0b"></div>
-        <div class="kpi-value" style="color:#f59e0b">50.0%</div>
+      <div class="kpi-card" style="position:relative;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div class="kpi-icon" style="color:#f59e0b;font-size:18px">⭐</div>
+          <span style="font-size:10px;font-weight:700;color:#f59e0b;background:#f59e0b18;padding:2px 7px;border-radius:99px">↑ Featured Share</span>
+        </div>
+        <div class="kpi-value" style="color:#f59e0b">51.6%</div>
         <div class="kpi-label">Featured Listings</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon" style="color:#8b5cf6"></div>
-        <div class="kpi-value" style="color:#8b5cf6">99.0%</div>
+      <div class="kpi-card" style="position:relative;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div class="kpi-icon" style="color:#8b5cf6;font-size:18px">🎯</div>
+          <span style="font-size:10px;font-weight:700;color:#8b5cf6;background:#8b5cf618;padding:2px 7px;border-radius:99px">↑ Extracted Signals</span>
+        </div>
+        <div class="kpi-value" style="color:#8b5cf6">98.4%</div>
         <div class="kpi-label">Extraction Completeness</div>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon" style="color:#ec4899"></div>
-        <div class="kpi-value" style="color:#ec4899">20.4</div>
+      <div class="kpi-card" style="position:relative;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div class="kpi-icon" style="color:#ec4899;font-size:18px">📸</div>
+          <span style="font-size:10px;font-weight:700;color:#ec4899;background:#ec489918;padding:2px 7px;border-radius:99px">↑ Photo Coverage</span>
+        </div>
+        <div class="kpi-value" style="color:#ec4899">20.7</div>
         <div class="kpi-label">Avg Photos (badge)</div>
       </div></div>
+ 
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:20px">
+      <!-- Line Chart Card: Price Trend -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div>
+            <div style="font-size:14px;font-weight:700;color:#f1f5f9">Price Trend Over Segments</div>
+            <div style="font-size:11px;color:#64748b">Average listing price across top markets</div>
+          </div>
+          <span style="font-size:11px;color:#10b981;font-weight:700;background:rgba(16,185,129,0.15);padding:3px 8px;border-radius:6px">📈 Realtime Crawl</span>
+        </div>
+        <svg viewBox="0 0 500 200" style="width:100%;height:auto;overflow:visible">
+          <defs>
+            <linearGradient id="chartAreaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0"/>
+            </linearGradient>
+          </defs>
+          <!-- Grid Lines -->
+          <line x1="30" y1="40" x2="470" y2="40" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+          <line x1="30" y1="90" x2="470" y2="90" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+          <line x1="30" y1="140" x2="470" y2="140" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+          <line x1="30" y1="170" x2="470" y2="170" stroke="rgba(255,255,255,0.1)"/>
+          
+          <!-- Area Fill -->
+          <polygon points="40,170 40,50 125,57 210,63 295,103 380,106 465,108 465,170" fill="url(#chartAreaGrad)"/>
+          
+          <!-- Smooth Line -->
+          <polyline points="40,50 125,57 210,63 295,103 380,106 465,108" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+          
+          <!-- Glowing Data Points & Labels -->
+          <circle cx="40" cy="50" r="5" fill="#38bdf8" stroke="#0f172a" stroke-width="2"/><circle cx="125" cy="57" r="5" fill="#38bdf8" stroke="#0f172a" stroke-width="2"/><circle cx="210" cy="63" r="5" fill="#38bdf8" stroke="#0f172a" stroke-width="2"/><circle cx="295" cy="103" r="5" fill="#38bdf8" stroke="#0f172a" stroke-width="2"/><circle cx="380" cy="106" r="5" fill="#38bdf8" stroke="#0f172a" stroke-width="2"/><circle cx="465" cy="108" r="5" fill="#38bdf8" stroke="#0f172a" stroke-width="2"/>
+          <text x="40" y="40" fill="#38bdf8" font-size="10" font-weight="700" text-anchor="middle">12.3 Cr</text><text x="40" y="188" fill="#64748b" font-size="10" font-weight="600" text-anchor="middle">Karachi</text><text x="125" y="47" fill="#38bdf8" font-size="10" font-weight="700" text-anchor="middle">11.5 Cr</text><text x="125" y="188" fill="#64748b" font-size="10" font-weight="600" text-anchor="middle">Islamabad</text><text x="210" y="53" fill="#38bdf8" font-size="10" font-weight="700" text-anchor="middle">10.8 Cr</text><text x="210" y="188" fill="#64748b" font-size="10" font-weight="600" text-anchor="middle">Quetta</text><text x="295" y="93" fill="#38bdf8" font-size="10" font-weight="700" text-anchor="middle">5.9 Cr</text><text x="295" y="188" fill="#64748b" font-size="10" font-weight="600" text-anchor="middle">Lahore</text><text x="380" y="96" fill="#38bdf8" font-size="10" font-weight="700" text-anchor="middle">5.5 Cr</text><text x="380" y="188" fill="#64748b" font-size="10" font-weight="600" text-anchor="middle">Islamabad</text><text x="465" y="98" fill="#38bdf8" font-size="10" font-weight="700" text-anchor="middle">5.3 Cr</text><text x="465" y="188" fill="#64748b" font-size="10" font-weight="600" text-anchor="middle">Multan</text>
+        </svg>
+      </div>
+
+      <!-- Donut Chart Card: Property Breakdown -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div>
+            <div style="font-size:14px;font-weight:700;color:#f1f5f9">Property Type Breakdown</div>
+            <div style="font-size:11px;color:#64748b">Distribution by inventory category</div>
+          </div>
+          <span style="font-size:11px;color:#6366f1;font-weight:700;background:rgba(99,102,241,0.15);padding:3px 8px;border-radius:6px">📊 Category Share</span>
+        </div>
+        <div style="display:grid;grid-template-columns:160px 1fr;gap:16px;align-items:center">
+          <div style="position:relative;width:160px;height:160px;margin:0 auto">
+            <svg viewBox="0 0 160 160" style="transform:rotate(-90deg);width:160px;height:160px">
+              <circle r="55" cx="80" cy="80" fill="transparent" stroke="#6366f1" stroke-width="18" stroke-dasharray="291.3 54.3" stroke-dashoffset="-0.0" opacity="0.9"></circle><circle r="55" cx="80" cy="80" fill="transparent" stroke="#0ea5e9" stroke-width="18" stroke-dasharray="43.2 302.4" stroke-dashoffset="-291.3" opacity="0.9"></circle><circle r="55" cx="80" cy="80" fill="transparent" stroke="#8b5cf6" stroke-width="18" stroke-dasharray="10.4 335.2" stroke-dashoffset="-334.5" opacity="0.9"></circle><circle r="55" cx="80" cy="80" fill="transparent" stroke="#f59e0b" stroke-width="18" stroke-dasharray="0.3 345.2" stroke-dashoffset="-344.9" opacity="0.9"></circle>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+              <span style="font-size:18px;font-weight:800;color:#fff">2,082</span>
+              <span style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px">Listings</span>
+            </div>
+          </div>
+          <div>
+            
+        <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="width:10px;height:10px;border-radius:50%;background:#6366f1;display:inline-block"></span>
+            <span style="color:#e2e8f0;font-weight:600">House</span>
+          </div>
+          <span style="color:#94a3b8;font-weight:700">84.3% <small style="opacity:.6">(1,756)</small></span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="width:10px;height:10px;border-radius:50%;background:#0ea5e9;display:inline-block"></span>
+            <span style="color:#e2e8f0;font-weight:600">Flat</span>
+          </div>
+          <span style="color:#94a3b8;font-weight:700">12.5% <small style="opacity:.6">(261)</small></span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="width:10px;height:10px;border-radius:50%;background:#8b5cf6;display:inline-block"></span>
+            <span style="color:#e2e8f0;font-weight:600">Unknown</span>
+          </div>
+          <span style="color:#94a3b8;font-weight:700">3.0% <small style="opacity:.6">(62)</small></span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="width:10px;height:10px;border-radius:50%;background:#f59e0b;display:inline-block"></span>
+            <span style="color:#e2e8f0;font-weight:600">Commercial</span>
+          </div>
+          <span style="color:#94a3b8;font-weight:700">0.1% <small style="opacity:.6">(3)</small></span>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
 </div>
 
 <!-- ═══════════════════ CITIES ═══════════════════ -->
@@ -216,70 +334,70 @@ a{color:inherit;text-decoration:none}
       <div class="city-card" style="border-top:4px solid #6366f1">
         <div class="city-header">
           <span class="city-name"> Karachi · Houses</span>
-          <span class="city-price" style="color:#6366f1">PKR 15.2 Cr</span>
+          <span class="city-price" style="color:#6366f1">PKR 12.3 Cr</span>
         </div>
-        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 6.7 Cr &nbsp;|&nbsp; 199 listings</div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 7.5 Cr &nbsp;|&nbsp; 250 listings</div>
         
-        <div style="margin:10px 0"><span style="display:inline-block;background:#6366f122;color:#6366f1;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 190</span> <span style="display:inline-block;background:#6366f122;color:#6366f1;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 9</span></div>
+        <div style="margin:10px 0"><span style="display:inline-block;background:#6366f122;color:#6366f1;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 238</span> <span style="display:inline-block;background:#6366f122;color:#6366f1;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 12</span></div>
         <div class="city-meta">
-          <span>📐 PKR 31,461/sqft</span>
-          <span style="color:#10b981">▼ Featured 27.2%</span>
+          <span>📐 PKR 30,677/sqft</span>
+          <span style="color:#ef4444">▲ Featured 3.8%</span>
         </div>
         <div class="dist-row">
           <div class="dist-item">
             <div class="dist-label">Budget</div>
             <div class="dist-val">0</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
-            <div class="dist-val">13</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:7%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">20</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:8%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
-            <div class="dist-val">68</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:34%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">77</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:31%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
-            <div class="dist-val">118</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:59%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">153</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:61%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div>
       <div class="city-card" style="border-top:4px solid #0ea5e9">
         <div class="city-header">
           <span class="city-name"> Islamabad · Houses</span>
-          <span class="city-price" style="color:#0ea5e9">PKR 13.6 Cr</span>
+          <span class="city-price" style="color:#0ea5e9">PKR 11.5 Cr</span>
         </div>
-        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 6.5 Cr &nbsp;|&nbsp; 248 listings</div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 5.5 Cr &nbsp;|&nbsp; 250 listings</div>
         
-        <div style="margin:10px 0"><span style="display:inline-block;background:#0ea5e922;color:#0ea5e9;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 235</span> <span style="display:inline-block;background:#0ea5e922;color:#0ea5e9;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 10</span> <span style="display:inline-block;background:#0ea5e922;color:#0ea5e9;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 2</span></div>
+        <div style="margin:10px 0"><span style="display:inline-block;background:#0ea5e922;color:#0ea5e9;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 243</span> <span style="display:inline-block;background:#0ea5e922;color:#0ea5e9;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 7</span></div>
         <div class="city-meta">
-          <span>📐 PKR 32,187/sqft</span>
-          <span style="color:#ef4444">▲ Featured 23.9%</span>
+          <span>📐 PKR 31,042/sqft</span>
+          <span style="color:#ef4444">▲ Featured 22.4%</span>
         </div>
         <div class="dist-row">
           <div class="dist-item">
             <div class="dist-label">Budget</div>
             <div class="dist-val">0</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
-            <div class="dist-val">3</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:1%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">6</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:2%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
-            <div class="dist-val">84</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:34%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">108</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:43%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
-            <div class="dist-val">161</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:65%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">136</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:54%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div>
@@ -299,383 +417,453 @@ a{color:inherit;text-decoration:none}
           <div class="dist-item">
             <div class="dist-label">Budget</div>
             <div class="dist-val">0</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
             <div class="dist-val">0</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
             <div class="dist-val">0</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
             <div class="dist-val">2</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:100%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:100%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div>
       <div class="city-card" style="border-top:4px solid #f59e0b">
         <div class="city-header">
           <span class="city-name"> Lahore · Houses</span>
-          <span class="city-price" style="color:#f59e0b">PKR 6.4 Cr</span>
+          <span class="city-price" style="color:#f59e0b">PKR 5.9 Cr</span>
         </div>
-        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 3.8 Cr &nbsp;|&nbsp; 249 listings</div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 3.9 Cr &nbsp;|&nbsp; 249 listings</div>
         
-        <div style="margin:10px 0"><span style="display:inline-block;background:#f59e0b22;color:#f59e0b;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 234</span> <span style="display:inline-block;background:#f59e0b22;color:#f59e0b;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 13</span> <span style="display:inline-block;background:#f59e0b22;color:#f59e0b;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Plot 1</span></div>
+        <div style="margin:10px 0"><span style="display:inline-block;background:#f59e0b22;color:#f59e0b;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 243</span> <span style="display:inline-block;background:#f59e0b22;color:#f59e0b;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 5</span> <span style="display:inline-block;background:#f59e0b22;color:#f59e0b;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Commercial 1</span></div>
         <div class="city-meta">
-          <span>📐 PKR 21,030/sqft</span>
-          <span style="color:#ef4444">▲ Featured 11.1%</span>
+          <span>📐 PKR 20,988/sqft</span>
+          <span style="color:#ef4444">▲ Featured 7.4%</span>
         </div>
         <div class="dist-row">
           <div class="dist-item">
             <div class="dist-label">Budget</div>
             <div class="dist-val">0</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
-            <div class="dist-val">17</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:7%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">12</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:5%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
-            <div class="dist-val">135</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:54%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">132</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:53%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
-            <div class="dist-val">97</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:39%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">105</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:42%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div>
       <div class="city-card" style="border-top:4px solid #ef4444">
         <div class="city-header">
-          <span class="city-name"> Lahore · Flats</span>
-          <span class="city-price" style="color:#ef4444">PKR 5.6 Cr</span>
+          <span class="city-name"> Islamabad · Flats</span>
+          <span class="city-price" style="color:#ef4444">PKR 5.5 Cr</span>
         </div>
-        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 4.0 Cr &nbsp;|&nbsp; 79 listings</div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 2.5 Cr &nbsp;|&nbsp; 63 listings</div>
         
-        <div style="margin:10px 0"><span style="display:inline-block;background:#ef444422;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 63</span> <span style="display:inline-block;background:#ef444422;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 14</span> <span style="display:inline-block;background:#ef444422;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 2</span></div>
+        <div style="margin:10px 0"><span style="display:inline-block;background:#ef444422;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 54</span> <span style="display:inline-block;background:#ef444422;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 5</span> <span style="display:inline-block;background:#ef444422;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 4</span></div>
         <div class="city-meta">
-          <span>📐 PKR 14,328/sqft</span>
-          <span style="color:#ef4444">▲ Featured 6.4%</span>
+          <span>📐 PKR 16,395/sqft</span>
+          <span style="color:#ef4444">▲ Featured 48.8%</span>
         </div>
         <div class="dist-row">
           <div class="dist-item">
             <div class="dist-label">Budget</div>
-            <div class="dist-val">1</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:1%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">2</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:3%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
-            <div class="dist-val">8</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:10%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">19</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:30%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
-            <div class="dist-val">39</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:49%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">36</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:57%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
-            <div class="dist-val">31</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:39%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">6</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:10%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div>
       <div class="city-card" style="border-top:4px solid #8b5cf6">
         <div class="city-header">
-          <span class="city-name"> Peshawar · Houses</span>
-          <span class="city-price" style="color:#8b5cf6">PKR 4.8 Cr</span>
+          <span class="city-name"> Multan · Flats</span>
+          <span class="city-price" style="color:#8b5cf6">PKR 5.3 Cr</span>
         </div>
-        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 3.3 Cr &nbsp;|&nbsp; 250 listings</div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 91.1 L &nbsp;|&nbsp; 10 listings</div>
         
-        <div style="margin:10px 0"><span style="display:inline-block;background:#8b5cf622;color:#8b5cf6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 246</span> <span style="display:inline-block;background:#8b5cf622;color:#8b5cf6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 4</span></div>
+        <div style="margin:10px 0"><span style="display:inline-block;background:#8b5cf622;color:#8b5cf6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 7</span> <span style="display:inline-block;background:#8b5cf622;color:#8b5cf6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 3</span></div>
         <div class="city-meta">
-          <span>📐 PKR 21,796/sqft</span>
-          <span style="color:#ef4444">▲ Featured 25.2%</span>
+          <span>📐 PKR 14,130/sqft</span>
+          <span style="color:#ef4444">▲ Featured 16.9%</span>
         </div>
         <div class="dist-row">
           <div class="dist-item">
             <div class="dist-label">Budget</div>
-            <div class="dist-val">0</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">2</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:20%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
-            <div class="dist-val">26</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:10%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">6</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:60%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
-            <div class="dist-val">143</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:57%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">0</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
-            <div class="dist-val">81</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:32%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">2</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:20%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div>
       <div class="city-card" style="border-top:4px solid #ec4899">
         <div class="city-header">
-          <span class="city-name"> Rawalpindi · Flats</span>
-          <span class="city-price" style="color:#ec4899">PKR 4.5 Cr</span>
+          <span class="city-name"> Rawalpindi · Houses</span>
+          <span class="city-price" style="color:#ec4899">PKR 5.0 Cr</span>
         </div>
-        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 3.5 Cr &nbsp;|&nbsp; 250 listings</div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 3.7 Cr &nbsp;|&nbsp; 250 listings</div>
         
-        <div style="margin:10px 0"><span style="display:inline-block;background:#ec489922;color:#ec4899;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 232</span> <span style="display:inline-block;background:#ec489922;color:#ec4899;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 9</span> <span style="display:inline-block;background:#ec489922;color:#ec4899;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 7</span></div>
+        <div style="margin:10px 0"><span style="display:inline-block;background:#ec489922;color:#ec4899;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 247</span> <span style="display:inline-block;background:#ec489922;color:#ec4899;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 3</span></div>
         <div class="city-meta">
-          <span>📐 PKR 18,137/sqft</span>
-          <span style="color:#ef4444">▲ Featured 31.4%</span>
+          <span>📐 PKR 19,535/sqft</span>
+          <span style="color:#ef4444">▲ Featured 11.4%</span>
         </div>
         <div class="dist-row">
           <div class="dist-item">
             <div class="dist-label">Budget</div>
-            <div class="dist-val">1</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">7</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:3%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
-            <div class="dist-val">48</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:19%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">21</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:8%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
-            <div class="dist-val">122</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:49%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">136</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:54%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
-            <div class="dist-val">79</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:32%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">86</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:34%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div>
       <div class="city-card" style="border-top:4px solid #14b8a6">
         <div class="city-header">
-          <span class="city-name"> Faisalabad · Flats</span>
-          <span class="city-price" style="color:#14b8a6">PKR 4.3 Cr</span>
+          <span class="city-name"> Karachi · Flats</span>
+          <span class="city-price" style="color:#14b8a6">PKR 5.0 Cr</span>
         </div>
-        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 3.0 Cr &nbsp;|&nbsp; 250 listings</div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 3.5 Cr &nbsp;|&nbsp; 142 listings</div>
         
-        <div style="margin:10px 0"><span style="display:inline-block;background:#14b8a622;color:#14b8a6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 237</span> <span style="display:inline-block;background:#14b8a622;color:#14b8a6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 7</span> <span style="display:inline-block;background:#14b8a622;color:#14b8a6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 6</span></div>
+        <div style="margin:10px 0"><span style="display:inline-block;background:#14b8a622;color:#14b8a6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 112</span> <span style="display:inline-block;background:#14b8a622;color:#14b8a6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 16</span> <span style="display:inline-block;background:#14b8a622;color:#14b8a6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 13</span></div>
         <div class="city-meta">
-          <span>📐 PKR 20,089/sqft</span>
-          <span style="color:#ef4444">▲ Featured 19.1%</span>
+          <span>📐 PKR 24,193/sqft</span>
+          <span style="color:#ef4444">▲ Featured 1.1%</span>
         </div>
         <div class="dist-row">
           <div class="dist-item">
             <div class="dist-label">Budget</div>
-            <div class="dist-val">4</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:2%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">0</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
-            <div class="dist-val">32</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:13%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">20</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:14%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
-            <div class="dist-val">161</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:64%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">76</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:54%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
-            <div class="dist-val">53</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:21%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">46</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:32%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div>
       <div class="city-card" style="border-top:4px solid #6366f1">
         <div class="city-header">
-          <span class="city-name"> Multan · Flats</span>
-          <span class="city-price" style="color:#6366f1">PKR 3.8 Cr</span>
+          <span class="city-name"> Faisalabad · Houses</span>
+          <span class="city-price" style="color:#6366f1">PKR 4.6 Cr</span>
         </div>
-        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 82.6 L &nbsp;|&nbsp; 12 listings</div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 3.4 Cr &nbsp;|&nbsp; 250 listings</div>
         
-        <div style="margin:10px 0"><span style="display:inline-block;background:#6366f122;color:#6366f1;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 7</span> <span style="display:inline-block;background:#6366f122;color:#6366f1;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 5</span></div>
+        <div style="margin:10px 0"><span style="display:inline-block;background:#6366f122;color:#6366f1;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 245</span> <span style="display:inline-block;background:#6366f122;color:#6366f1;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 5</span></div>
         <div class="city-meta">
-          <span>📐 PKR 14,436/sqft</span>
-          <span style="color:#ef4444">▲ Featured 83.8%</span>
+          <span>📐 PKR 20,375/sqft</span>
+          <span style="color:#ef4444">▲ Featured 5.7%</span>
         </div>
         <div class="dist-row">
           <div class="dist-item">
             <div class="dist-label">Budget</div>
-            <div class="dist-val">3</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:25%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">1</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
-            <div class="dist-val">5</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:42%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">20</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:8%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
-            <div class="dist-val">3</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:25%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">167</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:67%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
-            <div class="dist-val">1</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:8%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">62</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:25%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div>
       <div class="city-card" style="border-top:4px solid #0ea5e9">
         <div class="city-header">
-          <span class="city-name"> Karachi · Flats</span>
-          <span class="city-price" style="color:#0ea5e9">PKR 3.6 Cr</span>
+          <span class="city-name"> Peshawar · Houses</span>
+          <span class="city-price" style="color:#0ea5e9">PKR 4.5 Cr</span>
         </div>
-        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 2.8 Cr &nbsp;|&nbsp; 116 listings</div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 3.3 Cr &nbsp;|&nbsp; 250 listings</div>
         
-        <div style="margin:10px 0"><span style="display:inline-block;background:#0ea5e922;color:#0ea5e9;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 92</span> <span style="display:inline-block;background:#0ea5e922;color:#0ea5e9;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 21</span> <span style="display:inline-block;background:#0ea5e922;color:#0ea5e9;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 3</span></div>
+        <div style="margin:10px 0"><span style="display:inline-block;background:#0ea5e922;color:#0ea5e9;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 247</span> <span style="display:inline-block;background:#0ea5e922;color:#0ea5e9;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 2</span> <span style="display:inline-block;background:#0ea5e922;color:#0ea5e9;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Commercial 1</span></div>
         <div class="city-meta">
-          <span>📐 PKR 19,074/sqft</span>
-          <span style="color:#ef4444">▲ Featured 27.3%</span>
+          <span>📐 PKR 20,687/sqft</span>
+          <span style="color:#ef4444">▲ Featured 29.9%</span>
         </div>
         <div class="dist-row">
           <div class="dist-item">
             <div class="dist-label">Budget</div>
-            <div class="dist-val">8</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:7%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">0</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
-            <div class="dist-val">25</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:22%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">32</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:13%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
-            <div class="dist-val">52</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:45%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">148</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:59%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
-            <div class="dist-val">31</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:27%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">70</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:28%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div>
       <div class="city-card" style="border-top:4px solid #10b981">
         <div class="city-header">
-          <span class="city-name"> Islamabad · Flats</span>
-          <span class="city-price" style="color:#10b981">PKR 3.6 Cr</span>
+          <span class="city-name"> Lahore · Flats</span>
+          <span class="city-price" style="color:#10b981">PKR 4.4 Cr</span>
         </div>
-        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 1.9 Cr &nbsp;|&nbsp; 68 listings</div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 2.9 Cr &nbsp;|&nbsp; 47 listings</div>
         
-        <div style="margin:10px 0"><span style="display:inline-block;background:#10b98122;color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 56</span> <span style="display:inline-block;background:#10b98122;color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 10</span> <span style="display:inline-block;background:#10b98122;color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 2</span></div>
+        <div style="margin:10px 0"><span style="display:inline-block;background:#10b98122;color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 29</span> <span style="display:inline-block;background:#10b98122;color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 18</span></div>
         <div class="city-meta">
-          <span>📐 PKR 18,898/sqft</span>
-          <span style="color:#ef4444">▲ Featured 7.0%</span>
+          <span>📐 PKR 13,854/sqft</span>
+          <span style="color:#ef4444">▲ Featured 27.3%</span>
         </div>
         <div class="dist-row">
           <div class="dist-item">
             <div class="dist-label">Budget</div>
-            <div class="dist-val">3</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:4%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">4</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:9%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
-            <div class="dist-val">25</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:37%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">14</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:30%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
-            <div class="dist-val">31</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:46%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">17</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:36%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
-            <div class="dist-val">9</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:13%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">12</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:26%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div>
       <div class="city-card" style="border-top:4px solid #f59e0b">
         <div class="city-header">
-          <span class="city-name"> Multan · Houses</span>
-          <span class="city-price" style="color:#f59e0b">PKR 3.5 Cr</span>
+          <span class="city-name"> Rawalpindi · Flats</span>
+          <span class="city-price" style="color:#f59e0b">PKR 4.3 Cr</span>
         </div>
-        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 3.1 Cr &nbsp;|&nbsp; 249 listings</div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 95.0 L &nbsp;|&nbsp; 29 listings</div>
         
-        <div style="margin:10px 0"><span style="display:inline-block;background:#f59e0b22;color:#f59e0b;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 243</span> <span style="display:inline-block;background:#f59e0b22;color:#f59e0b;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 6</span></div>
+        <div style="margin:10px 0"><span style="display:inline-block;background:#f59e0b22;color:#f59e0b;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 22</span> <span style="display:inline-block;background:#f59e0b22;color:#f59e0b;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 6</span> <span style="display:inline-block;background:#f59e0b22;color:#f59e0b;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 1</span></div>
         <div class="city-meta">
-          <span>📐 PKR 14,535/sqft</span>
-          <span style="color:#ef4444">▲ Featured 15.8%</span>
+          <span>📐 PKR 13,078/sqft</span>
+          <span style="color:#ef4444">▲ Featured 141.8%</span>
         </div>
         <div class="dist-row">
           <div class="dist-item">
             <div class="dist-label">Budget</div>
-            <div class="dist-val">1</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">7</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:24%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
-            <div class="dist-val">34</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:14%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">10</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:34%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
-            <div class="dist-val">161</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:65%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">10</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:34%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
-            <div class="dist-val">53</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:21%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">2</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:7%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div>
       <div class="city-card" style="border-top:4px solid #ef4444">
         <div class="city-header">
-          <span class="city-name"> Peshawar · Flats</span>
-          <span class="city-price" style="color:#ef4444">PKR 1.7 Cr</span>
+          <span class="city-name"> Multan · Houses</span>
+          <span class="city-price" style="color:#ef4444">PKR 3.4 Cr</span>
         </div>
-        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 1.4 Cr &nbsp;|&nbsp; 35 listings</div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 2.5 Cr &nbsp;|&nbsp; 249 listings</div>
         
-        <div style="margin:10px 0"><span style="display:inline-block;background:#ef444422;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 34</span> <span style="display:inline-block;background:#ef444422;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 1</span></div>
+        <div style="margin:10px 0"><span style="display:inline-block;background:#ef444422;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 244</span> <span style="display:inline-block;background:#ef444422;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 5</span></div>
         <div class="city-meta">
-          <span>📐 PKR 11,252/sqft</span>
-          <span style="color:#10b981">▼ Featured 30.4%</span>
+          <span>📐 PKR 14,719/sqft</span>
+          <span style="color:#ef4444">▲ Featured 17.6%</span>
         </div>
         <div class="dist-row">
           <div class="dist-item">
             <div class="dist-label">Budget</div>
-            <div class="dist-val">3</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:9%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">1</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
-            <div class="dist-val">18</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:51%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">36</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:14%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
-            <div class="dist-val">14</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:40%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">161</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:65%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
-            <div class="dist-val">0</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div class="dist-val">51</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:20%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div>
       <div class="city-card" style="border-top:4px solid #8b5cf6">
         <div class="city-header">
+          <span class="city-name"> Peshawar · Flats</span>
+          <span class="city-price" style="color:#8b5cf6">PKR 2.4 Cr</span>
+        </div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 1.6 Cr &nbsp;|&nbsp; 33 listings</div>
+        
+        <div style="margin:10px 0"><span style="display:inline-block;background:#8b5cf622;color:#8b5cf6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 29</span> <span style="display:inline-block;background:#8b5cf622;color:#8b5cf6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Unknown 2</span> <span style="display:inline-block;background:#8b5cf622;color:#8b5cf6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">House 2</span></div>
+        <div class="city-meta">
+          <span>📐 PKR 12,497/sqft</span>
+          <span style="color:#10b981">▼ Featured 41.1%</span>
+        </div>
+        <div class="dist-row">
+          <div class="dist-item">
+            <div class="dist-label">Budget</div>
+            <div class="dist-val">2</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:6%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+          </div>
+          <div class="dist-item">
+            <div class="dist-label">Mid</div>
+            <div class="dist-val">14</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:42%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+          </div>
+          <div class="dist-item">
+            <div class="dist-label">Premium</div>
+            <div class="dist-val">16</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:48%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+          </div>
+          <div class="dist-item">
+            <div class="dist-label">Luxury</div>
+            <div class="dist-val">1</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:3%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="city-card" style="border-top:4px solid #ec4899">
+        <div class="city-header">
+          <span class="city-name"> Faisalabad · Flats</span>
+          <span class="city-price" style="color:#ec4899">PKR 85.0 L</span>
+        </div>
+        <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 87.5 L &nbsp;|&nbsp; 4 listings</div>
+        
+        <div style="margin:10px 0"><span style="display:inline-block;background:#ec489922;color:#ec4899;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 4</span></div>
+        <div class="city-meta">
+          <span>📐 PKR 16,658/sqft</span>
+          <span style="color:#ef4444">▲ Featured 15.7%</span>
+        </div>
+        <div class="dist-row">
+          <div class="dist-item">
+            <div class="dist-label">Budget</div>
+            <div class="dist-val">2</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:50%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+          </div>
+          <div class="dist-item">
+            <div class="dist-label">Mid</div>
+            <div class="dist-val">2</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:50%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+          </div>
+          <div class="dist-item">
+            <div class="dist-label">Premium</div>
+            <div class="dist-val">0</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+          </div>
+          <div class="dist-item">
+            <div class="dist-label">Luxury</div>
+            <div class="dist-val">0</div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="city-card" style="border-top:4px solid #14b8a6">
+        <div class="city-header">
           <span class="city-name"> Quetta · Flats</span>
-          <span class="city-price" style="color:#8b5cf6">PKR 69.7 L</span>
+          <span class="city-price" style="color:#14b8a6">PKR 69.7 L</span>
         </div>
         <div class="city-sub">Average Price &nbsp;|&nbsp; Median: 71.4 L &nbsp;|&nbsp; 4 listings</div>
         
-        <div style="margin:10px 0"><span style="display:inline-block;background:#8b5cf622;color:#8b5cf6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 4</span></div>
+        <div style="margin:10px 0"><span style="display:inline-block;background:#14b8a622;color:#14b8a6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Flat 4</span></div>
         <div class="city-meta">
           <span>📐 PKR 15,188/sqft</span>
           <span style="color:#ef4444">▲ Featured 0.0%</span>
@@ -684,22 +872,22 @@ a{color:inherit;text-decoration:none}
           <div class="dist-item">
             <div class="dist-label">Budget</div>
             <div class="dist-val">0</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Mid</div>
             <div class="dist-val">4</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:100%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:100%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Premium</div>
             <div class="dist-val">0</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
           <div class="dist-item">
             <div class="dist-label">Luxury</div>
             <div class="dist-val">0</div>
-            <div style="background:#e2e8f0;border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+            <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:5px;overflow:hidden;margin-top:6px"><div style="width:0%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
           </div>
         </div>
       </div></div>
@@ -712,33 +900,21 @@ a{color:inherit;text-decoration:none}
  <div class="prop-grid">
       <div class="prop-card">
         <div class="prop-type" style="color:#6366f1">House</div>
-        <div class="prop-count">1,700</div>
-        <div class="prop-pct" style="color:#6366f1">84.5%</div>
-        <div style="background:#e2e8f0;border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:84.5%;background:#6366f1;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div class="prop-count">1,756</div>
+        <div class="prop-pct" style="color:#6366f1">84.3%</div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:84.3%;background:#6366f1;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div>
       <div class="prop-card">
         <div class="prop-type" style="color:#0ea5e9">Flat</div>
-        <div class="prop-count">224</div>
-        <div class="prop-pct" style="color:#0ea5e9">11.1%</div>
-        <div style="background:#e2e8f0;border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:11.1%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
-      </div>
-      <div class="prop-card">
-        <div class="prop-type" style="color:#94a3b8">Unknown</div>
-        <div class="prop-count">82</div>
-        <div class="prop-pct" style="color:#94a3b8">4.1%</div>
-        <div style="background:#e2e8f0;border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:4.1%;background:#94a3b8;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div class="prop-count">261</div>
+        <div class="prop-pct" style="color:#0ea5e9">12.5%</div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:12.5%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div>
       <div class="prop-card">
         <div class="prop-type" style="color:#f59e0b">Commercial</div>
         <div class="prop-count">3</div>
         <div class="prop-pct" style="color:#f59e0b">0.1%</div>
-        <div style="background:#e2e8f0;border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:0.1%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
-      </div>
-      <div class="prop-card">
-        <div class="prop-type" style="color:#10b981">Plot</div>
-        <div class="prop-count">2</div>
-        <div class="prop-pct" style="color:#10b981">0.1%</div>
-        <div style="background:#e2e8f0;border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:0.1%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:0.1%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div></div>
 </div>
 
@@ -747,63 +923,63 @@ a{color:inherit;text-decoration:none}
  <div class="section-title"> Marketing Strategy Analysis</div>
  <div class="section-desc">Keyword presence in listing <strong>titles + card snippets</strong> (search-result page text only — not full listing descriptions). Percentages reflect what buyers see on search pages.</div>
  <div class="mkt-grid">
-      <div class="mkt-card" style="background:#fef3c7">
+      <div class="mkt-card" style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2)">
         <div class="mkt-row">
           <span class="mkt-label" style="color:#f59e0b">Luxury / Premium</span>
-          <span style="display:inline-block;background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Active</span>
+          <span style="display:inline-block;background:rgba(16,185,129,0.15);color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Active</span>
         </div>
-        <div class="mkt-stat" style="color:#f59e0b">36.9%</div>
-        <div class="mkt-count">742 listings</div>
-        <div style="background:#e2e8f0;border-radius:99px;height:7px;overflow:hidden;margin-top:6px"><div style="width:36.9%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div class="mkt-stat" style="color:#f59e0b">39.3%</div>
+        <div class="mkt-count">819 listings</div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:7px;overflow:hidden;margin-top:6px"><div style="width:39.3%;background:#f59e0b;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div>
-      <div class="mkt-card" style="background:#e0f2fe">
+      <div class="mkt-card" style="background:rgba(14,165,233,0.1);border:1px solid rgba(14,165,233,0.2)">
         <div class="mkt-row">
           <span class="mkt-label" style="color:#0ea5e9">Location Signals</span>
-          <span style="display:inline-block;background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Active</span>
+          <span style="display:inline-block;background:rgba(16,185,129,0.15);color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Active</span>
         </div>
-        <div class="mkt-stat" style="color:#0ea5e9">19.8%</div>
-        <div class="mkt-count">398 listings</div>
-        <div style="background:#e2e8f0;border-radius:99px;height:7px;overflow:hidden;margin-top:6px"><div style="width:19.8%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div class="mkt-stat" style="color:#0ea5e9">22.9%</div>
+        <div class="mkt-count">477 listings</div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:7px;overflow:hidden;margin-top:6px"><div style="width:22.9%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div>
-      <div class="mkt-card" style="background:#d1fae5">
+      <div class="mkt-card" style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2)">
         <div class="mkt-row">
           <span class="mkt-label" style="color:#10b981">Deal / Discount</span>
-          <span style="display:inline-block;background:#fee2e2;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">GAP</span>
+          <span style="display:inline-block;background:rgba(239,68,68,0.15);color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">GAP</span>
         </div>
-        <div class="mkt-stat" style="color:#10b981">3.6%</div>
-        <div class="mkt-count">72 listings</div>
-        <div style="background:#e2e8f0;border-radius:99px;height:7px;overflow:hidden;margin-top:6px"><div style="width:3.6%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div class="mkt-stat" style="color:#10b981">4.5%</div>
+        <div class="mkt-count">93 listings</div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:7px;overflow:hidden;margin-top:6px"><div style="width:4.5%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div>
-      <div class="mkt-card" style="background:#e0e7ff">
+      <div class="mkt-card" style="background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2)">
         <div class="mkt-row">
           <span class="mkt-label" style="color:#6366f1">New Construction</span>
-          <span style="display:inline-block;background:#d1fae5;color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Active</span>
+          <span style="display:inline-block;background:rgba(16,185,129,0.15);color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Active</span>
         </div>
-        <div class="mkt-stat" style="color:#6366f1">22.1%</div>
-        <div class="mkt-count">444 listings</div>
-        <div style="background:#e2e8f0;border-radius:99px;height:7px;overflow:hidden;margin-top:6px"><div style="width:22.1%;background:#6366f1;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div class="mkt-stat" style="color:#6366f1">22.4%</div>
+        <div class="mkt-count">467 listings</div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:7px;overflow:hidden;margin-top:6px"><div style="width:22.4%;background:#6366f1;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div>
-      <div class="mkt-card" style="background:#ede9fe">
+      <div class="mkt-card" style="background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2)">
         <div class="mkt-row">
           <span class="mkt-label" style="color:#8b5cf6">Investment Focus</span>
-          <span style="display:inline-block;background:#fee2e2;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">GAP</span>
+          <span style="display:inline-block;background:rgba(239,68,68,0.15);color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">GAP</span>
         </div>
-        <div class="mkt-stat" style="color:#8b5cf6">0.4%</div>
-        <div class="mkt-count">8 listings</div>
-        <div style="background:#e2e8f0;border-radius:99px;height:7px;overflow:hidden;margin-top:6px"><div style="width:0.4%;background:#8b5cf6;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div class="mkt-stat" style="color:#8b5cf6">0.6%</div>
+        <div class="mkt-count">13 listings</div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:7px;overflow:hidden;margin-top:6px"><div style="width:0.6%;background:#8b5cf6;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div>
-      <div class="mkt-card" style="background:#fee2e2">
+      <div class="mkt-card" style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2)">
         <div class="mkt-row">
           <span class="mkt-label" style="color:#ef4444">Urgency / FOMO</span>
-          <span style="display:inline-block;background:#fee2e2;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">GAP</span>
+          <span style="display:inline-block;background:rgba(239,68,68,0.15);color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">GAP</span>
         </div>
-        <div class="mkt-stat" style="color:#ef4444">0.5%</div>
-        <div class="mkt-count">10 listings</div>
-        <div style="background:#e2e8f0;border-radius:99px;height:7px;overflow:hidden;margin-top:6px"><div style="width:0.5%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div class="mkt-stat" style="color:#ef4444">0.7%</div>
+        <div class="mkt-count">14 listings</div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:7px;overflow:hidden;margin-top:6px"><div style="width:0.7%;background:#ef4444;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div></div>
     <div class="keyword-cloud">
       <div class="section-sub-title">🔑 Top SEO Keywords Used by Zameen</div>
-      <div style="margin-top:12px;line-height:2"><span style="font-size:22px;color:#4338ca;background:#e0e7ff;padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">house <small style="color:#818cf8">×1529</small></span><span style="font-size:22px;color:#4338ca;background:#e0e7ff;padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">marla <small style="color:#818cf8">×961</small></span><span style="font-size:22px;color:#4338ca;background:#e0e7ff;padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">brand <small style="color:#818cf8">×446</small></span><span style="font-size:22px;color:#4338ca;background:#e0e7ff;padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">location <small style="color:#818cf8">×363</small></span><span style="font-size:22px;color:#4338ca;background:#e0e7ff;padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">luxury <small style="color:#818cf8">×290</small></span><span style="font-size:22px;color:#4338ca;background:#e0e7ff;padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">prime <small style="color:#818cf8">×264</small></span><span style="font-size:22px;color:#4338ca;background:#e0e7ff;padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">phase <small style="color:#818cf8">×255</small></span><span style="font-size:22px;color:#4338ca;background:#e0e7ff;padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">kanal <small style="color:#818cf8">×249</small></span><span style="font-size:22px;color:#4338ca;background:#e0e7ff;padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">road <small style="color:#818cf8">×233</small></span><span style="font-size:22px;color:#4338ca;background:#e0e7ff;padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">town <small style="color:#818cf8">×222</small></span><span style="font-size:22px;color:#4338ca;background:#e0e7ff;padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">double <small style="color:#818cf8">×208</small></span><span style="font-size:22px;color:#4338ca;background:#e0e7ff;padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">block <small style="color:#818cf8">×182</small></span></div>
+      <div style="margin-top:12px;line-height:2"><span style="font-size:22px;color:#818cf8;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">house <small style="color:#a5b4fc">×1541</small></span><span style="font-size:22px;color:#818cf8;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">marla <small style="color:#a5b4fc">×969</small></span><span style="font-size:22px;color:#818cf8;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">brand <small style="color:#a5b4fc">×471</small></span><span style="font-size:22px;color:#818cf8;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">location <small style="color:#a5b4fc">×419</small></span><span style="font-size:22px;color:#818cf8;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">prime <small style="color:#a5b4fc">×313</small></span><span style="font-size:22px;color:#818cf8;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">luxury <small style="color:#a5b4fc">×302</small></span><span style="font-size:22px;color:#818cf8;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">town <small style="color:#a5b4fc">×254</small></span><span style="font-size:22px;color:#818cf8;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">phase <small style="color:#a5b4fc">×243</small></span><span style="font-size:22px;color:#818cf8;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">block <small style="color:#a5b4fc">×223</small></span><span style="font-size:22px;color:#818cf8;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">road <small style="color:#a5b4fc">×213</small></span><span style="font-size:22px;color:#818cf8;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">kanal <small style="color:#a5b4fc">×204</small></span><span style="font-size:22px;color:#818cf8;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">apartment <small style="color:#a5b4fc">×167</small></span></div>
     </div>
 </div>
 
@@ -814,33 +990,33 @@ a{color:inherit;text-decoration:none}
  <div class="quality-grid">
       <div class="quality-card">
         <div class="quality-label"> Avg Photos (card badge)</div>
-        <div class="quality-val" style="color:#ec4899">20.4</div>
+        <div class="quality-val" style="color:#ec4899">20.7</div>
         <span style="display:inline-block;background:#10b98122;color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Good</span>
-        <div style="background:#e2e8f0;border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:100%;background:#ec4899;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:100%;background:#ec4899;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div>
       <div class="quality-card">
         <div class="quality-label"> Photo Badge Coverage</div>
-        <div class="quality-val" style="color:#f97316">97.2</div>
+        <div class="quality-val" style="color:#f97316">98.0</div>
         <span style="display:inline-block;background:#10b98122;color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Good</span>
-        <div style="background:#e2e8f0;border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:97%;background:#f97316;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:98%;background:#f97316;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div>
       <div class="quality-card">
         <div class="quality-label">📝 Avg Description Length</div>
         <div class="quality-val" style="color:#6366f1">86</div>
         <span style="display:inline-block;background:#ef444422;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Poor</span>
-        <div style="background:#e2e8f0;border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:29%;background:#6366f1;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:29%;background:#6366f1;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div>
       <div class="quality-card">
         <div class="quality-label"> Beds Data Coverage</div>
-        <div class="quality-val" style="color:#10b981">97.1</div>
+        <div class="quality-val" style="color:#10b981">95.1</div>
         <span style="display:inline-block;background:#10b98122;color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Good</span>
-        <div style="background:#e2e8f0;border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:97%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:95%;background:#10b981;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div>
       <div class="quality-card">
         <div class="quality-label">📐 Area Data Coverage</div>
         <div class="quality-val" style="color:#0ea5e9">100.0</div>
         <span style="display:inline-block;background:#10b98122;color:#10b981;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Good</span>
-        <div style="background:#e2e8f0;border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:100%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
+        <div style="background:rgba(255,255,255,0.1);border-radius:99px;height:10px;overflow:hidden;margin-top:6px"><div style="width:100%;background:#0ea5e9;height:100%;border-radius:99px;transition:width .6s ease"></div></div>
       </div></div>
 </div>
 
@@ -857,11 +1033,11 @@ a{color:inherit;text-decoration:none}
             <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
               <span style="display:inline-block;background:#ef44441a;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase"> Critical</span>
               <span style="display:inline-block;background:#f1f5f9;color:#475569;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Marketing Gap</span>
-              <span class="sug-stat">0.5% of listings</span>
+              <span class="sug-stat">0.7% of listings</span>
             </div>
           </div>
         </div>
-        <div class="sug-desc">Only 0.5% of Zameen listings use urgency language. Buyers respond strongly to scarcity cues.</div>
+        <div class="sug-desc">Only 0.7% of Zameen listings use urgency language. Buyers respond strongly to scarcity cues.</div>
         <div class="sug-action">
           <strong> Action:</strong> Add 'Limited Time', 'Last Chance', countdown banners, and FOMO-driven push notifications.
         </div>
@@ -875,11 +1051,11 @@ a{color:inherit;text-decoration:none}
             <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
               <span style="display:inline-block;background:#ef44441a;color:#ef4444;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase"> Critical</span>
               <span style="display:inline-block;background:#f1f5f9;color:#475569;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Untapped Segment</span>
-              <span class="sug-stat">0.4% investment focus</span>
+              <span class="sug-stat">0.6% investment focus</span>
             </div>
           </div>
         </div>
-        <div class="sug-desc">Only 0.4% of listings target investors, yet investors make up 30–40% of real-estate buyers in Pakistan.</div>
+        <div class="sug-desc">Only 0.6% of listings target investors, yet investors make up 30–40% of real-estate buyers in Pakistan.</div>
         <div class="sug-action">
           <strong> Action:</strong> Build an 'Investor Hub' with ROI calculators, rental-yield data, and market reports.
         </div>
@@ -915,7 +1091,7 @@ a{color:inherit;text-decoration:none}
             </div>
           </div>
         </div>
-        <div class="sug-desc">Quetta is 88% cheaper than the national average — a clear entry-point for first-time buyers.</div>
+        <div class="sug-desc">Quetta is 87% cheaper than the national average — a clear entry-point for first-time buyers.</div>
         <div class="sug-action">
           <strong> Action:</strong> Run targeted 'Affordable Homes in Quetta' campaigns for first-time buyers and middle-income families.
         </div>
@@ -929,11 +1105,11 @@ a{color:inherit;text-decoration:none}
             <div style="display:flex;gap:8px;align-items:center;margin-top:4px">
               <span style="display:inline-block;background:#3b82f61a;color:#3b82f6;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">🔵 Medium</span>
               <span style="display:inline-block;background:#f1f5f9;color:#475569;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Pricing Strategy</span>
-              <span class="sug-stat">PKR 152,373,618 avg</span>
+              <span class="sug-stat">PKR 123,476,400 avg</span>
             </div>
           </div>
         </div>
-        <div class="sug-desc">Karachi commands a 160% premium over the national average.</div>
+        <div class="sug-desc">Karachi commands a 129% premium over the national average.</div>
         <div class="sug-action">
           <strong> Action:</strong> Develop white-glove luxury service tier for Karachi — dedicated agents, VIP tours, premium branding.
         </div>
@@ -941,107 +1117,14 @@ a{color:inherit;text-decoration:none}
       </div>
 </div>
 
-<!-- ═══════════════════ STRATEGY ═══════════════════ -->
-<div class="section">
- <div class="section-title"> Strategic Recommendations</div>
- <div class="section-desc">Four pillars to differentiate from Zameen and capture market share</div>
- 
-    <div class="strategy-grid">
-      <div class="strat-card" style="background:linear-gradient(135deg,#e0e7ff,#f0f4ff)">
-        <div class="strat-title"> Target Investors</div>
-        <div class="strat-body">
-          Zameen uses investment messaging in only <strong>0.4%</strong>
-          of listings. Build a dedicated <em>Investor Hub</em> with ROI calculators,
-          rental-yield data, and city-level market reports to capture this under-served,
-          high-value audience.
-        </div>
-      </div>
-      <div class="strat-card" style="background:linear-gradient(135deg,#fce7f3,#fdf2f8)">
-        <div class="strat-title">⏱️ Create Urgency</div>
-        <div class="strat-body">
-          With only <strong>0.5%</strong> of listings using urgency cues,
-          you can stand out immediately. Deploy countdown timers, "X people viewing now"
-          badges, and limited-time discounts to drive faster conversions.
-        </div>
-      </div>
-      <div class="strat-card" style="background:linear-gradient(135deg,#d1fae5,#ecfdf5)">
-        <div class="strat-title"> City Positioning</div>
-        <div class="strat-body">
-          There is a <strong>2086%</strong> price gap between
-          <em>Karachi</em> (premium) and
-          <em>Quetta</em> (affordable).
-          Segment your campaigns: luxury messaging in Karachi,
-          first-home messaging in Quetta.
-        </div>
-      </div>
-      <div class="strat-card" style="background:linear-gradient(135deg,#fef3c7,#fffbeb)">
-        <div class="strat-title"> Win on Quality</div>
-        <div class="strat-body">
-          Zameen averages <strong>20.4 photos</strong> and
-          <strong>86 chars</strong> of description per listing.
-          Offer AI-assisted listings with richer media, virtual tours, and
-          neighbourhood insights — quality is your most achievable differentiator.
-        </div>
-      </div>
-    </div>
-</div>
 
-<!-- ═══════════════════ RENTAL INTELLIGENCE ═══════════════════ -->
-<div class="section" style="background:#f8fafc">
- <div class="section-title">Rental Market Intelligence</div>
- <div class="section-desc">City-by-city rental price benchmarks — PKR per month, analysed independently from sale data</div>
- <div style="color:#94a3b8;font-size:13px;padding:12px 0">No rental listings were collected in this run.</div>
-</div>
 
-<!-- ═══════════════════ METHODOLOGY ═══════════════════ -->
-<div class="section" style="background:#f8fafc">
- <div class="section-title"> Methodology & Data Notes</div>
- <div class="section-desc">Read this before citing numbers externally</div>
- <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;font-size:13px;color:#475569;line-height:1.8">
-  <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0">
-   <strong style="color:#1e293b"> Sample</strong><br>
-   2,011 unique listings scraped from zameen.com search pages.
-   Deduplicated on canonical URL before analysis — duplicates across
-   category pages were removed. Raw row count may be higher.
-  </div>
-  <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0">
-   <strong style="color:#1e293b"> Segmentation</strong><br>
-   Each card labelled as <em>Category · City</em> (e.g. Houses · Islamabad).
-   The same city appears up to 3 times — once per property category
-   (Houses, Flats, Plots). These are intentionally separate segments,
-   not duplicated data.
-  </div>
-  <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0">
-   <strong style="color:#1e293b"> Extraction Completeness</strong><br>
-   This metric measures how many fields (beds, area, price/sqft) our scraper
-   successfully extracted — <em>not</em> a claim about Zameen's own data quality.
-   Zameen renders some fields via JavaScript; static scraping may miss them.
-  </div>
-  <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0">
-   <strong style="color:#1e293b"> Photo Count</strong><br>
-   Measured from the photo-count badge on each search-result card,
-   not the listing detail page gallery. If no badge was detected,
-   the field shows N/A rather than 0.
-  </div>
-  <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0">
-   <strong style="color:#1e293b"> Marketing Keywords</strong><br>
-   Scanned across listing title <em>and</em> description text captured from
-   search cards. Zameen titles are short and formulaic — percentages
-   reflect actual text in scraped content, not full listing pages.
-  </div>
-  <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0">
-   <strong style="color:#1e293b"> Freshness</strong><br>
-   Data scraped on 2026-07-31. Zameen listings change daily.
-   Re-run <code>competitor_engine.py</code> for a fresh snapshot.
-   Price figures are in PKR as listed on zameen.com.
-  </div>
- </div>
-</div>
+
 
 <!-- ═══════════════════ FOOTER ═══════════════════ -->
 <div class="footer">
- <div class="footer-brand"> AI-Powered Competitor Intelligence Engine</div>
- <div class="footer-ts">Generated: July 31, 2026 • 10:16 PM &nbsp;|&nbsp; zameen.com analysis</div>
+ <div class="footer-brand">Zameen Competitor Intelligence</div>
+ <div class="footer-ts">Generated: August 05, 2026 • 02:25 PM &nbsp;|&nbsp; zameen.com analysis</div>
 </div>
 
 </div><!-- /page -->

@@ -195,6 +195,36 @@ def scan_page(url: str, label: str = "") -> dict:
 # Full-site scan
 # ---------------------------------------------------------------------------
 
+def scan_listing_inventory() -> dict:
+    """Fetches /api/properties from base URL to evaluate live property inventory quality."""
+    url = f"{BASE_URL}/api/properties"
+    try:
+        resp = requests.get(url, timeout=5)
+        if resp.status_code == 200:
+            props = resp.json() or []
+            total = len(props)
+            no_img = sum(1 for p in props if not p.get('image_url'))
+            no_desc = sum(1 for p in props if not p.get('description') or len(str(p.get('description')).strip()) < 30)
+            for_sale = sum(1 for p in props if (p.get('status') or '').lower() == 'for sale')
+            for_rent = sum(1 for p in props if (p.get('status') or '').lower() == 'for rent')
+            return {
+                "total_listings": total,
+                "missing_images": no_img,
+                "missing_description": no_desc,
+                "for_sale_count": for_sale,
+                "for_rent_count": for_rent
+            }
+    except Exception:
+        pass
+    return {
+        "total_listings": 0,
+        "missing_images": 0,
+        "missing_description": 0,
+        "for_sale_count": 0,
+        "for_rent_count": 0
+    }
+
+
 def scan_website(pages: list = None) -> dict:
     """
     Scans all configured pages and returns a combined report dict.
@@ -203,12 +233,15 @@ def scan_website(pages: list = None) -> dict:
     pages = pages or PAGES_TO_SCAN
     scan_results = []
 
-    print(f"[scanner] Scanning {len(pages)} pages…")
+    print(f"[scanner] Scanning {len(pages)} pages...")
     for page in pages:
-        print(f"  → {page['label']} ({page['url']})")
+        print(f"  -> {page['label']} ({page['url']})")
         result = scan_page(page["url"], label=page["label"])
         scan_results.append(result)
         time.sleep(0.3)   # gentle — it's your own server
+
+    # Scan inventory quality
+    inventory = scan_listing_inventory()
 
     # Aggregate across all pages
     all_issues   = []
@@ -231,10 +264,23 @@ def scan_website(pages: list = None) -> dict:
         if not r.get("title"):
             pages_without_title += 1
 
+    # Append inventory issues to all_issues
+    if inventory["missing_images"] > 0:
+        all_issues.append({
+            "page": "Home (Listings)",
+            "issue": f"{inventory['missing_images']} of {inventory['total_listings']} property listings are missing images"
+        })
+    if inventory["missing_description"] > 0:
+        all_issues.append({
+            "page": "Home (Listings)",
+            "issue": f"{inventory['missing_description']} of {inventory['total_listings']} property listings have incomplete descriptions"
+        })
+
     avg_load = round(sum(load_times) / len(load_times), 1) if load_times else None
 
     return {
         "pages":                 scan_results,
+        "inventory":             inventory,
         "total_pages_scanned":   len(scan_results),
         "all_issues":            all_issues,
         "total_issues":          len(all_issues),
@@ -245,3 +291,4 @@ def scan_website(pages: list = None) -> dict:
         "pages_without_title":   pages_without_title,
         "scanned_at":            __import__('datetime').datetime.now().isoformat(),
     }
+

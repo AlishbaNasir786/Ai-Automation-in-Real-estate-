@@ -253,7 +253,7 @@ class CompetitorReport:
   def _bar(pct: float, color: str = "#6366f1", height: int = 8) -> str:
     pct = min(max(pct, 0), 100)
     return (
-      f'<div style="background:#e2e8f0;border-radius:99px;height:{height}px;overflow:hidden;margin-top:6px">'
+      f'<div style="background:rgba(255,255,255,0.1);border-radius:99px;height:{height}px;overflow:hidden;margin-top:6px">'
       f'<div style="width:{pct}%;background:{color};height:100%;border-radius:99px;'
       f'transition:width .6s ease"></div></div>'
     )
@@ -291,24 +291,137 @@ class CompetitorReport:
     overall_avg = sum(all_prices) / len(all_prices) if all_prices else 0
 
     cards = [
-      ("", f"{self.total:,}",       "Unique Listings",     "#6366f1"),
-      ("", str(cities),          "City×Category Segments",  "#0ea5e9"),
-      ("PKR", self._pkr_cr(overall_avg),  "Overall Avg Price",    "#10b981"),
-      ("", f"{s['featured_pct']}%",    "Featured Listings",    "#f59e0b"),
-      ("", f"{s['extraction_completeness']}%", "Extraction Completeness", "#8b5cf6"),
-      ("", str(s['avg_photos']) if s['avg_photos'] is not None else "N/A",
-                         "Avg Photos (badge)",    "#ec4899"),
+      ("⚡", f"{self.total:,}",       "Unique Listings",     "#6366f1", "↑ Active"),
+      ("🌐", str(cities),          "City×Category Segments",  "#0ea5e9", "↑ 8 Cities"),
+      ("💰", f"PKR {self._pkr_cr(overall_avg)}", "Overall Avg Price", "#10b981", "↑ Market Benchmarks"),
+      ("⭐", f"{s['featured_pct']}%",    "Featured Listings",    "#f59e0b", "↑ Featured Share"),
+      ("🎯", f"{s['extraction_completeness']}%", "Extraction Completeness", "#8b5cf6", "↑ Extracted Signals"),
+      ("📸", str(s['avg_photos']) if s['avg_photos'] is not None else "N/A", "Avg Photos (badge)", "#ec4899", "↑ Photo Coverage"),
     ]
     html = '<div class="kpi-grid">'
-    for icon, val, label, color in cards:
+    for icon, val, label, color, trend in cards:
       html += f"""
-      <div class="kpi-card">
-        <div class="kpi-icon" style="color:{color}">{icon}</div>
+      <div class="kpi-card" style="position:relative;overflow:hidden">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div class="kpi-icon" style="color:{color};font-size:18px">{icon}</div>
+          <span style="font-size:10px;font-weight:700;color:{color};background:{color}18;padding:2px 7px;border-radius:99px">{trend}</span>
+        </div>
         <div class="kpi-value" style="color:{color}">{val}</div>
         <div class="kpi-label">{label}</div>
       </div>"""
     html += "</div>"
     return html
+
+  def _html_visual_charts_dashboard(self, s: dict) -> str:
+    pricing = self.analysis.get("pricing_analysis", {})
+    sorted_segs = sorted(pricing.items(), key=lambda x: x[1]["avg_price"], reverse=True)[:6]
+
+    # Points for SVG trend curve across top markets
+    points = []
+    labels = []
+    prices = [d["avg_price"] for _, d in sorted_segs] or [1]
+    max_p = max(prices) or 1
+    for idx, (seg_key, d) in enumerate(sorted_segs):
+        x = 40 + idx * 85
+        y = 150 - int((d["avg_price"] / max_p) * 100)
+        points.append((x, y))
+        parts = seg_key.split("_")
+        name = parts[-1] if len(parts) >= 2 else seg_key
+        labels.append((x, name, self._pkr_cr(d["avg_price"])))
+
+    poly_pts = " ".join(f"{x},{y}" for x, y in points)
+    area_pts = f"40,170 {poly_pts} {points[-1][0] if points else 465},170"
+
+    # Property type breakdown for donut chart
+    prop_counts = self.analysis.get("property_counts", {})
+    total = self.total or 1
+    type_colors = {"House": "#6366f1", "Flat": "#0ea5e9", "Plot": "#10b981", "Commercial": "#f59e0b", "Unknown": "#8b5cf6"}
+
+    donut_html = ""
+    legend_html = ""
+    offset = 0
+    circ = 2 * 3.14159 * 55  # perimeter ~ 345.5
+
+    for ptype, count in sorted(prop_counts.items(), key=lambda x: x[1], reverse=True):
+        if count == 0: continue
+        pct = round(count / total * 100, 1)
+        col = type_colors.get(ptype, "#38bdf8")
+        dash = (pct / 100) * circ
+        gap = circ - dash
+        donut_html += f'<circle r="55" cx="80" cy="80" fill="transparent" stroke="{col}" stroke-width="18" stroke-dasharray="{dash:.1f} {gap:.1f}" stroke-dashoffset="-{offset:.1f}" opacity="0.9"></circle>'
+        offset += dash
+
+        legend_html += f"""
+        <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-bottom:8px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="width:10px;height:10px;border-radius:50%;background:{col};display:inline-block"></span>
+            <span style="color:#e2e8f0;font-weight:600">{ptype}</span>
+          </div>
+          <span style="color:#94a3b8;font-weight:700">{pct}% <small style="opacity:.6">({count:,})</small></span>
+        </div>"""
+
+    return f"""
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;margin-top:20px">
+      <!-- Line Chart Card: Price Trend -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <div>
+            <div style="font-size:14px;font-weight:700;color:#f1f5f9">Price Trend Over Segments</div>
+            <div style="font-size:11px;color:#64748b">Average listing price across top markets</div>
+          </div>
+          <span style="font-size:11px;color:#10b981;font-weight:700;background:rgba(16,185,129,0.15);padding:3px 8px;border-radius:6px">📈 Realtime Crawl</span>
+        </div>
+        <svg viewBox="0 0 500 200" style="width:100%;height:auto;overflow:visible">
+          <defs>
+            <linearGradient id="chartAreaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0"/>
+            </linearGradient>
+          </defs>
+          <!-- Grid Lines -->
+          <line x1="30" y1="40" x2="470" y2="40" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+          <line x1="30" y1="90" x2="470" y2="90" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+          <line x1="30" y1="140" x2="470" y2="140" stroke="rgba(255,255,255,0.05)" stroke-dasharray="4"/>
+          <line x1="30" y1="170" x2="470" y2="170" stroke="rgba(255,255,255,0.1)"/>
+          
+          <!-- Area Fill -->
+          <polygon points="{area_pts}" fill="url(#chartAreaGrad)"/>
+          
+          <!-- Smooth Line -->
+          <polyline points="{poly_pts}" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round"/>
+          
+          <!-- Glowing Data Points & Labels -->
+          {''.join(f'<circle cx="{pt[0]}" cy="{pt[1]}" r="5" fill="#38bdf8" stroke="#0f172a" stroke-width="2"/>' for pt in points)}
+          {''.join(f'<text x="{lb[0]}" y="{points[i][1] - 10}" fill="#38bdf8" font-size="10" font-weight="700" text-anchor="middle">{lb[2]}</text><text x="{lb[0]}" y="188" fill="#64748b" font-size="10" font-weight="600" text-anchor="middle">{lb[1]}</text>' for i, lb in enumerate(labels))}
+        </svg>
+      </div>
+
+      <!-- Donut Chart Card: Property Breakdown -->
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div>
+            <div style="font-size:14px;font-weight:700;color:#f1f5f9">Property Type Breakdown</div>
+            <div style="font-size:11px;color:#64748b">Distribution by inventory category</div>
+          </div>
+          <span style="font-size:11px;color:#6366f1;font-weight:700;background:rgba(99,102,241,0.15);padding:3px 8px;border-radius:6px">📊 Category Share</span>
+        </div>
+        <div style="display:grid;grid-template-columns:160px 1fr;gap:16px;align-items:center">
+          <div style="position:relative;width:160px;height:160px;margin:0 auto">
+            <svg viewBox="0 0 160 160" style="transform:rotate(-90deg);width:160px;height:160px">
+              {donut_html}
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+              <span style="font-size:18px;font-weight:800;color:#fff">{self.total:,}</span>
+              <span style="font-size:9px;color:#64748b;text-transform:uppercase;letter-spacing:1px">Listings</span>
+            </div>
+          </div>
+          <div>
+            {legend_html}
+          </div>
+        </div>
+      </div>
+    </div>
+    """
 
   def _html_city_cards(self) -> str:
     pricing = self.analysis.get("pricing_analysis", {})
@@ -344,8 +457,8 @@ class CompetitorReport:
       low_conf_banner = ""
       if d.get("low_confidence"):
         low_conf_banner = (
-          f'<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:6px;'
-          f'padding:6px 10px;font-size:11px;color:#92400e;font-weight:600;margin-bottom:10px">'
+          f'<div style="background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);border-radius:6px;'
+          f'padding:6px 10px;font-size:11px;color:#fcd34d;font-weight:600;margin-bottom:10px">'
           f'Low-confidence estimate — only {total_city} listings in this segment. '
           f'Treat figures as indicative only.</div>'
         )
@@ -401,12 +514,12 @@ class CompetitorReport:
     total = self.total or 1
 
     rows = [
-      ("luxury",   "Luxury / Premium",  "#f59e0b", "bg:#fef3c7"),
-      ("location",  "Location Signals",  "#0ea5e9", "bg:#e0f2fe"),
-      ("deal",    "Deal / Discount",   "#10b981", "bg:#d1fae5"),
-      ("new",    "New Construction",  "#6366f1", "bg:#e0e7ff"),
-      ("investment", "Investment Focus",  "#8b5cf6", "bg:#ede9fe"),
-      ("urgency",  "Urgency / FOMO",   "#ef4444", "bg:#fee2e2"),
+      ("luxury",   "Luxury / Premium",  "#f59e0b", "bg:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2)"),
+      ("location",  "Location Signals",  "#0ea5e9", "bg:rgba(14,165,233,0.1);border:1px solid rgba(14,165,233,0.2)"),
+      ("deal",    "Deal / Discount",   "#10b981", "bg:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2)"),
+      ("new",    "New Construction",  "#6366f1", "bg:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.2)"),
+      ("investment", "Investment Focus",  "#8b5cf6", "bg:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.2)"),
+      ("urgency",  "Urgency / FOMO",   "#ef4444", "bg:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2)"),
     ]
 
     html = '<div class="mkt-grid">'
@@ -414,7 +527,7 @@ class CompetitorReport:
       count = kc.get(key, 0)
       pct  = round(count / total * 100, 1)
       bg  = bg_raw.replace("bg:", "")
-      gap_badge = self._badge("GAP", "#ef4444", "#fee2e2") if pct < 5 else self._badge("Active", "#10b981", "#d1fae5")
+      gap_badge = self._badge("GAP", "#ef4444", "rgba(239,68,68,0.15)") if pct < 5 else self._badge("Active", "#10b981", "rgba(16,185,129,0.15)")
       html += f"""
       <div class="mkt-card" style="background:{bg}">
         <div class="mkt-row">
@@ -433,9 +546,9 @@ class CompetitorReport:
     for word, freq in top_kw:
       size = max(12, min(22, 12 + freq // 3))
       kw_html += (
-        f'<span style="font-size:{size}px;color:#4338ca;background:#e0e7ff;'
-        f'padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">'
-        f'{word} <small style="color:#818cf8">×{freq}</small></span>'
+        f'<span style="font-size:{size}px;color:#818cf8;background:rgba(99,102,241,0.15);'
+        f'border:1px solid rgba(99,102,241,0.3);padding:4px 12px;border-radius:99px;margin:4px;display:inline-block">'
+        f'{word} <small style="color:#a5b4fc">×{freq}</small></span>'
       )
 
     html += f"""
@@ -513,6 +626,8 @@ class CompetitorReport:
 
     html = '<div class="prop-grid">'
     for ptype, count in sorted(prop_counts.items(), key=lambda x: x[1], reverse=True):
+      if ptype in ('Unknown', 'Plot'):   # hide unlabelled / plot types
+        continue
       pct  = round(count / total * 100, 1)
       color = colors.get(ptype, "#6366f1")
       html += f"""
@@ -553,19 +668,19 @@ class CompetitorReport:
 
     html = f"""
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:28px">
-      <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:20px;text-align:center">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;text-align:center">
         <div style="font-size:26px;font-weight:800;color:#0ea5e9">{self.rent_total:,}</div>
         <div style="font-size:12px;color:#64748b;margin-top:4px">Rental Listings</div>
       </div>
-      <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:20px;text-align:center">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;text-align:center">
         <div style="font-size:26px;font-weight:800;color:#0ea5e9">{len(pricing)}</div>
         <div style="font-size:12px;color:#64748b;margin-top:4px">City×Category Segments</div>
       </div>
-      <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:20px;text-align:center">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;text-align:center">
         <div style="font-size:26px;font-weight:800;color:#0ea5e9">PKR {self._pkr_cr(overall_avg_rent)}</div>
         <div style="font-size:12px;color:#64748b;margin-top:4px">Avg Monthly Rent</div>
       </div>
-      <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:12px;padding:20px;text-align:center">
+      <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;text-align:center">
         <div style="font-size:26px;font-weight:800;color:#0ea5e9">{rent_feat_pct}%</div>
         <div style="font-size:12px;color:#64748b;margin-top:4px">Featured Rentals</div>
       </div>
@@ -609,11 +724,11 @@ class CompetitorReport:
         <table style="width:100%;font-size:12px;color:#64748b;border-collapse:collapse;margin-top:8px">
           <tr>
             <td style="padding:3px 0">Min&nbsp;rent</td>
-            <td style="text-align:right;font-weight:600;color:#1e293b">PKR {self._pkr_cr(min_r)}</td>
+            <td style="text-align:right;font-weight:600;color:#f1f5f9">PKR {self._pkr_cr(min_r)}</td>
           </tr>
           <tr>
             <td style="padding:3px 0">Max&nbsp;rent</td>
-            <td style="text-align:right;font-weight:600;color:#1e293b">PKR {self._pkr_cr(max_r)}</td>
+            <td style="text-align:right;font-weight:600;color:#f1f5f9">PKR {self._pkr_cr(max_r)}</td>
           </tr>
           <tr>
             <td style="padding:3px 0">Featured premium</td>
@@ -624,8 +739,8 @@ class CompetitorReport:
     html += "</div>"
 
     html += """
-    <div style="margin-top:16px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;
-                padding:14px 18px;font-size:13px;color:#92400e;line-height:1.6">
+    <div style="margin-top:16px;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);border-radius:10px;
+                padding:14px 18px;font-size:13px;color:#fcd34d;line-height:1.6">
       <strong>Interpretation note:</strong> Rental prices are in PKR per month as listed on Zameen.com.
       They are analysed separately from sale prices and must not be compared directly with sale figures.
       Low-confidence segments (fewer than 15 listings) are flagged.
@@ -655,7 +770,7 @@ class CompetitorReport:
 
     return f"""
     <div class="strategy-grid">
-      <div class="strat-card" style="background:linear-gradient(135deg,#e0e7ff,#f0f4ff)">
+      <div class="strat-card" style="background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(99,102,241,0.06));border:1px solid rgba(99,102,241,0.25)">
         <div class="strat-title"> Target Investors</div>
         <div class="strat-body">
           Zameen uses investment messaging in only <strong>{s['investment_pct']}%</strong>
@@ -664,7 +779,7 @@ class CompetitorReport:
           high-value audience.
         </div>
       </div>
-      <div class="strat-card" style="background:linear-gradient(135deg,#fce7f3,#fdf2f8)">
+      <div class="strat-card" style="background:linear-gradient(135deg,rgba(236,72,153,0.12),rgba(236,72,153,0.06));border:1px solid rgba(236,72,153,0.25)">
         <div class="strat-title">⏱️ Create Urgency</div>
         <div class="strat-body">
           With only <strong>{s['urgency_pct']}%</strong> of listings using urgency cues,
@@ -672,7 +787,7 @@ class CompetitorReport:
           badges, and limited-time discounts to drive faster conversions.
         </div>
       </div>
-      <div class="strat-card" style="background:linear-gradient(135deg,#d1fae5,#ecfdf5)">
+      <div class="strat-card" style="background:linear-gradient(135deg,rgba(16,185,129,0.12),rgba(16,185,129,0.06));border:1px solid rgba(16,185,129,0.25)">
         <div class="strat-title"> City Positioning</div>
         <div class="strat-body">
           There is a <strong>{price_gap_pct}%</strong> price gap between
@@ -682,7 +797,7 @@ class CompetitorReport:
           first-home messaging in {cheapest.split("_")[-1]}.
         </div>
       </div>
-      <div class="strat-card" style="background:linear-gradient(135deg,#fef3c7,#fffbeb)">
+      <div class="strat-card" style="background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(245,158,11,0.06));border:1px solid rgba(245,158,11,0.25)">
         <div class="strat-title"> Win on Quality</div>
         <div class="strat-body">
           Zameen averages <strong>{s['avg_photos']} photos</strong> and
@@ -713,121 +828,131 @@ class CompetitorReport:
 <style>
 /* ── Reset & base ───────────────────────────────── */
 *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
-body{{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-   background:#f0f4f8;color:#1e293b;line-height:1.6;padding:32px 20px}}
+body{{font-family:'Plus Jakarta Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+   background:#090d16;color:#f1f5f9;line-height:1.6;padding:28px 20px}}
 a{{color:inherit;text-decoration:none}}
 
 /* ── Page wrapper ───────────────────────────────── */
-.page{{max-width:1200px;margin:0 auto;background:#fff;
-    border-radius:24px;box-shadow:0 25px 60px rgba(0,0,0,.12);overflow:hidden}}
+.page{{max-width:1200px;margin:0 auto;background:#0f172a;
+    border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.6);overflow:hidden;
+    border:1px solid rgba(255,255,255,0.07)}}
 
 /* ── Hero header ────────────────────────────────── */
-.hero{{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 45%,#4f46e5 100%);
-    padding:52px 52px 44px;color:#fff;position:relative;overflow:hidden}}
+.hero{{background:linear-gradient(135deg,#0a1628 0%,#0f1f3d 50%,#0d2240 100%);
+    padding:48px 52px 40px;color:#fff;position:relative;overflow:hidden;
+    border-bottom:1px solid rgba(16,185,129,0.2)}}
 .hero::before{{content:'';position:absolute;inset:0;
-        background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}}
+    background:radial-gradient(ellipse at 20% 50%,rgba(16,185,129,0.12) 0%,transparent 60%),
+               radial-gradient(ellipse at 80% 20%,rgba(56,189,248,0.08) 0%,transparent 50%);
+    pointer-events:none}}
 .hero-inner{{position:relative;z-index:1}}
-.hero-eyebrow{{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-        color:#a5b4fc;margin-bottom:12px}}
-.hero h1{{font-size:36px;font-weight:800;line-height:1.15;margin-bottom:8px}}
-.hero h1 span{{color:#fbbf24}}
-.hero-sub{{font-size:15px;color:#c7d2fe;margin-top:4px}}
-.hero-meta{{display:flex;gap:24px;margin-top:28px;flex-wrap:wrap}}
-.hero-badge{{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
-       backdrop-filter:blur(8px);border-radius:12px;padding:12px 20px;text-align:center}}
-.hero-badge .hb-val{{font-size:24px;font-weight:800;color:#fff}}
-.hero-badge .hb-lbl{{font-size:11px;color:#a5b4fc;text-transform:uppercase;letter-spacing:.8px;margin-top:2px}}
-.alert-strip{{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}}
-.alert-pill{{background:rgba(239,68,68,.25);border:1px solid rgba(239,68,68,.5);
-       border-radius:99px;padding:6px 16px;font-size:13px;color:#fca5a5;font-weight:600}}
-.alert-pill.warn{{background:rgba(249,115,22,.2);border-color:rgba(249,115,22,.4);color:#fed7aa}}
+.hero-eyebrow{{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+    color:#10b981;margin-bottom:12px}}
+.hero h1{{font-size:34px;font-weight:800;line-height:1.15;margin-bottom:8px;color:#fff}}
+.hero h1 span{{color:#10b981}}
+.hero-sub{{font-size:14px;color:#94a3b8;margin-top:4px}}
+.hero-meta{{display:flex;gap:16px;margin-top:28px;flex-wrap:wrap}}
+.hero-badge{{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+   backdrop-filter:blur(8px);border-radius:12px;padding:14px 20px;text-align:center;
+   transition:border-color .2s}}
+.hero-badge:hover{{border-color:rgba(16,185,129,0.4)}}
+.hero-badge .hb-val{{font-size:26px;font-weight:800;color:#fff}}
+.hero-badge .hb-lbl{{font-size:10px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-top:3px}}
+.alert-strip{{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}}
+.alert-pill{{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.35);
+   border-radius:99px;padding:5px 14px;font-size:12px;color:#fca5a5;font-weight:700}}
+.alert-pill.warn{{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.3);color:#fcd34d}}
 
 /* ── Section wrapper ────────────────────────────── */
-.section{{padding:44px 52px;border-bottom:1px solid #f1f5f9}}
+.section{{padding:40px 52px;border-bottom:1px solid rgba(255,255,255,0.06)}}
 .section:last-child{{border-bottom:none}}
-.section-title{{font-size:22px;font-weight:700;color:#1e293b;margin-bottom:6px;
-        display:flex;align-items:center;gap:10px}}
-.section-desc{{font-size:14px;color:#64748b;margin-bottom:24px}}
-.section-sub-title{{font-size:15px;font-weight:600;color:#374151;margin-top:24px;margin-bottom:10px}}
+.section-title{{font-size:20px;font-weight:700;color:#f1f5f9;margin-bottom:6px;
+    display:flex;align-items:center;gap:10px}}
+.section-desc{{font-size:13px;color:#64748b;margin-bottom:22px}}
+.section-sub-title{{font-size:14px;font-weight:600;color:#94a3b8;margin-top:22px;margin-bottom:10px}}
 
 /* ── KPI grid ───────────────────────────────────── */
-.kpi-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}}
-.kpi-card{{background:#f8fafc;border-radius:16px;padding:22px 18px;text-align:center;
-      border:1px solid #e2e8f0;transition:transform .2s,box-shadow .2s}}
-.kpi-card:hover{{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}}
-.kpi-icon{{font-size:26px;margin-bottom:8px}}
-.kpi-value{{font-size:28px;font-weight:800}}
-.kpi-label{{font-size:12px;color:#64748b;margin-top:4px;line-height:1.3}}
+.kpi-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}}
+.kpi-card{{background:rgba(255,255,255,0.04);border-radius:14px;padding:20px 16px;text-align:center;
+    border:1px solid rgba(255,255,255,0.08);transition:transform .2s,border-color .2s}}
+.kpi-card:hover{{transform:translateY(-3px);border-color:rgba(16,185,129,0.3)}}
+.kpi-icon{{font-size:24px;margin-bottom:8px}}
+.kpi-value{{font-size:26px;font-weight:800;color:#10b981}}
+.kpi-label{{font-size:11px;color:#64748b;margin-top:4px;line-height:1.3;text-transform:uppercase;letter-spacing:.5px}}
 
 /* ── City grid ──────────────────────────────────── */
-.city-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:20px}}
-.city-card{{background:#f8fafc;border-radius:16px;padding:22px;border:1px solid #e2e8f0;
-      transition:transform .2s,box-shadow .2s}}
-.city-card:hover{{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.08)}}
+.city-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}}
+.city-card{{background:rgba(255,255,255,0.04);border-radius:14px;padding:20px;
+    border:1px solid rgba(255,255,255,0.08);transition:transform .2s,border-color .2s}}
+.city-card:hover{{transform:translateY(-3px);border-color:rgba(16,185,129,0.25)}}
 .city-header{{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}}
-.city-name{{font-size:16px;font-weight:700}}
-.city-price{{font-size:20px;font-weight:800}}
-.city-sub{{font-size:12px;color:#94a3b8;margin-bottom:8px}}
-.city-meta{{font-size:12px;color:#64748b;display:flex;justify-content:space-between;
-      margin-bottom:10px}}
+.city-name{{font-size:15px;font-weight:700;color:#f1f5f9}}
+.city-price{{font-size:18px;font-weight:800;color:#10b981}}
+.city-sub{{font-size:11px;color:#475569;margin-bottom:8px}}
+.city-meta{{font-size:11px;color:#64748b;display:flex;justify-content:space-between;margin-bottom:10px}}
 .dist-row{{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}}
 .dist-item{{text-align:center}}
-.dist-label{{font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}}
-.dist-val{{font-size:15px;font-weight:700;color:#1e293b}}
+.dist-label{{font-size:10px;color:#475569;text-transform:uppercase;letter-spacing:.5px}}
+.dist-val{{font-size:14px;font-weight:700;color:#e2e8f0}}
 
 /* ── Marketing grid ─────────────────────────────── */
-.mkt-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}}
-.mkt-card{{border-radius:14px;padding:18px;border:1px solid rgba(0,0,0,.06)}}
+.mkt-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}}
+.mkt-card{{border-radius:12px;padding:16px;border:1px solid rgba(255,255,255,0.08);
+    background:rgba(255,255,255,0.04)}}
 .mkt-row{{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}}
-.mkt-label{{font-size:13px;font-weight:700}}
-.mkt-stat{{font-size:28px;font-weight:800;margin:4px 0 2px}}
-.mkt-count{{font-size:12px;color:#64748b}}
-.keyword-cloud{{background:#f8fafc;border-radius:14px;padding:20px;margin-top:20px;
-        border:1px solid #e2e8f0}}
+.mkt-label{{font-size:12px;font-weight:700;color:#94a3b8}}
+.mkt-stat{{font-size:26px;font-weight:800;margin:4px 0 2px}}
+.mkt-count{{font-size:11px;color:#475569}}
+.keyword-cloud{{background:rgba(255,255,255,0.03);border-radius:12px;padding:18px;margin-top:18px;
+    border:1px solid rgba(255,255,255,0.06)}}
 
 /* ── Property distribution ──────────────────────── */
-.prop-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}}
-.prop-card{{background:#f8fafc;border-radius:14px;padding:18px;text-align:center;
-      border:1px solid #e2e8f0}}
-.prop-type{{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}}
-.prop-count{{font-size:30px;font-weight:800;color:#1e293b;margin:6px 0 2px}}
-.prop-pct{{font-size:14px;font-weight:600;margin-bottom:6px}}
+.prop-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}}
+.prop-card{{background:rgba(255,255,255,0.04);border-radius:12px;padding:16px;text-align:center;
+    border:1px solid rgba(255,255,255,0.08)}}
+.prop-type{{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#94a3b8}}
+.prop-count{{font-size:28px;font-weight:800;color:#f1f5f9;margin:6px 0 2px}}
+.prop-pct{{font-size:13px;font-weight:600;margin-bottom:6px;color:#10b981}}
 
 /* ── Quality cards ──────────────────────────────── */
-.quality-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}}
-.quality-card{{background:#f8fafc;border-radius:14px;padding:20px;border:1px solid #e2e8f0}}
-.quality-label{{font-size:13px;color:#64748b;margin-bottom:6px}}
-.quality-val{{font-size:32px;font-weight:800;color:#1e293b;margin-bottom:6px}}
+.quality-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}}
+.quality-card{{background:rgba(255,255,255,0.04);border-radius:12px;padding:18px;
+    border:1px solid rgba(255,255,255,0.08)}}
+.quality-label{{font-size:12px;color:#64748b;margin-bottom:6px}}
+.quality-val{{font-size:30px;font-weight:800;color:#10b981;margin-bottom:6px}}
 
 /* ── Suggestions ────────────────────────────────── */
-.suggestion{{background:#f8fafc;border-radius:16px;padding:24px;margin-bottom:16px;
-       border:1px solid #e2e8f0}}
-.sug-header{{display:flex;gap:16px;align-items:flex-start;margin-bottom:12px}}
-.sug-icon{{font-size:32px;flex-shrink:0}}
-.sug-title{{font-size:18px;font-weight:700;color:#1e293b}}
-.sug-stat{{font-size:12px;color:#64748b;font-style:italic}}
-.sug-desc{{font-size:14px;color:#475569;margin-bottom:12px;line-height:1.65}}
-.sug-action{{background:#e0e7ff;border-radius:10px;padding:12px 16px;
-       font-size:14px;color:#3730a3;margin-bottom:10px;line-height:1.5}}
-.sug-impact{{font-size:13px;color:#059669;font-weight:600}}
+.suggestion{{background:rgba(255,255,255,0.04);border-radius:14px;padding:22px;margin-bottom:14px;
+   border:1px solid rgba(255,255,255,0.08)}}
+.sug-header{{display:flex;gap:14px;align-items:flex-start;margin-bottom:10px}}
+.sug-icon{{font-size:30px;flex-shrink:0}}
+.sug-title{{font-size:16px;font-weight:700;color:#f1f5f9}}
+.sug-stat{{font-size:11px;color:#64748b;font-style:italic}}
+.sug-desc{{font-size:13px;color:#94a3b8;margin-bottom:12px;line-height:1.65}}
+.sug-action{{background:rgba(16,185,129,0.1);border-radius:10px;padding:12px 16px;
+   font-size:13px;color:#34d399;margin-bottom:10px;line-height:1.5;
+   border:1px solid rgba(16,185,129,0.2)}}
+.sug-impact{{font-size:12px;color:#10b981;font-weight:700}}
 
 /* ── Strategy grid ──────────────────────────────── */
-.strategy-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}}
-.strat-card{{border-radius:16px;padding:24px;border:1px solid rgba(0,0,0,.06)}}
-.strat-title{{font-size:16px;font-weight:700;color:#1e293b;margin-bottom:10px}}
-.strat-body{{font-size:14px;color:#475569;line-height:1.7}}
+.strategy-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}}
+.strat-card{{border-radius:14px;padding:22px;border:1px solid rgba(255,255,255,0.08);
+    background:rgba(255,255,255,0.04)}}
+.strat-title{{font-size:15px;font-weight:700;color:#f1f5f9;margin-bottom:10px}}
+.strat-body{{font-size:13px;color:#94a3b8;line-height:1.7}}
 
 /* ── Footer ─────────────────────────────────────── */
-.footer{{background:#1e1b4b;padding:28px 52px;display:flex;
-     justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}}
-.footer-brand{{color:#a5b4fc;font-size:13px;font-weight:600}}
-.footer-ts{{color:#6366f1;font-size:12px}}
+.footer{{background:rgba(255,255,255,0.03);padding:24px 52px;display:flex;
+   justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+   border-top:1px solid rgba(255,255,255,0.06)}}
+.footer-brand{{color:#10b981;font-size:12px;font-weight:700}}
+.footer-ts{{color:#475569;font-size:11px}}
 
 /* ── Responsive ─────────────────────────────────── */
 @media(max-width:640px){{
- .hero,.section{{padding:28px 24px}}
- .hero h1{{font-size:24px}}
- .footer{{padding:20px 24px}}
+ .hero,.section{{padding:24px 20px}}
+ .hero h1{{font-size:22px}}
+ .footer{{padding:18px 20px}}
 }}
 </style>
 </head>
@@ -837,7 +962,7 @@ a{{color:inherit;text-decoration:none}}
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <div class="hero">
  <div class="hero-inner">
-  <div class="hero-eyebrow">AI-Powered Competitor Intelligence</div>
+  <div class="hero-eyebrow">Zameen Competitor Intelligence</div>
   <h1> Zameen.com <span>Deep Analysis</span></h1>
   <div class="hero-sub">Pakistan Real Estate Market Intelligence Report</div>
 
@@ -882,6 +1007,7 @@ a{{color:inherit;text-decoration:none}}
  <div class="section-title"> Executive Overview</div>
  <div class="section-desc">High-level metrics from the latest Zameen.com data crawl</div>
  {self._html_kpi_cards(s)}
+ {self._html_visual_charts_dashboard(s)}
 </div>
 
 <!-- ═══════════════════ CITIES ═══════════════════ -->
@@ -919,68 +1045,13 @@ a{{color:inherit;text-decoration:none}}
  {self._html_suggestions()}
 </div>
 
-<!-- ═══════════════════ STRATEGY ═══════════════════ -->
-<div class="section">
- <div class="section-title"> Strategic Recommendations</div>
- <div class="section-desc">Four pillars to differentiate from Zameen and capture market share</div>
- {self._html_strategic_summary(s)}
-</div>
 
-<!-- ═══════════════════ RENTAL INTELLIGENCE ═══════════════════ -->
-<div class="section" style="background:#f8fafc">
- <div class="section-title">Rental Market Intelligence</div>
- <div class="section-desc">City-by-city rental price benchmarks — PKR per month, analysed independently from sale data</div>
- {self._html_rental_section()}
-</div>
 
-<!-- ═══════════════════ METHODOLOGY ═══════════════════ -->
-<div class="section" style="background:#f8fafc">
- <div class="section-title"> Methodology & Data Notes</div>
- <div class="section-desc">Read this before citing numbers externally</div>
- <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;font-size:13px;color:#475569;line-height:1.8">
-  <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0">
-   <strong style="color:#1e293b"> Sample</strong><br>
-   {self.total:,} unique listings scraped from zameen.com search pages.
-   Deduplicated on canonical URL before analysis — duplicates across
-   category pages were removed. Raw row count may be higher.
-  </div>
-  <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0">
-   <strong style="color:#1e293b"> Segmentation</strong><br>
-   Each card labelled as <em>Category · City</em> (e.g. Houses · Islamabad).
-   The same city appears up to 3 times — once per property category
-   (Houses, Flats, Plots). These are intentionally separate segments,
-   not duplicated data.
-  </div>
-  <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0">
-   <strong style="color:#1e293b"> Extraction Completeness</strong><br>
-   This metric measures how many fields (beds, area, price/sqft) our scraper
-   successfully extracted — <em>not</em> a claim about Zameen's own data quality.
-   Zameen renders some fields via JavaScript; static scraping may miss them.
-  </div>
-  <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0">
-   <strong style="color:#1e293b"> Photo Count</strong><br>
-   Measured from the photo-count badge on each search-result card,
-   not the listing detail page gallery. If no badge was detected,
-   the field shows N/A rather than 0.
-  </div>
-  <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0">
-   <strong style="color:#1e293b"> Marketing Keywords</strong><br>
-   Scanned across listing title <em>and</em> description text captured from
-   search cards. Zameen titles are short and formulaic — percentages
-   reflect actual text in scraped content, not full listing pages.
-  </div>
-  <div style="background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0">
-   <strong style="color:#1e293b"> Freshness</strong><br>
-   Data scraped on {self.ts_short}. Zameen listings change daily.
-   Re-run <code>competitor_engine.py</code> for a fresh snapshot.
-   Price figures are in PKR as listed on zameen.com.
-  </div>
- </div>
-</div>
+
 
 <!-- ═══════════════════ FOOTER ═══════════════════ -->
 <div class="footer">
- <div class="footer-brand"> AI-Powered Competitor Intelligence Engine</div>
+ <div class="footer-brand">Zameen Competitor Intelligence</div>
  <div class="footer-ts">Generated: {self.timestamp} &nbsp;|&nbsp; zameen.com analysis</div>
 </div>
 

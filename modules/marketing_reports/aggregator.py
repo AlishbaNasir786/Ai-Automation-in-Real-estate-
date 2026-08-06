@@ -109,14 +109,23 @@ def _compute_health_score(review_stats: dict, website_data: dict) -> dict:
     else:
         perf_health = 30
 
-    # Content health: penalise for thin content / missing images alt
+    # Content health: penalise for thin content / missing images alt / missing inventory photos & descriptions
     content_issues = sum(
         1
         for issue_dict in website_data.get("all_issues", [])
         if any(k in issue_dict.get("issue", "").lower()
                for k in ["content", "word", "image", "alt", "paragraph"])
     )
-    content_health = max(0, round(100 - (content_issues * 15), 1))
+    content_health = max(0, round(100 - (content_issues * 10), 1))
+
+    inventory = website_data.get("inventory", {})
+    tot_listings = inventory.get("total_listings", 0)
+    if tot_listings > 0:
+        missing_imgs = inventory.get("missing_images", 0)
+        missing_descs = inventory.get("missing_description", 0)
+        img_pen = (missing_imgs / tot_listings) * 25
+        desc_pen = (missing_descs / tot_listings) * 15
+        content_health = max(0, round(content_health - img_pen - desc_pen, 1))
 
     overall = round(
         (review_health * 0.35 + seo_health * 0.25 + perf_health * 0.20 + content_health * 0.20),
@@ -130,3 +139,4 @@ def _compute_health_score(review_stats: dict, website_data: dict) -> dict:
         "performance": perf_health,
         "content":     content_health,
     }
+
